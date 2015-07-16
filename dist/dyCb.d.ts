@@ -51,6 +51,77 @@ declare module dyCb {
 }
 
 declare module dyCb {
+    class YEQuery {
+        static ajax(conf: any): void;
+        private static _createAjax(error);
+        private static _isLocalFile(status);
+        private static _isSoundFile(dataType);
+    }
+}
+
+/// <reference path="../definitions.d.ts" />
+declare module dyCb {
+    class ConvertUtils {
+        static toString(obj: any): string;
+        private static _convertCodeToString(fn);
+    }
+}
+
+/// <reference path="../definitions.d.ts" />
+declare module dyCb {
+    class EventUtils {
+        static bindEvent(context: any, func: any): (event: any) => any;
+        static addEvent(dom: any, eventName: any, handler: any): void;
+        static removeEvent(dom: any, eventName: any, handler: any): void;
+    }
+}
+
+/// <reference path="../definitions.d.ts" />
+declare module dyCb {
+    class ExtendUtils {
+        /**
+         * 深拷贝
+         *
+         * 示例：
+         * 如果拷贝对象为数组，能够成功拷贝（不拷贝Array原型链上的成员）
+         * expect(extend.extendDeep([1, { x: 1, y: 1 }, "a", { x: 2 }, [2]])).toEqual([1, { x: 1, y: 1 }, "a", { x: 2 }, [2]]);
+         *
+         * 如果拷贝对象为对象，能够成功拷贝（能拷贝原型链上的成员）
+         * var result = null;
+         function A() {
+                };
+         A.prototype.a = 1;
+
+         function B() {
+                };
+         B.prototype = new A();
+         B.prototype.b = { x: 1, y: 1 };
+         B.prototype.c = [{ x: 1 }, [2]];
+
+         var t = new B();
+
+         result = extend.extendDeep(t);
+
+         expect(result).toEqual(
+         {
+             a: 1,
+             b: { x: 1, y: 1 },
+             c: [{ x: 1 }, [2]]
+         });
+         * @param parent
+         * @param child
+         * @returns
+         */
+        static extendDeep(parent: any, child?: any, filter?: (val: any, i: any) => boolean): any;
+        /**
+         * 浅拷贝
+         */
+        static extend(destination: any, source: any): any;
+        static copyPublicAttri(source: any): {};
+    }
+}
+
+declare module dyCb {
     class Log {
         static info: {
             INVALID_PARAM: string;
@@ -121,5 +192,14 @@ declare module dyCb {
         private _map(arr, func);
         private _removeChild(arr, func);
         private _filter;
+    }
+}
+
+/// <reference path="../definitions.d.ts" />
+declare module dyCb {
+    class DomQuery {
+        private _doms;
+        constructor(domStr: any);
+        get(index: any): any;
     }
 }
