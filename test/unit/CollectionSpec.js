@@ -363,12 +363,12 @@ describe("Collection.js", function () {
                 child3 = {a: 2};
             collection.addChilds([child1, child2, child3]);
 
-            collection.filter(function (e) {
+            var result = collection.filter(function (e) {
                 return e.a === 2;
             });
 
-            expect(collection.getCount()).toEqual(2);
-            expect(collection.getChilds()).toEqual([child2, child3]);
+            expect(collection.getChilds()).toEqual([child1, child2, child3]);
+            expect(result.getChilds()).toEqual([child2, child3]);
         });
         it("this is point to container", function(){
             var child1 = {a: 1},
@@ -376,12 +376,12 @@ describe("Collection.js", function () {
                 child3 = {a: 2};
             collection.addChilds([child1, child2, child3]);
 
-            collection.filter(function (value, index) {
+            var result = collection.filter(function (value, index) {
                 return this[index].a === 2;
             });
 
-            expect(collection.getCount()).toEqual(2);
-            expect(collection.getChilds()).toEqual([child2, child3]);
+            expect(collection.getChilds()).toEqual([child1, child2, child3]);
+            expect(result.getChilds()).toEqual([child2, child3]);
         });
     });
 });

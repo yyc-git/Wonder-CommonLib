@@ -7,8 +7,8 @@ declare module dyCb {
 /// <reference path="definitions.d.ts" />
 declare module dyCb {
     class Hash {
-        static create(): Hash;
-        constructor();
+        static create(childs?: {}): Hash;
+        constructor(childs?: any);
         private _childs;
         getChilds(): any;
         getKeys(): any[];
@@ -174,11 +174,12 @@ declare module dyCb {
 /// <reference path="definitions.d.ts" />
 declare module dyCb {
     class Collection {
-        static create(): Collection;
+        static create(childs?: any[]): Collection;
+        constructor(childs?: any);
         private _childs;
         getCount(): number;
         hasChild(arg: any): boolean;
-        getChilds(): any;
+        getChilds(): any[];
         getChild(index: number): any;
         addChild(child: any): Collection;
         addChilds(arg: any[] | any): Collection;
@@ -186,7 +187,7 @@ declare module dyCb {
         forEach(func: Function, context?: any): Collection;
         filter(func: any): Collection;
         removeChild(arg: any): Collection;
-        sort(func: Function): Collection;
+        sort(func: any): Collection;
         map(func: Function): Collection;
         private _indexOf(arr, arg);
         private _contain(arr, arg);

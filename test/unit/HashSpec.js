@@ -133,11 +133,16 @@ describe("Hash.js", function () {
             hash.addChild("2", child2);
             hash.addChild("3", child3);
 
-            hash.filter(function (val, key) {
+            var result = hash.filter(function (val, key) {
                 return val.a === 2;
             });
 
             expect(hash.getChilds()).toEqual({
+                "1": child1,
+                "2": child2,
+                "3": child3
+            });
+            expect(result.getChilds()).toEqual({
                 "2": child2,
                 "3": child3
             });
@@ -150,11 +155,16 @@ describe("Hash.js", function () {
             hash.addChild("2", child2);
             hash.addChild("3", child3);
 
-            hash.filter(function (val, key) {
+            var result = hash.filter(function (val, key) {
                 return this[key].a === 2;
             });
 
             expect(hash.getChilds()).toEqual({
+                "1": child1,
+                "2": child2,
+                "3": child3
+            });
+            expect(result.getChilds()).toEqual({
                 "2": child2,
                 "3": child3
             });

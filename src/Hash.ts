@@ -1,16 +1,17 @@
 /// <reference path="definitions.d.ts"/>
 module dyCb {
     export class Hash {
-        public static create(){
-            var obj = new this();
+        public static create(childs = {}){
+            var obj = new this(childs);
 
             return obj;
         }
 
-        constructor() {
+        constructor(childs:any = {}){
+            this._childs = childs;
         }
 
-        private _childs:any = {};
+        private _childs:any = null;
 
         public getChilds() {
             return this._childs;
@@ -107,9 +108,7 @@ module dyCb {
                 result[key] = val;
             });
 
-            this._childs = result;
-
-            return this;
+            return Hash.create(result);
         }
 
         //public map(handlerName:string, argArr?:any[]) {
