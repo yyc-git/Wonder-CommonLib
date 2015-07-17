@@ -21,7 +21,7 @@ gulp.task('clean', function() {
 
 gulp.task('compileTs', function() {
     var tsResult = gulp.src(tsFilePaths)
-        .pipe(gulpSourcemaps.init())
+        //.pipe(gulpSourcemaps.init())
         .pipe(gulpTs({
             declarationFiles: true,
             target: 'ES5',
@@ -36,12 +36,31 @@ gulp.task('compileTs', function() {
             .pipe(gulp.dest('dist')),
         tsResult.js
             .pipe(gulpConcat('dyCb.js'))
-            .pipe(gulpSourcemaps.write('./'))
+            //.pipe(gulpSourcemaps.write('./'))
+            //.pipe(gulpSourcemaps.write())
             .pipe(gulp.dest('dist/'))
     ])
 });
 
-gulp.task("build", gulpSync.sync(["clean", "compileTs"]));
+
+gulp.task('compileTsDebug', function() {
+    var tsResult = gulp.src(tsFilePaths)
+        .pipe(gulpSourcemaps.init())
+        .pipe(gulpTs({
+            declarationFiles: true,
+            target: 'ES5',
+            sortOutput:true,
+            typescript: require('typescript')
+        }));
+
+
+    return tsResult.js
+            .pipe(gulpConcat('dyCb.debug.js'))
+            .pipe(gulpSourcemaps.write())
+            .pipe(gulp.dest('dist/'));
+});
+
+gulp.task("build", gulpSync.sync(["clean", "compileTs", "compileTsDebug"]));
 
 
 
