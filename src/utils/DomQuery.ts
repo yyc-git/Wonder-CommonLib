@@ -1,6 +1,12 @@
 /// <reference path="../definitions.d.ts"/>
 module dyCb {
     export class DomQuery {
+        public static create(domStr:string) {
+            var obj = new this(domStr);
+
+            return obj;
+        }
+
         private _doms:any = null;
 
         constructor(domStr) {
@@ -19,3 +25,4 @@ module dyCb {
         }
     }
 }
+

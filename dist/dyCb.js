@@ -86,7 +86,8 @@ var dyCb;
                 }
                 result[key] = val;
             });
-            return this._childs = result;
+            this._childs = result;
+            return this;
         };
         return Hash;
     })();
@@ -148,8 +149,8 @@ var dyCb;
 
 var dyCb;
 (function (dyCb) {
-    var YEQuery = (function () {
-        function YEQuery() {
+    var AjaxUtils = (function () {
+        function AjaxUtils() {
         }
         /*!
          实现ajax
@@ -163,7 +164,7 @@ var dyCb;
          alert(data.name);
          }
          });*/
-        YEQuery.ajax = function (conf) {
+        AjaxUtils.ajax = function (conf) {
             var type = conf.type; //type参数,可选
             var url = conf.url; //url参数，必填
             var data = conf.data; //data参数可选，只有在post请求时需要
@@ -224,7 +225,7 @@ var dyCb;
                 error(xhr, e);
             }
         };
-        YEQuery._createAjax = function (error) {
+        AjaxUtils._createAjax = function (error) {
             var xhr = null;
             try {
                 xhr = new ActiveXObject("microsoft.xmlhttp");
@@ -240,15 +241,15 @@ var dyCb;
             }
             return xhr;
         };
-        YEQuery._isLocalFile = function (status) {
+        AjaxUtils._isLocalFile = function (status) {
             return document.URL.contain("file://") && status === 0;
         };
-        YEQuery._isSoundFile = function (dataType) {
+        AjaxUtils._isSoundFile = function (dataType) {
             return dataType === "arraybuffer";
         };
-        return YEQuery;
+        return AjaxUtils;
     })();
-    dyCb.YEQuery = YEQuery;
+    dyCb.AjaxUtils = AjaxUtils;
 })(dyCb || (dyCb = {}));
 
 /// <reference path="../definitions.d.ts"/>
@@ -490,8 +491,8 @@ var dyCb;
         };
         Log.info = {
             INVALID_PARAM: "invalid parameter",
-            //ABSTRACT_ATTRIBUTE: "abstract attribute need override",
-            //ABSTRACT_METHOD: "abstract method need override",
+            ABSTRACT_ATTRIBUTE: "abstract attribute need override",
+            ABSTRACT_METHOD: "abstract method need override",
             helperFunc: function () {
                 var args = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
@@ -735,6 +736,10 @@ var dyCb;
             }
             return this;
         }
+        DomQuery.create = function (domStr) {
+            var obj = new this(domStr);
+            return obj;
+        };
         DomQuery.prototype.get = function (index) {
             return this._doms[index];
         };

@@ -18,7 +18,7 @@ declare module dyCb {
         removeChild(arg: any): Hash;
         hasChild(key: string): boolean;
         forEach(func: Function, context?: any): Hash;
-        filter(func: Function): {};
+        filter(func: Function): Hash;
     }
 }
 
@@ -51,7 +51,7 @@ declare module dyCb {
 }
 
 declare module dyCb {
-    class YEQuery {
+    class AjaxUtils {
         static ajax(conf: any): void;
         private static _createAjax(error);
         private static _isLocalFile(status);
@@ -125,6 +125,8 @@ declare module dyCb {
     class Log {
         static info: {
             INVALID_PARAM: string;
+            ABSTRACT_ATTRIBUTE: string;
+            ABSTRACT_METHOD: string;
             helperFunc: (...args: any[]) => string;
             FUNC_INVALID: (value: any) => any;
             FUNC_MUST_BE: (...args: any[]) => any;
@@ -198,6 +200,7 @@ declare module dyCb {
 /// <reference path="../definitions.d.ts" />
 declare module dyCb {
     class DomQuery {
+        static create(domStr: string): DomQuery;
         private _doms;
         constructor(domStr: any);
         get(index: any): any;

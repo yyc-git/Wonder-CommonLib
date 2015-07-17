@@ -31,13 +31,13 @@ module dyCb {
             return this._childs[key];
         }
 
-        public addChild(key:string, value:any):Hash {
+        public addChild(key:string, value:any) {
             this._childs[key] = value;
 
             return this;
         }
 
-        public appendChild(key:string, value:any):Hash {
+        public appendChild(key:string, value:any) {
             //if (JudgeUtils.isArray(this._childs[key])) {
             //    this._childs[key].push(value);
             //}
@@ -54,7 +54,7 @@ module dyCb {
             return this;
         }
 
-        public removeChild(arg:any):Hash {
+        public removeChild(arg:any){
             if(JudgeUtils.isString(arg)){
                 let key = <string>arg;
 
@@ -80,7 +80,7 @@ module dyCb {
         }
 
 
-        public forEach(func:Function, context?:any):Hash {
+        public forEach(func:Function, context?:any){
             var i = null,
                 childs = this._childs;
 
@@ -107,7 +107,9 @@ module dyCb {
                 result[key] = val;
             });
 
-            return this._childs = result;
+            this._childs = result;
+
+            return this;
         }
 
         //public map(handlerName:string, argArr?:any[]) {
