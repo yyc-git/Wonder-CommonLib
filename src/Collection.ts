@@ -1,13 +1,13 @@
 /// <reference path="definitions.d.ts"/>
 module dyCb {
-    export class Collection {
+    export class Collection<T> {
         public static create(){
             var obj = new this();
 
             return obj;
         }
 
-        private _childs:any = [];
+        private _childs:Array<T> = <any>[];
 
         public getCount():number {
             return this._childs.length;
@@ -43,13 +43,13 @@ module dyCb {
             return this._childs[index];
         }
 
-        public addChild(child):Collection {
+        public addChild(child) {
             this._childs.push(child);
 
             return this;
         }
 
-        public addChilds(arg:any[]|any):Collection {
+        public addChilds(arg:any[]|any) {
             var i = 0,
                 len = 0;
 
@@ -67,19 +67,19 @@ module dyCb {
             return this;
         }
 
-        public removeAllChilds():Collection {
+        public removeAllChilds() {
             this._childs = [];
 
             return this;
         }
 
-        public forEach(func:Function, context?:any):Collection {
+        public forEach(func:Function, context?:any) {
             this._forEach(this._childs, func, context);
 
             return this;
         }
 
-        public filter(func):Collection {
+        public filter(func) {
             this._filter(this._childs, func, this._childs);
 
             return this;
@@ -99,7 +99,7 @@ module dyCb {
         //    this._childs.reverse();
         //}
 
-        public removeChild(arg:any):Collection {
+        public removeChild(arg:any) {
             if (JudgeUtils.isFunction(arg)) {
                 let func = <Function>arg;
 
@@ -122,7 +122,7 @@ module dyCb {
             return this;
         }
 
-        public sort(func:Function):Collection {
+        public sort(func:(a:T, b:T)=>number){
             this._childs.sort(func);
 
             return this;
