@@ -53,19 +53,21 @@ module dyCb {
             return this;
         }
 
-        public addChilds(arg:any[]|any) {
-            var i = 0,
-                len = 0;
-
-            if (!JudgeUtils.isArray(arg)) {
-                let child = <any>arg;
-
-                this.addChild(child);
-            }
-            else {
+        public addChilds(arg:any[]|Collection|any) {
+            if (JudgeUtils.isArray(arg)) {
                 let childs = <any[]>arg;
 
                 this._childs = this._childs.concat(childs);
+            }
+            else if(arg instanceof Collection){
+                let childs = <Collection>arg;
+
+                this._childs = this._childs.concat(childs.toArray());
+            }
+            else {
+                let child = <any>arg;
+
+                this.addChild(child);
             }
 
             return this;
@@ -134,6 +136,10 @@ module dyCb {
             this._map(this._childs, func);
 
             return this;
+        }
+
+        public toArray(){
+            return this._childs;
         }
 
         private _indexOf(arr:any[], arg:any) {

@@ -183,13 +183,14 @@ declare module dyCb {
         getChilds(): any[];
         getChild(index: number): any;
         addChild(child: any): Collection;
-        addChilds(arg: any[] | any): Collection;
+        addChilds(arg: any[] | Collection | any): Collection;
         removeAllChilds(): Collection;
         forEach(func: Function, context?: any): Collection;
         filter(func: any): Collection;
         removeChild(arg: any): Collection;
         sort(func: any): Collection;
         map(func: Function): Collection;
+        toArray(): any[];
         private _indexOf(arr, arg);
         private _contain(arr, arg);
         private _forEach(arr, func, context?);

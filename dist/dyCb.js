@@ -622,13 +622,17 @@ var dyCb;
         };
         Collection.prototype.addChilds = function (arg) {
             var i = 0, len = 0;
-            if (!dyCb.JudgeUtils.isArray(arg)) {
-                var child = arg;
-                this.addChild(child);
-            }
-            else {
+            if (dyCb.JudgeUtils.isArray(arg)) {
                 var childs = arg;
                 this._childs = this._childs.concat(childs);
+            }
+            else if (arg instanceof Collection) {
+                var childs = arg;
+                this._childs = this._childs.concat(childs.toArray());
+            }
+            else {
+                var child = arg;
+                this.addChild(child);
             }
             return this;
         };
@@ -683,6 +687,9 @@ var dyCb;
         Collection.prototype.map = function (func) {
             this._map(this._childs, func);
             return this;
+        };
+        Collection.prototype.toArray = function () {
+            return this._childs;
         };
         Collection.prototype._indexOf = function (arr, arg) {
             var result = -1;

@@ -90,14 +90,21 @@ describe("Collection.js", function () {
     });
 
     describe("addChilds", function () {
-        it("批量加入元素", function () {
+        it("add array", function () {
             var fakeElement = [1, 2];
 
             collection.addChilds(fakeElement);
 
             expect(collection.getChilds()).toEqual(fakeElement);
         });
-        it("也可以加入一个元素", function () {
+        it("add another Collection", function(){
+            var col = dyCb.Collection.create([1, 2]);
+
+            collection.addChilds(col);
+
+            expect(collection.getChilds()).toEqual(col.getChilds());
+        });
+        it("add one element", function () {
             collection.addChilds(1);
 
             expect(collection.getChilds()).toEqual([1]);
