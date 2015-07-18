@@ -17,12 +17,29 @@ module dyCb {
             return this._childs;
         }
 
-        public getKeys(){
-            var result = [],
+        public getCount(){
+            var result = 0,
+                childs = this._childs,
                 key = null;
 
-            for(key in this._childs){
-                result.push(key);
+            for(key in childs){
+                if(childs.hasOwnProperty(key)){
+                    result++;
+                }
+            }
+
+            return result;
+        }
+
+        public getKeys(){
+            var result = Collection.create(),
+                childs = this._childs,
+                key = null;
+
+            for(key in childs){
+                if(childs.hasOwnProperty(key)) {
+                    result.addChild(key);
+                }
             }
 
             return result;
@@ -76,7 +93,15 @@ module dyCb {
             return this;
         }
 
-        public hasChild(key:string):boolean {
+        public hasChild(arg:any):boolean {
+            if (JudgeUtils.isFunction(arguments[0])) {
+                let func = <Function>arguments[0];
+
+                return this.filter(func).getCount() > 0;
+            }
+
+            let key = <string>arguments[0];
+
             return !!this._childs[key];
         }
 

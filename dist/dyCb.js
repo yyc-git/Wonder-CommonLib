@@ -22,10 +22,21 @@ var dyCb;
         Hash.prototype.getChilds = function () {
             return this._childs;
         };
+        Hash.prototype.getCount = function () {
+            var result = 0, childs = this._childs, key = null;
+            for (key in childs) {
+                if (childs.hasOwnProperty(key)) {
+                    result++;
+                }
+            }
+            return result;
+        };
         Hash.prototype.getKeys = function () {
-            var result = [], key = null;
-            for (key in this._childs) {
-                result.push(key);
+            var result = dyCb.Collection.create(), childs = this._childs, key = null;
+            for (key in childs) {
+                if (childs.hasOwnProperty(key)) {
+                    result.addChild(key);
+                }
             }
             return result;
         };
@@ -67,7 +78,12 @@ var dyCb;
             }
             return this;
         };
-        Hash.prototype.hasChild = function (key) {
+        Hash.prototype.hasChild = function (arg) {
+            if (dyCb.JudgeUtils.isFunction(arguments[0])) {
+                var func = arguments[0];
+                return this.filter(func).getCount() > 0;
+            }
+            var key = arguments[0];
             return !!this._childs[key];
         };
         Hash.prototype.forEach = function (func, context) {

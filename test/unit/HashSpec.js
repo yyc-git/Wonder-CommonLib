@@ -29,6 +29,28 @@ describe("Hash.js", function () {
         });
     });
 
+    describe("getKeys", function(){
+        it("get all keys", function(){
+            hash.addChild("a1", 1);
+            hash.addChild("a2", 1);
+
+            expect(hash.getKeys()).toBeInstanceOf(dyCb.Collection);
+            expect(hash.getKeys().getChilds()).toEqual(["a1", "a2"]);
+        });
+    });
+    
+    describe("getCount", function(){
+        it("empty container's count is zero", function(){
+            expect(hash.getCount()).toEqual(0);
+        });
+        it("get the count of the container", function(){
+            hash.addChild("a1", 1);
+            hash.addChild("a2", 1);
+
+            expect(hash.getCount()).toEqual(2);
+        });
+    });
+
     describe("addChild", function () {
         it("加入到容器中，参数为：key，value", function () {
             var value1 = null,
@@ -70,6 +92,28 @@ describe("Hash.js", function () {
 
             expect(value).toBeInstanceOf(dyCb.Collection);
             expect(value.getChilds()).toEqual(["1", "2"]);
+        });
+    });
+
+    describe("hasChild", function(){
+        beforeEach(function(){
+            hash.addChild("a1", "1");
+            hash.addChild("a2", "2");
+        });
+        it("if arg is function, use it as iterator to judge", function () {
+            expect(hash.hasChild(function (val, key) {
+                return val === "1";
+            })).toBeTruthy();
+            expect(hash.hasChild(function (val, key) {
+                return key === "a1";
+            })).toBeTruthy();
+            expect(hash.hasChild(function (val, key) {
+                return key === "a3";
+            })).toBeFalsy();
+        });
+        it("else, arg is as the key to judge", function(){
+            expect(hash.hasChild("a1")).toBeTruthy();
+            expect(hash.hasChild("b")).toBeFalsy();
         });
     });
 

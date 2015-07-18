@@ -11,12 +11,13 @@ declare module dyCb {
         constructor(childs?: any);
         private _childs;
         getChilds(): any;
-        getKeys(): any[];
+        getCount(): number;
+        getKeys(): Collection;
         getChild(key: string): any;
         addChild(key: string, value: any): Hash;
         appendChild(key: string, value: any): Hash;
         removeChild(arg: any): Hash;
-        hasChild(key: string): boolean;
+        hasChild(arg: any): boolean;
         forEach(func: Function, context?: any): Hash;
         filter(func: Function): Hash;
     }
