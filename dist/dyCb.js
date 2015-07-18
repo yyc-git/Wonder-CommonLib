@@ -73,6 +73,7 @@ var dyCb;
                 this.forEach(function (val, key) {
                     if (func(val, key)) {
                         self_1._childs[key] = undefined;
+                        delete self_1._childs[key];
                     }
                 });
             }
@@ -80,8 +81,14 @@ var dyCb;
         };
         Hash.prototype.hasChild = function (arg) {
             if (dyCb.JudgeUtils.isFunction(arguments[0])) {
-                var func = arguments[0];
-                return this.filter(func).getCount() > 0;
+                var func = arguments[0], result = false;
+                this.forEach(function (val, key) {
+                    if (func(val, key)) {
+                        result = true;
+                        return dyCb.$BREAK;
+                    }
+                });
+                return result;
             }
             var key = arguments[0];
             return !!this._childs[key];

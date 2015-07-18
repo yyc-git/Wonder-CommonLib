@@ -86,6 +86,7 @@ module dyCb {
                 this.forEach((val, key) => {
                     if(func(val, key)){
                         self._childs[key] = undefined;
+                        delete self._childs[key];
                     }
                 });
             }
@@ -95,9 +96,17 @@ module dyCb {
 
         public hasChild(arg:any):boolean {
             if (JudgeUtils.isFunction(arguments[0])) {
-                let func = <Function>arguments[0];
+                let func = <Function>arguments[0],
+                    result = false;
 
-                return this.filter(func).getCount() > 0;
+                this.forEach((val, key) => {
+                    if(func(val, key)){
+                        result = true;
+                        return $BREAK;
+                    }
+                });
+
+                return result;
             }
 
             let key = <string>arguments[0];
