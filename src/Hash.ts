@@ -1,6 +1,6 @@
 /// <reference path="definitions.d.ts"/>
 module dyCb {
-    export class Hash {
+    export class Hash<T> {
         public static create(childs = {}){
             var obj = new this(childs);
 
@@ -121,7 +121,7 @@ module dyCb {
 
             for (i in childs) {
                 if (childs.hasOwnProperty(i)) {
-                    if (func.call(context, childs[i], i) === $BREAK) {
+                    if (func.call(context, <T>childs[i], i) === $BREAK) {
                         break;
                     }
                 }
@@ -145,15 +145,22 @@ module dyCb {
             return Hash.create(result);
         }
 
-        //public map(handlerName:string, argArr?:any[]) {
-        //    var i = null,
-        //        childs = this._childs;
-        //
-        //    for (i in childs) {
-        //        if (childs.hasOwnProperty(i)) {
-        //            childs[i][handlerName].apply(childs[i], argArr);
-        //        }
-        //    }
-        //}
+        public map(func:Function) {
+            var resultMap = {};
+
+            this.forEach((val, key) => {
+                var result = func(val, key);
+
+                if(result !== $REMOVE){
+                    Log.error(!JudgeUtils.isArray(result) || result.length !== 2, Log.info.FUNC_MUST_BE("iterator", "[key, value]"));
+
+                    resultMap[result[0]] = result[1];
+                }
+            });
+
+            return Hash.create(resultMap);
+        }
     }
 }
+
+

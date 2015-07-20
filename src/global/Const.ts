@@ -1,7 +1,8 @@
 module dyCb{
     export const $BREAK = {
-        CollectionBreak:true
+        break:true
     };
+    export const $REMOVE = void 0;
 }
 
 

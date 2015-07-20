@@ -355,11 +355,27 @@ describe("Collection.js", function () {
             collection.addChild(1);
             collection.addChild(2);
 
-            collection.map(function(val){
+            var result = collection.map(function(val){
                 return val * 2;
             });
 
-            expect(collection.getChilds()).toEqual([2, 4]);
+            expect(result.getChilds()).toEqual([2, 4]);
+            expect(collection.getChilds()).toEqual([1, 2]);
+        });
+        it("if handler return $REMOVE, then remove it from the result", function(){
+            collection.addChild(1);
+            collection.addChild(2);
+
+            var result = collection.map(function(val){
+                if(val === 2){
+                    return dyCb.$REMOVE;
+                }
+
+                return val * 2;
+            });
+
+            expect(result.getChilds()).toEqual([2]);
+            expect(collection.getChilds()).toEqual([1, 2]);
         });
     });
 

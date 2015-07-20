@@ -131,6 +131,7 @@ describe("Hash.js", function () {
         it("遍历容器", function () {
             var a = 0;
             var b = "";
+
             hash.addChild("a",1);
             hash.addChild("b",2);
 
@@ -165,6 +166,46 @@ describe("Hash.js", function () {
             }, t);
 
             expect(a).toEqual(3);
+        });
+    });
+
+    describe("map", function () {
+        it("handle each value and return handled result", function(){
+            hash.addChild("a1", 1);
+            hash.addChild("a2", 2);
+
+            var result = hash.map(function(val, key){
+                return [key, val * 2];
+            });
+
+            expect(result.getChilds()).toEqual({
+                "a1": 2,
+                "a2": 4
+            });
+            expect(hash.getChilds()).toEqual({
+                "a1": 1,
+                "a2": 2
+            });
+        });
+        it("if handler return $REMOVE, then remove it from the result", function(){
+            hash.addChild("a1", 1);
+            hash.addChild("a2", 2);
+
+            var result = hash.map(function(val, key){
+                if(val === 2){
+                    return dyCb.$REMOVE;
+                }
+
+                return [key, val * 2];
+            });
+
+            expect(result.getChilds()).toEqual({
+                "a1": 2
+            });
+            expect(hash.getChilds()).toEqual({
+                "a1": 1,
+                "a2": 2
+            });
         });
     });
 
