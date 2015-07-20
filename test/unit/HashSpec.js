@@ -1,4 +1,4 @@
-describe("Hash.js", function () {
+describe("Hash", function () {
     var hash = null;
     var sandbox = null;
 

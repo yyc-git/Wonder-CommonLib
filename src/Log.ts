@@ -14,31 +14,55 @@ module dyCb {
 
                 return result.slice(0, -1);
             },
-            FUNC_INVALID: function (value) {
-                return this.helperFunc("invalid", value);
-            },
-            FUNC_MUST_BE: function (...args) {
-                if(arguments.length === 1){
-                    return this.helperFunc("must be", arguments[0]);
+            assertion: function(...args){
+                if(arguments.length === 2){
+                    return this.helperFunc(arguments[0], arguments[1]);
                 }
-                else if(arguments.length === 2){
-                    return this.helperFunc(arguments[0], "must be", arguments[1]);
+                else if(arguments.length === 3){
+                    return this.helperFunc(arguments[1], arguments[0], arguments[2]);
                 }
                 else{
-                    throw new Error("arguments.length must <= 2");
+                    throw new Error("arguments.length must <= 3");
                 }
             },
+
+            FUNC_INVALID: function (value) {
+                return this.assertion("invalid", value);
+            },
+            FUNC_MUST_BE: function (...args) {
+                var arr = Array.prototype.slice.call(arguments, 0);
+
+                arr.unshift("must be");
+
+                return this.assertion.apply(this, arr);
+            },
+            FUNC_MUST_NOT_BE: function (...args) {
+                var arr = Array.prototype.slice.call(arguments, 0);
+
+                arr.unshift("must not be");
+
+                return this.assertion.apply(this, arr);
+            },
+            FUNC_SUPPORT: function(value){
+                return this.assertion("support", value);
+            },
             FUNC_NOT_SUPPORT: function(value){
-                return this.helperFunc("not support", value);
+                return this.assertion("not support", value);
             },
             FUNC_MUST_DEFINE: function(value){
-                return this.helperFunc("must define", value);
+                return this.assertion("must define", value);
+            },
+            FUNC_MUST_NOT_DEFINE: function(value){
+                return this.assertion("must not define", value);
             },
             FUNC_UNKNOW: function(value){
-                return this.helperFunc("unknow", value);
+                return this.assertion("unknow", value);
+            },
+            FUNC_EXPECT: function(value){
+                return this.assertion("expect", value);
             },
             FUNC_UNEXPECT: function(value){
-                return this.helperFunc("unexpected", value);
+                return this.assertion("unexpected", value);
             }
         };
 
