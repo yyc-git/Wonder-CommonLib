@@ -7,21 +7,21 @@ declare module dyCb {
 
 /// <reference path="definitions.d.ts" />
 declare module dyCb {
-    class Hash<T> {
-        static create(childs?: {}): Hash<{}>;
+    class Hash {
+        static create(childs?: {}): Hash;
         constructor(childs?: any);
         private _childs;
         getChilds(): any;
         getCount(): number;
         getKeys(): Collection;
         getChild(key: string): any;
-        addChild(key: string, value: any): Hash<T>;
-        appendChild(key: string, value: any): Hash<T>;
-        removeChild(arg: any): Hash<T>;
+        addChild(key: string, value: any): Hash;
+        appendChild(key: string, value: any): Hash;
+        removeChild(arg: any): Hash;
         hasChild(arg: any): boolean;
-        forEach(func: Function, context?: any): Hash<T>;
-        filter(func: Function): Hash<{}>;
-        map(func: Function): Hash<{}>;
+        forEach(func: Function, context?: any): Hash;
+        filter(func: Function): Hash;
+        map(func: Function): Hash;
     }
 }
 

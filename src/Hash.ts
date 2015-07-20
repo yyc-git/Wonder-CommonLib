@@ -1,6 +1,6 @@
 /// <reference path="definitions.d.ts"/>
 module dyCb {
-    export class Hash<T> {
+    export class Hash {
         public static create(childs = {}){
             var obj = new this(childs);
 
@@ -121,7 +121,7 @@ module dyCb {
 
             for (i in childs) {
                 if (childs.hasOwnProperty(i)) {
-                    if (func.call(context, <T>childs[i], i) === $BREAK) {
+                    if (func.call(context, childs[i], i) === $BREAK) {
                         break;
                     }
                 }
