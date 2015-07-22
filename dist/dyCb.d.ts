@@ -135,9 +135,12 @@ declare module dyCb {
             FUNC_INVALID: (value: any) => any;
             FUNC_MUST_BE: (...args: any[]) => any;
             FUNC_MUST_NOT_BE: (...args: any[]) => any;
+            FUNC_SUPPORT: (value: any) => any;
             FUNC_NOT_SUPPORT: (value: any) => any;
             FUNC_MUST_DEFINE: (value: any) => any;
+            FUNC_MUST_NOT_DEFINE: (value: any) => any;
             FUNC_UNKNOW: (value: any) => any;
+            FUNC_EXPECT: (value: any) => any;
             FUNC_UNEXPECT: (value: any) => any;
         };
         /**

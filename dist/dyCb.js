@@ -67,6 +67,7 @@ var dyCb;
             if (dyCb.JudgeUtils.isString(arg)) {
                 var key = arg;
                 this._childs[key] = undefined;
+                delete this._childs[key];
             }
             else if (dyCb.JudgeUtils.isFunction(arg)) {
                 var func = arg, self_1 = this;
@@ -577,14 +578,23 @@ var dyCb;
                 arr.unshift("must not be");
                 return this.assertion.apply(this, arr);
             },
+            FUNC_SUPPORT: function (value) {
+                return this.assertion("support", value);
+            },
             FUNC_NOT_SUPPORT: function (value) {
                 return this.assertion("not support", value);
             },
             FUNC_MUST_DEFINE: function (value) {
                 return this.assertion("must define", value);
             },
+            FUNC_MUST_NOT_DEFINE: function (value) {
+                return this.assertion("must not define", value);
+            },
             FUNC_UNKNOW: function (value) {
                 return this.assertion("unknow", value);
+            },
+            FUNC_EXPECT: function (value) {
+                return this.assertion("expect", value);
             },
             FUNC_UNEXPECT: function (value) {
                 return this.assertion("unexpected", value);

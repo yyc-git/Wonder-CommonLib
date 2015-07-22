@@ -77,6 +77,7 @@ module dyCb {
                 let key = <string>arg;
 
                 this._childs[key] = undefined;
+                delete this._childs[key];
             }
             else if (JudgeUtils.isFunction(arg)) {
                 let func = <Function>arg,
