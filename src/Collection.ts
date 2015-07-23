@@ -1,34 +1,34 @@
 /// <reference path="definitions.d.ts"/>
 module dyCb {
     export class Collection {
-        public static create(childs = []){
-            var obj = new this(childs);
+        public static create(children = []){
+            var obj = new this(children);
 
             return obj;
         }
 
-        constructor(childs:any = []){
-            this._childs = childs;
+        constructor(children:any = []){
+            this._children = children;
         }
 
-        private _childs:any[] = null;
+        private _children:any[] = null;
 
         public getCount():number {
-            return this._childs.length;
+            return this._children.length;
         }
 
         public hasChild(arg):boolean {
             if (JudgeUtils.isFunction(arguments[0])) {
                 let func = <Function>arguments[0];
 
-                return this._contain(this._childs, (c, i)  => {
+                return this._contain(this._children, (c, i)  => {
                     return func(c, i);
                 });
             }
 
             let child = <any>arguments[0];
 
-            return this._contain(this._childs, (c, i) => {
+            return this._contain(this._children, (c, i) => {
                 if (c === child
                     || (c.uid && child.uid && c.uid === child.uid)) {
                     return true;
@@ -39,30 +39,30 @@ module dyCb {
             });
         }
 
-        public getChilds () {
-            return this._childs;
+        public getChildren () {
+            return this._children;
         }
 
         public getChild(index:number) {
-            return this._childs[index];
+            return this._children[index];
         }
 
         public addChild(child) {
-            this._childs.push(child);
+            this._children.push(child);
 
             return this;
         }
 
-        public addChilds(arg:any[]|Collection|any) {
+        public addChildren(arg:any[]|Collection|any) {
             if (JudgeUtils.isArray(arg)) {
-                let childs = <any[]>arg;
+                let children = <any[]>arg;
 
-                this._childs = this._childs.concat(childs);
+                this._children = this._children.concat(children);
             }
             else if(arg instanceof Collection){
-                let childs = <Collection>arg;
+                let children = <Collection>arg;
 
-                this._childs = this._childs.concat(childs.toArray());
+                this._children = this._children.concat(children.toArray());
             }
             else {
                 let child = <any>arg;
@@ -73,44 +73,44 @@ module dyCb {
             return this;
         }
 
-        public removeAllChilds() {
-            this._childs = [];
+        public removeAllChildren() {
+            this._children = [];
 
             return this;
         }
 
         public forEach(func:Function, context?:any) {
-            this._forEach(this._childs, func, context);
+            this._forEach(this._children, func, context);
 
             return this;
         }
 
         public filter(func) {
-            return this._filter(this._childs, func, this._childs);
+            return this._filter(this._children, func, this._children);
         }
 
         //public removeChildAt (index) {
         //    Log.error(index < 0, "序号必须大于等于0");
         //
-        //    this._childs.splice(index, 1);
+        //    this._children.splice(index, 1);
         //}
         //
         //public copy () {
-        //    return ExtendUtils.extendDeep(this._childs);
+        //    return ExtendUtils.extendDeep(this._children);
         //}
         //
         //public reverse () {
-        //    this._childs.reverse();
+        //    this._children.reverse();
         //}
 
         public removeChild(arg:any) {
             if (JudgeUtils.isFunction(arg)) {
                 let func = <Function>arg;
 
-                this._removeChild(this._childs, func);
+                this._removeChild(this._children, func);
             }
             else if (arg.uid) {
-                this._removeChild(this._childs, (e) => {
+                this._removeChild(this._children, (e) => {
                     if (!e.uid) {
                         return false;
                     }
@@ -118,7 +118,7 @@ module dyCb {
                 });
             }
             else {
-                this._removeChild(this._childs,  (e) => {
+                this._removeChild(this._children,  (e) => {
                     return e === arg;
                 });
             }
@@ -127,17 +127,17 @@ module dyCb {
         }
 
         public sort(func){
-            this._childs.sort(func);
+            this._children.sort(func);
 
             return this;
         }
 
         public map(func:Function){
-            return this._map(this._childs, func);
+            return this._map(this._children, func);
         }
 
         public toArray(){
-            return this._childs;
+            return this._children;
         }
 
         private _indexOf(arr:any[], arg:any) {

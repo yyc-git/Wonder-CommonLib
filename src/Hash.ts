@@ -1,29 +1,29 @@
 /// <reference path="definitions.d.ts"/>
 module dyCb {
     export class Hash {
-        public static create(childs = {}){
-            var obj = new this(childs);
+        public static create(children = {}){
+            var obj = new this(children);
 
             return obj;
         }
 
-        constructor(childs:any = {}){
-            this._childs = childs;
+        constructor(children:any = {}){
+            this._children = children;
         }
 
-        private _childs:any = null;
+        private _children:any = null;
 
-        public getChilds() {
-            return this._childs;
+        public getChildren() {
+            return this._children;
         }
 
         public getCount(){
             var result = 0,
-                childs = this._childs,
+                children = this._children,
                 key = null;
 
-            for(key in childs){
-                if(childs.hasOwnProperty(key)){
+            for(key in children){
+                if(children.hasOwnProperty(key)){
                     result++;
                 }
             }
@@ -33,11 +33,11 @@ module dyCb {
 
         public getKeys(){
             var result = Collection.create(),
-                childs = this._childs,
+                children = this._children,
                 key = null;
 
-            for(key in childs){
-                if(childs.hasOwnProperty(key)) {
+            for(key in children){
+                if(children.hasOwnProperty(key)) {
                     result.addChild(key);
                 }
             }
@@ -46,27 +46,27 @@ module dyCb {
         }
 
         public getChild(key:string) {
-            return this._childs[key];
+            return this._children[key];
         }
 
         public addChild(key:string, value:any) {
-            this._childs[key] = value;
+            this._children[key] = value;
 
             return this;
         }
 
         public appendChild(key:string, value:any) {
-            //if (JudgeUtils.isArray(this._childs[key])) {
-            //    this._childs[key].push(value);
+            //if (JudgeUtils.isArray(this._children[key])) {
+            //    this._children[key].push(value);
             //}
             //else {
-            //    this._childs[key] = [value];
+            //    this._children[key] = [value];
             //}
-            if (this._childs[key] instanceof Collection) {
-                this._childs[key].addChild(value);
+            if (this._children[key] instanceof Collection) {
+                this._children[key].addChild(value);
             }
             else {
-                this._childs[key] = Collection.create().addChild(value);
+                this._children[key] = Collection.create().addChild(value);
             }
 
             return this;
@@ -76,18 +76,18 @@ module dyCb {
             if(JudgeUtils.isString(arg)){
                 let key = <string>arg;
 
-                this._childs[key] = undefined;
-                delete this._childs[key];
+                this._children[key] = undefined;
+                delete this._children[key];
             }
             else if (JudgeUtils.isFunction(arg)) {
                 let func = <Function>arg,
                     self = this;
 
-                //return this._removeChild(this._childs, arg);
+                //return this._removeChild(this._children, arg);
                 this.forEach((val, key) => {
                     if(func(val, key)){
-                        self._childs[key] = undefined;
-                        delete self._childs[key];
+                        self._children[key] = undefined;
+                        delete self._children[key];
                     }
                 });
             }
@@ -112,17 +112,17 @@ module dyCb {
 
             let key = <string>arguments[0];
 
-            return !!this._childs[key];
+            return !!this._children[key];
         }
 
 
         public forEach(func:Function, context?:any){
             var i = null,
-                childs = this._childs;
+                children = this._children;
 
-            for (i in childs) {
-                if (childs.hasOwnProperty(i)) {
-                    if (func.call(context, childs[i], i) === $BREAK) {
+            for (i in children) {
+                if (children.hasOwnProperty(i)) {
+                    if (func.call(context, children[i], i) === $BREAK) {
                         break;
                     }
                 }
@@ -133,7 +133,7 @@ module dyCb {
 
         public filter(func:Function){
             var result = {},
-                scope = this._childs;
+                scope = this._children;
 
             this.forEach((val, key) => {
                 if(!func.call(scope, val, key)){

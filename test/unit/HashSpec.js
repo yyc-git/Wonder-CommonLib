@@ -10,19 +10,19 @@ describe("Hash", function () {
         sandbox.restore();
     });
 
-    describe("getChilds", function () {
+    describe("getChildren", function () {
         it("获得容器", function () {
             hash.addChild("a1", 1);
-            var childs = hash.getChilds();
+            var children = hash.getChildren();
 
-            expect(childs).toBeSameArray(hash._childs);
-            expect(childs.a1).toEqual(1);
+            expect(children).toBeSameArray(hash._children);
+            expect(children.a1).toEqual(1);
         });
     });
 
     describe("getChild", function () {
         it("根据key获得value", function () {
-            hash._childs = {"a1": 1};
+            hash._children = {"a1": 1};
             var value = hash.getChild("a1");
 
             expect(value).toEqual(1);
@@ -35,7 +35,7 @@ describe("Hash", function () {
             hash.addChild("a2", 1);
 
             expect(hash.getKeys()).toBeInstanceOf(dyCb.Collection);
-            expect(hash.getKeys().getChilds()).toEqual(["a1", "a2"]);
+            expect(hash.getKeys().getChildren()).toEqual(["a1", "a2"]);
         });
     });
     
@@ -81,7 +81,7 @@ describe("Hash", function () {
             value = hash.getChild("a1");
 
             expect(value).toBeInstanceOf(dyCb.Collection);
-            expect(value.getChilds()).toEqual(["1"]);
+            expect(value.getChildren()).toEqual(["1"]);
         });
         it("否则，则将该key的值加入到Collection最后", function () {
             var value = null;
@@ -91,7 +91,7 @@ describe("Hash", function () {
             value = hash.getChild("a1");
 
             expect(value).toBeInstanceOf(dyCb.Collection);
-            expect(value.getChilds()).toEqual(["1", "2"]);
+            expect(value.getChildren()).toEqual(["1", "2"]);
         });
     });
 
@@ -178,11 +178,11 @@ describe("Hash", function () {
                 return [key, val * 2];
             });
 
-            expect(result.getChilds()).toEqual({
+            expect(result.getChildren()).toEqual({
                 "a1": 2,
                 "a2": 4
             });
-            expect(hash.getChilds()).toEqual({
+            expect(hash.getChildren()).toEqual({
                 "a1": 1,
                 "a2": 2
             });
@@ -199,10 +199,10 @@ describe("Hash", function () {
                 return [key, val * 2];
             });
 
-            expect(result.getChilds()).toEqual({
+            expect(result.getChildren()).toEqual({
                 "a1": 2
             });
-            expect(hash.getChilds()).toEqual({
+            expect(hash.getChildren()).toEqual({
                 "a1": 1,
                 "a2": 2
             });
@@ -222,12 +222,12 @@ describe("Hash", function () {
                 return val.a === 2;
             });
 
-            expect(hash.getChilds()).toEqual({
+            expect(hash.getChildren()).toEqual({
                 "1": child1,
                 "2": child2,
                 "3": child3
             });
-            expect(result.getChilds()).toEqual({
+            expect(result.getChildren()).toEqual({
                 "2": child2,
                 "3": child3
             });
@@ -244,12 +244,12 @@ describe("Hash", function () {
                 return this[key].a === 2;
             });
 
-            expect(hash.getChilds()).toEqual({
+            expect(hash.getChildren()).toEqual({
                 "1": child1,
                 "2": child2,
                 "3": child3
             });
-            expect(result.getChilds()).toEqual({
+            expect(result.getChildren()).toEqual({
                 "2": child2,
                 "3": child3
             });

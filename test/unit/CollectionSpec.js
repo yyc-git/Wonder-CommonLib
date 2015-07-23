@@ -19,7 +19,7 @@ describe("Collection", function () {
                 return a - b;
             });
 
-            expect(collection.getChilds()).toEqual([1, 2]);
+            expect(collection.getChildren()).toEqual([1, 2]);
         });
     });
 
@@ -60,17 +60,17 @@ describe("Collection", function () {
         });
     });
 
-    describe("getChilds", function () {
+    describe("getChildren", function () {
         it("获得容器", function () {
-            var childs = collection.getChilds();
+            var children = collection.getChildren();
 
-            expect(childs).toBeSameArray(collection._childs);
+            expect(children).toBeSameArray(collection._children);
         });
     });
 
     describe("getChild", function () {
         it("获得容器指定位置的数据", function () {
-            collection._childs = [1, 2];
+            collection._children = [1, 2];
             var child = collection.getChild(1);
 
             expect(child).toEqual(2);
@@ -79,42 +79,42 @@ describe("Collection", function () {
 
     describe("addChild", function () {
         it("插入到容器的末尾", function () {
-            var childs = null;
+            var children = null;
 
             collection.addChild(1).addChild(2);
 
-            childs = collection.getChilds();
+            children = collection.getChildren();
 
-            expect(childs).toEqual([1, 2]);
+            expect(children).toEqual([1, 2]);
         });
     });
 
-    describe("addChilds", function () {
+    describe("addChildren", function () {
         it("add array", function () {
             var fakeElement = [1, 2];
 
-            collection.addChilds(fakeElement);
+            collection.addChildren(fakeElement);
 
-            expect(collection.getChilds()).toEqual(fakeElement);
+            expect(collection.getChildren()).toEqual(fakeElement);
         });
         it("add another Collection", function(){
             var col = dyCb.Collection.create([1, 2]);
 
-            collection.addChilds(col);
+            collection.addChildren(col);
 
-            expect(collection.getChilds()).toEqual(col.getChilds());
+            expect(collection.getChildren()).toEqual(col.getChildren());
         });
         it("add one element", function () {
-            collection.addChilds(1);
+            collection.addChildren(1);
 
-            expect(collection.getChilds()).toEqual([1]);
+            expect(collection.getChildren()).toEqual([1]);
 
         });
     });
 
     describe("getCount", function () {
         it("返回元素个数", function () {
-            collection.addChilds([1, 2]);
+            collection.addChildren([1, 2]);
 
             expect(collection.getCount()).toEqual(2);
         });
@@ -124,7 +124,7 @@ describe("Collection", function () {
         it("return collection instance", function(){
             var arr = [1, 2];
 
-            collection.addChilds(arr);
+            collection.addChildren(arr);
 
             expect(collection.removeChild(function (e) {
                 return e === 1;
@@ -146,7 +146,7 @@ describe("Collection", function () {
                     return false;
                 });
 
-                expect(collection.getChilds().length).toEqual(0);
+                expect(collection.getChildren().length).toEqual(0);
             });
             it("第二种调用方式", function () {
                 var child = {
@@ -166,12 +166,12 @@ describe("Collection", function () {
                     return false;
                 });
 
-                expect(collection.getChilds().length).toEqual(0);
+                expect(collection.getChildren().length).toEqual(0);
             });
             //it("删除成功返回true，失败返回false", function () {
             //    var arr = [1, 2];
             //
-            //    collection.addChilds(arr);
+            //    collection.addChildren(arr);
             //
             //    expect(collection.removeChild(function (e) {
             //        return e === 1;
@@ -200,7 +200,7 @@ describe("Collection", function () {
 
                 collection.removeChild(child);
 
-                expect(collection.getChilds().length).toEqual(0);
+                expect(collection.getChildren().length).toEqual(0);
             });
             //it("删除成功返回true，失败返回false", function () {
             //    var child = buildObj(1);
@@ -223,16 +223,16 @@ describe("Collection", function () {
 
                 collection.removeChild(child);
 
-                expect(collection.getChilds().length).toEqual(1);
+                expect(collection.getChildren().length).toEqual(1);
 
                 collection.removeChild(1);
 
-                expect(collection.getChilds().length).toEqual(0);
+                expect(collection.getChildren().length).toEqual(0);
             });
             //it("删除成功返回true，失败返回false", function () {
             //    var arr = [1, 2];
             //
-            //    collection.addChilds(arr);
+            //    collection.addChildren(arr);
             //
             //    expect(collection.removeChild(1)).toBeTruthy();
             //    expect(collection.removeChild(1)).toBeFalsy();
@@ -248,25 +248,25 @@ describe("Collection", function () {
     //        }).toThrow();
     //    });
     //    it("删除容器中指定位置的元素。", function () {
-    //        collection.addChilds([1, 2, 3]);
+    //        collection.addChildren([1, 2, 3]);
     //
     //        collection.removeChildAt(1);
     //
-    //        expect(collection.getChilds().length).toEqual(2);
+    //        expect(collection.getChildren().length).toEqual(2);
     //        expect(collection.getChildAt(1)).toEqual(3);
     //    });
     //});
 
-    describe("removeAllChilds", function () {
+    describe("removeAllChildren", function () {
         it("清空容器", function () {
             collection.addChild(1).addChild(2);
 
-            collection.removeAllChilds();
+            collection.removeAllChildren();
 
-            expect(collection.getChilds().length).toEqual(0);
+            expect(collection.getChildren().length).toEqual(0);
         });
 //        it("重置cursor", function () {
-//            collection.removeAllChilds();
+//            collection.removeAllChildren();
 //
 //            expect(collection._cursor).toEqual(0);
 //        });
@@ -275,7 +275,7 @@ describe("Collection", function () {
     //describe("copy", function () {
     //    it("返回容器副本（深拷贝）", function () {
     //        var arr = [1, {a: 1}];
-    //        collection.addChilds(arr);
+    //        collection.addChildren(arr);
     //
     //        var a = collection.copy();
     //        a[1].a = 100;
@@ -288,7 +288,7 @@ describe("Collection", function () {
 //
 //    describe("reverse", function () {
 ////        it("如果容器为空，则报错", function () {
-////            collection.removeAllChilds();
+////            collection.removeAllChildren();
 ////
 ////            expect(function () {
 ////                collection.reverse();
@@ -301,11 +301,11 @@ describe("Collection", function () {
 //                3,
 //                4
 //            ];
-//            collection.addChilds(arr);
+//            collection.addChildren(arr);
 //
 //            collection.reverse();
 //
-//            expect(collection.getChilds()).toEqual([4, 3, 2, {}]);
+//            expect(collection.getChildren()).toEqual([4, 3, 2, {}]);
 //        });
 //    });
 
@@ -359,8 +359,8 @@ describe("Collection", function () {
                 return val * 2;
             });
 
-            expect(result.getChilds()).toEqual([2, 4]);
-            expect(collection.getChilds()).toEqual([1, 2]);
+            expect(result.getChildren()).toEqual([2, 4]);
+            expect(collection.getChildren()).toEqual([1, 2]);
         });
         it("if handler return $REMOVE, then remove it from the result", function(){
             collection.addChild(1);
@@ -374,8 +374,8 @@ describe("Collection", function () {
                 return val * 2;
             });
 
-            expect(result.getChilds()).toEqual([2]);
-            expect(collection.getChilds()).toEqual([1, 2]);
+            expect(result.getChildren()).toEqual([2]);
+            expect(collection.getChildren()).toEqual([1, 2]);
         });
     });
 
@@ -384,27 +384,27 @@ describe("Collection", function () {
             var child1 = {a: 1},
                 child2 = {a: 2},
                 child3 = {a: 2};
-            collection.addChilds([child1, child2, child3]);
+            collection.addChildren([child1, child2, child3]);
 
             var result = collection.filter(function (e) {
                 return e.a === 2;
             });
 
-            expect(collection.getChilds()).toEqual([child1, child2, child3]);
-            expect(result.getChilds()).toEqual([child2, child3]);
+            expect(collection.getChildren()).toEqual([child1, child2, child3]);
+            expect(result.getChildren()).toEqual([child2, child3]);
         });
         it("this is point to container", function(){
             var child1 = {a: 1},
                 child2 = {a: 2},
                 child3 = {a: 2};
-            collection.addChilds([child1, child2, child3]);
+            collection.addChildren([child1, child2, child3]);
 
             var result = collection.filter(function (value, index) {
                 return this[index].a === 2;
             });
 
-            expect(collection.getChilds()).toEqual([child1, child2, child3]);
-            expect(result.getChilds()).toEqual([child2, child3]);
+            expect(collection.getChildren()).toEqual([child1, child2, child3]);
+            expect(result.getChildren()).toEqual([child2, child3]);
         });
     });
 });
