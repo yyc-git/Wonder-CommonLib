@@ -16,6 +16,10 @@ module dyCb {
             return Object.prototype.toString.call(str) === "[object String]";
         }
 
+        public static isBoolean(obj) {
+            return Object.prototype.toString.call(obj) === "[object Boolean]";
+        }
+
         public static isDom(obj) {
             return obj instanceof HTMLElement;
         }
