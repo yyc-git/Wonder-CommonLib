@@ -31,6 +31,7 @@ declare module dyCb {
         static isFunction(func: any): boolean;
         static isNumber(obj: any): boolean;
         static isString(str: any): boolean;
+        static isBoolean(obj: any): boolean;
         static isDom(obj: any): boolean;
         /**
          * 判断是否为对象字面量（{}）

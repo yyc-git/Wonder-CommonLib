@@ -149,6 +149,9 @@ var dyCb;
         JudgeUtils.isString = function (str) {
             return Object.prototype.toString.call(str) === "[object String]";
         };
+        JudgeUtils.isBoolean = function (obj) {
+            return Object.prototype.toString.call(obj) === "[object Boolean]";
+        };
         JudgeUtils.isDom = function (obj) {
             return obj instanceof HTMLElement;
         };
