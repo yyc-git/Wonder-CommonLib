@@ -29,6 +29,13 @@ module dyCb {
             FUNC_INVALID: function (value) {
                 return this.assertion("invalid", value);
             },
+            FUNC_MUST: function (...args) {
+                var arr = Array.prototype.slice.call(arguments, 0);
+
+                arr.unshift("must");
+
+                return this.assertion.apply(this, arr);
+            },
             FUNC_MUST_BE: function (...args) {
                 var arr = Array.prototype.slice.call(arguments, 0);
 
@@ -40,6 +47,13 @@ module dyCb {
                 var arr = Array.prototype.slice.call(arguments, 0);
 
                 arr.unshift("must not be");
+
+                return this.assertion.apply(this, arr);
+            },
+            FUNC_SHOULD: function (...args) {
+                var arr = Array.prototype.slice.call(arguments, 0);
+
+                arr.unshift("should");
 
                 return this.assertion.apply(this, arr);
             },
