@@ -134,8 +134,10 @@ declare module dyCb {
             helperFunc: (...args: any[]) => string;
             assertion: (...args: any[]) => any;
             FUNC_INVALID: (value: any) => any;
+            FUNC_MUST: (...args: any[]) => any;
             FUNC_MUST_BE: (...args: any[]) => any;
             FUNC_MUST_NOT_BE: (...args: any[]) => any;
+            FUNC_SHOULD: (...args: any[]) => any;
             FUNC_SUPPORT: (value: any) => any;
             FUNC_NOT_SUPPORT: (value: any) => any;
             FUNC_MUST_DEFINE: (value: any) => any;

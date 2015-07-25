@@ -563,6 +563,15 @@ var dyCb;
             FUNC_INVALID: function (value) {
                 return this.assertion("invalid", value);
             },
+            FUNC_MUST: function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i - 0] = arguments[_i];
+                }
+                var arr = Array.prototype.slice.call(arguments, 0);
+                arr.unshift("must");
+                return this.assertion.apply(this, arr);
+            },
             FUNC_MUST_BE: function () {
                 var args = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
@@ -579,6 +588,15 @@ var dyCb;
                 }
                 var arr = Array.prototype.slice.call(arguments, 0);
                 arr.unshift("must not be");
+                return this.assertion.apply(this, arr);
+            },
+            FUNC_SHOULD: function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i - 0] = arguments[_i];
+                }
+                var arr = Array.prototype.slice.call(arguments, 0);
+                arr.unshift("should");
                 return this.assertion.apply(this, arr);
             },
             FUNC_SUPPORT: function (value) {
