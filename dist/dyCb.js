@@ -56,7 +56,8 @@ var dyCb;
             //    this._children[key] = [value];
             //}
             if (this._children[key] instanceof dyCb.Collection) {
-                this._children[key].addChild(value);
+                var c = (this._children[key]);
+                c.addChild(value);
             }
             else {
                 this._children[key] = dyCb.Collection.create().addChild(value);

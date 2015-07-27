@@ -1,17 +1,19 @@
 /// <reference path="definitions.d.ts"/>
 module dyCb {
-    export class Hash {
-        public static create(children = {}){
-            var obj = new this(children);
+    export class Hash<T> {
+        public static create<T>(children = {}){
+            var obj = new this(<{ [s:string]:T }>children);
 
             return obj;
         }
 
-        constructor(children:any = {}){
+        constructor(children:{ [s:string]:T } = {}){
             this._children = children;
         }
 
-        private _children:any = null;
+        private _children:{
+            [s:string]:T
+        } = null;
 
         public getChildren() {
             return this._children;
@@ -49,13 +51,13 @@ module dyCb {
             return this._children[key];
         }
 
-        public addChild(key:string, value:any) {
+        public addChild(key:string, value:T) {
             this._children[key] = value;
 
             return this;
         }
 
-        public appendChild(key:string, value:any) {
+        public appendChild(key:string, value:T) {
             //if (JudgeUtils.isArray(this._children[key])) {
             //    this._children[key].push(value);
             //}
@@ -63,10 +65,12 @@ module dyCb {
             //    this._children[key] = [value];
             //}
             if (this._children[key] instanceof Collection) {
-                this._children[key].addChild(value);
+                let c = <any>(this._children[key]);
+
+                    c.addChild(value);
             }
             else {
-                this._children[key] = Collection.create().addChild(value);
+                this._children[key] = <any>Collection.create<T>().addChild(value);
             }
 
             return this;

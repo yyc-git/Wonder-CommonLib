@@ -7,21 +7,25 @@ declare module dyCb {
 
 /// <reference path="definitions.d.ts" />
 declare module dyCb {
-    class Hash {
-        static create(children?: {}): Hash;
-        constructor(children?: any);
+    class Hash<T> {
+        static create<T>(children?: {}): Hash<T>;
+        constructor(children?: {
+            [s: string]: T;
+        });
         private _children;
-        getChildren(): any;
+        getChildren(): {
+            [s: string]: T;
+        };
         getCount(): number;
-        getKeys(): Collection;
-        getChild(key: string): any;
-        addChild(key: string, value: any): Hash;
-        appendChild(key: string, value: any): Hash;
-        removeChild(arg: any): Hash;
+        getKeys(): Collection<{}>;
+        getChild(key: string): T;
+        addChild(key: string, value: T): Hash<T>;
+        appendChild(key: string, value: T): Hash<T>;
+        removeChild(arg: any): Hash<T>;
         hasChild(arg: any): boolean;
-        forEach(func: Function, context?: any): Hash;
-        filter(func: Function): Hash;
-        map(func: Function): Hash;
+        forEach(func: Function, context?: any): Hash<T>;
+        filter(func: Function): Hash<{}>;
+        map(func: Function): Hash<{}>;
     }
 }
 
@@ -184,23 +188,23 @@ declare module dyCb {
 
 /// <reference path="definitions.d.ts" />
 declare module dyCb {
-    class Collection {
-        static create(children?: any[]): Collection;
-        constructor(children?: any);
+    class Collection<T> {
+        static create<T>(children?: any[]): Collection<T>;
+        constructor(children?: Array<T>);
         private _children;
         getCount(): number;
-        hasChild(arg: any): boolean;
-        getChildren(): any[];
-        getChild(index: number): any;
-        addChild(child: any): Collection;
-        addChildren(arg: any[] | Collection | any): Collection;
-        removeAllChildren(): Collection;
-        forEach(func: Function, context?: any): Collection;
-        filter(func: any): Collection;
-        removeChild(arg: any): Collection;
-        sort(func: any): Collection;
-        map(func: Function): Collection;
-        toArray(): any[];
+        hasChild(arg: Function | T): boolean;
+        getChildren(): T[];
+        getChild(index: number): T;
+        addChild(child: T): Collection<T>;
+        addChildren(arg: Array<T> | Collection<T> | any): Collection<T>;
+        removeAllChildren(): Collection<T>;
+        forEach(func: Function, context?: any): Collection<T>;
+        filter(func: any): Collection<{}>;
+        removeChild(arg: any): Collection<T>;
+        sort(func: any): Collection<T>;
+        map(func: Function): Collection<{}>;
+        toArray(): T[];
         private _indexOf(arr, arg);
         private _contain(arr, arg);
         private _forEach(arr, func, context?);

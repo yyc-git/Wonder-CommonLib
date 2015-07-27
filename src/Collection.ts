@@ -1,23 +1,23 @@
 /// <reference path="definitions.d.ts"/>
 module dyCb {
-    export class Collection {
-        public static create(children = []){
-            var obj = new this(children);
+    export class Collection<T> {
+        public static create<T>(children = []){
+            var obj = new this(<Array<T>>children);
 
             return obj;
         }
 
-        constructor(children:any = []){
+        constructor(children:Array<T> = []){
             this._children = children;
         }
 
-        private _children:any[] = null;
+        private _children:Array<T> = null;
 
         public getCount():number {
             return this._children.length;
         }
 
-        public hasChild(arg):boolean {
+        public hasChild(arg:Function|T):boolean {
             if (JudgeUtils.isFunction(arguments[0])) {
                 let func = <Function>arguments[0];
 
@@ -47,25 +47,25 @@ module dyCb {
             return this._children[index];
         }
 
-        public addChild(child) {
+        public addChild(child:T) {
             this._children.push(child);
 
             return this;
         }
 
-        public addChildren(arg:any[]|Collection|any) {
+        public addChildren(arg:Array<T>|Collection<T>|any) {
             if (JudgeUtils.isArray(arg)) {
-                let children = <any[]>arg;
+                let children:Array<T> = arg;
 
                 this._children = this._children.concat(children);
             }
             else if(arg instanceof Collection){
-                let children = <Collection>arg;
+                let children:Collection<T> = arg;
 
                 this._children = this._children.concat(children.toArray());
             }
             else {
-                let child = <any>arg;
+                let child:any = arg;
 
                 this.addChild(child);
             }
