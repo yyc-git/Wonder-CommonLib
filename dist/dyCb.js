@@ -60,7 +60,7 @@ var dyCb;
                 c.addChild(value);
             }
             else {
-                this._children[key] = dyCb.Collection.create().addChild(value);
+                this._children[key] = (dyCb.Collection.create().addChild(value));
             }
             return this;
         };

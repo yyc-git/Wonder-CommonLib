@@ -20,7 +20,7 @@ declare module dyCb {
         getKeys(): Collection<{}>;
         getChild(key: string): T;
         addChild(key: string, value: T): Hash<T>;
-        appendChild(key: string, value: T): Hash<T>;
+        appendChild(key: string, value: any): Hash<T>;
         removeChild(arg: any): Hash<T>;
         hasChild(arg: any): boolean;
         forEach(func: Function, context?: any): Hash<T>;

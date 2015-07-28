@@ -57,7 +57,7 @@ module dyCb {
             return this;
         }
 
-        public appendChild(key:string, value:T) {
+        public appendChild(key:string, value:any) {
             //if (JudgeUtils.isArray(this._children[key])) {
             //    this._children[key].push(value);
             //}
@@ -67,10 +67,10 @@ module dyCb {
             if (this._children[key] instanceof Collection) {
                 let c = <any>(this._children[key]);
 
-                    c.addChild(value);
+                c.addChild(<T>value);
             }
             else {
-                this._children[key] = <any>Collection.create<T>().addChild(value);
+                this._children[key] = <any>(Collection.create<any>().addChild(value));
             }
 
             return this;
