@@ -85,8 +85,18 @@ module dyCb {
             return this;
         }
 
-        public filter(func) {
-            return this._filter(this._children, func, this._children);
+        public filter(func):Collection<T> {
+            var scope = this._children,
+                result:Array<T> = [];
+
+            this._forEach(this._children, (value:T, index) => {
+                if (!func.call(scope, value, index)) {
+                    return;
+                }
+                result.push(value);
+            });
+
+            return Collection.create<T>(result);
         }
 
         //public removeChildAt (index) {
@@ -169,11 +179,11 @@ module dyCb {
             return result;
         }
 
-        private _contain(arr:any[], arg:any) {
+        private _contain(arr:T[], arg:any) {
             return this._indexOf(arr, arg) > -1;
         }
 
-        private _forEach(arr:any[], func:Function, context?:any) {
+        private _forEach(arr:T[], func:Function, context?:any) {
             var scope = context || window,
                 i = 0,
                 len = arr.length;
@@ -186,7 +196,7 @@ module dyCb {
             }
         }
 
-        private _map(arr:any[], func:Function) {
+        private _map(arr:T[], func:Function) {
             var resultArr = [];
 
             this._forEach(arr, (e, index) => {
@@ -198,10 +208,10 @@ module dyCb {
                 //e && e[handlerName] && e[handlerName].apply(context || e, valueArr);
             });
 
-            return Collection.create(resultArr);
+            return Collection.create<T>(resultArr);
         }
 
-        private _removeChild(arr:any[], func:Function) {
+        private _removeChild(arr:T[], func:Function) {
             var self = this,
                 index = null;
 
@@ -218,18 +228,7 @@ module dyCb {
             return arr;
         }
 
-        private _filter = function (arr, func, context) {
-            var scope = context || window,
-                result = [];
-
-            this._forEach(arr, (value, index) => {
-                if (!func.call(scope, value, index)) {
-                    return;
-                }
-                result.push(value);
-            });
-
-            return Collection.create(result);
-        };
+        private _filter (arr, func, context) {
+        }
     }
 }

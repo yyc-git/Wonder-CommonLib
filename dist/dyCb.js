@@ -634,16 +634,6 @@ var dyCb;
         function Collection(children) {
             if (children === void 0) { children = []; }
             this._children = null;
-            this._filter = function (arr, func, context) {
-                var scope = context || window, result = [];
-                this._forEach(arr, function (value, index) {
-                    if (!func.call(scope, value, index)) {
-                        return;
-                    }
-                    result.push(value);
-                });
-                return Collection.create(result);
-            };
             this._children = children;
         }
         Collection.create = function (children) {
@@ -706,7 +696,14 @@ var dyCb;
             return this;
         };
         Collection.prototype.filter = function (func) {
-            return this._filter(this._children, func, this._children);
+            var scope = this._children, result = [];
+            this._forEach(this._children, function (value, index) {
+                if (!func.call(scope, value, index)) {
+                    return;
+                }
+                result.push(value);
+            });
+            return Collection.create(result);
         };
         //public removeChildAt (index) {
         //    Log.error(index < 0, "序号必须大于等于0");
@@ -808,6 +805,8 @@ var dyCb;
             }
             //return false;
             return arr;
+        };
+        Collection.prototype._filter = function (arr, func, context) {
         };
         return Collection;
     })();

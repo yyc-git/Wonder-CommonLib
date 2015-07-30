@@ -200,17 +200,17 @@ declare module dyCb {
         addChildren(arg: Array<T> | Collection<T> | any): Collection<T>;
         removeAllChildren(): Collection<T>;
         forEach(func: Function, context?: any): Collection<T>;
-        filter(func: any): Collection<{}>;
+        filter(func: any): Collection<T>;
         removeChild(arg: any): Collection<T>;
         sort(func: any): Collection<T>;
-        map(func: Function): Collection<{}>;
+        map(func: Function): Collection<T>;
         toArray(): T[];
         private _indexOf(arr, arg);
         private _contain(arr, arg);
         private _forEach(arr, func, context?);
         private _map(arr, func);
         private _removeChild(arr, func);
-        private _filter;
+        private _filter(arr, func, context);
     }
 }
 
