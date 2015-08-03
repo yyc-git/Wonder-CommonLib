@@ -111,6 +111,8 @@ module dyCb {
         //
         public reverse () {
             this._children.reverse();
+
+            return this;
         }
 
         public removeChild(arg:any) {
