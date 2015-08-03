@@ -286,28 +286,21 @@ describe("Collection", function () {
     //    });
     //});
 //
-//    describe("reverse", function () {
-////        it("如果容器为空，则报错", function () {
-////            collection.removeAllChildren();
-////
-////            expect(function () {
-////                collection.reverse();
-////            }).toThrow();
-////        });
-//        it("容器反序", function () {
-//            var arr = [
-//                {},
-//                2,
-//                3,
-//                4
-//            ];
-//            collection.addChildren(arr);
-//
-//            collection.reverse();
-//
-//            expect(collection.getChildren()).toEqual([4, 3, 2, {}]);
-//        });
-//    });
+    describe("reverse", function () {
+        it("reverse elements", function () {
+            var arr = [
+                {},
+                2,
+                3,
+                4
+            ];
+            collection.addChildren(arr);
+
+            collection.reverse();
+
+            expect(collection.getChildren()).toEqual([4, 3, 2, {}]);
+        });
+    });
 
     describe("forEach", function () {
         it("遍历容器", function () {

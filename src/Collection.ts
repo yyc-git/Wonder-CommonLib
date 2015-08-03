@@ -109,9 +109,9 @@ module dyCb {
         //    return ExtendUtils.extendDeep(this._children);
         //}
         //
-        //public reverse () {
-        //    this._children.reverse();
-        //}
+        public reverse () {
+            this._children.reverse();
+        }
 
         public removeChild(arg:any) {
             if (JudgeUtils.isFunction(arg)) {

@@ -715,9 +715,9 @@ var dyCb;
         //    return ExtendUtils.extendDeep(this._children);
         //}
         //
-        //public reverse () {
-        //    this._children.reverse();
-        //}
+        Collection.prototype.reverse = function () {
+            this._children.reverse();
+        };
         Collection.prototype.removeChild = function (arg) {
             if (dyCb.JudgeUtils.isFunction(arg)) {
                 var func = arg;
