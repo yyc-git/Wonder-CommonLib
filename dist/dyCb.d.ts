@@ -201,7 +201,7 @@ declare module dyCb {
         removeAllChildren(): Collection<T>;
         forEach(func: Function, context?: any): Collection<T>;
         filter(func: any): Collection<T>;
-        reverse(): void;
+        reverse(): Collection<T>;
         removeChild(arg: any): Collection<T>;
         sort(func: any): Collection<T>;
         map(func: Function): Collection<T>;

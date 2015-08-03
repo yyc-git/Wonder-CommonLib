@@ -717,6 +717,7 @@ var dyCb;
         //
         Collection.prototype.reverse = function () {
             this._children.reverse();
+            return this;
         };
         Collection.prototype.removeChild = function (arg) {
             if (dyCb.JudgeUtils.isFunction(arg)) {
