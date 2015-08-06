@@ -61,16 +61,16 @@ describe("Collection", function () {
     });
 
     describe("getChildren", function () {
-        it("获得容器", function () {
+        it("directly return the children", function () {
             var children = collection.getChildren();
 
-            expect(children).toBeSameArray(collection._children);
+            expect(children).toBeSameArray(collection.children);
         });
     });
 
     describe("getChild", function () {
         it("获得容器指定位置的数据", function () {
-            collection._children = [1, 2];
+            collection.children = [1, 2];
             var child = collection.getChild(1);
 
             expect(child).toEqual(2);
@@ -272,20 +272,35 @@ describe("Collection", function () {
 //        });
     });
     //
-    //describe("copy", function () {
-    //    it("返回容器副本（深拷贝）", function () {
-    //        var arr = [1, {a: 1}];
-    //        collection.addChildren(arr);
-    //
-    //        var a = collection.copy();
-    //        a[1].a = 100;
-    //
-    //        expect(a === arr).toBeFalsy();
-    //        expect(a.length).toEqual(2);
-    //        expect(arr[1].a).toEqual(1);
-    //    });
-    //});
-//
+    describe("copy", function () {
+        it("return the copy one", function () {
+            var arr = [1, {a: 1}];
+            collection.addChildren(arr);
+
+            var a = collection.copy().getChildren();
+            a[1].a = 100;
+
+            expect(a === arr).toBeFalsy();
+            expect(a.length).toEqual(2);
+            expect(arr[1].a).toEqual(1);
+        });
+    });
+
+    describe("toArray", function(){
+        it("return the copied children", function(){
+            var arr = [1, {a: 1}];
+            collection.addChildren(arr);
+
+            var a = collection.toArray();
+            a[1].a = 100;
+
+            expect(a === arr).toBeFalsy();
+            expect(a.length).toEqual(2);
+            expect(arr[1].a).toEqual(1);
+
+        });
+    });
+
     describe("reverse", function () {
         it("reverse elements", function () {
             var arr = [

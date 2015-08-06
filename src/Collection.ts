@@ -8,27 +8,27 @@ module dyCb {
         }
 
         constructor(children:Array<T> = []){
-            this._children = children;
+            this.children = children;
         }
 
-        private _children:Array<T> = null;
+        protected children:Array<T> = null;
 
         public getCount():number {
-            return this._children.length;
+            return this.children.length;
         }
 
         public hasChild(arg:Function|T):boolean {
             if (JudgeUtils.isFunction(arguments[0])) {
                 let func = <Function>arguments[0];
 
-                return this._contain(this._children, (c, i)  => {
+                return this._contain(this.children, (c, i)  => {
                     return func(c, i);
                 });
             }
 
             let child = <any>arguments[0];
 
-            return this._contain(this._children, (c, i) => {
+            return this._contain(this.children, (c, i) => {
                 if (c === child
                     || (c.uid && child.uid && c.uid === child.uid)) {
                     return true;
@@ -40,15 +40,15 @@ module dyCb {
         }
 
         public getChildren () {
-            return this._children;
+            return this.children;
         }
 
         public getChild(index:number) {
-            return this._children[index];
+            return this.children[index];
         }
 
         public addChild(child:T) {
-            this._children.push(child);
+            this.children.push(child);
 
             return this;
         }
@@ -57,12 +57,12 @@ module dyCb {
             if (JudgeUtils.isArray(arg)) {
                 let children:Array<T> = arg;
 
-                this._children = this._children.concat(children);
+                this.children = this.children.concat(children);
             }
             else if(arg instanceof Collection){
                 let children:Collection<T> = arg;
 
-                this._children = this._children.concat(children.toArray());
+                this.children = this.children.concat(children.toArray());
             }
             else {
                 let child:any = arg;
@@ -74,22 +74,22 @@ module dyCb {
         }
 
         public removeAllChildren() {
-            this._children = [];
+            this.children = [];
 
             return this;
         }
 
         public forEach(func:Function, context?:any) {
-            this._forEach(this._children, func, context);
+            this._forEach(this.children, func, context);
 
             return this;
         }
 
         public filter(func):Collection<T> {
-            var scope = this._children,
+            var scope = this.children,
                 result:Array<T> = [];
 
-            this._forEach(this._children, (value:T, index) => {
+            this._forEach(this.children, (value:T, index) => {
                 if (!func.call(scope, value, index)) {
                     return;
                 }
@@ -102,15 +102,15 @@ module dyCb {
         //public removeChildAt (index) {
         //    Log.error(index < 0, "序号必须大于等于0");
         //
-        //    this._children.splice(index, 1);
+        //    this.children.splice(index, 1);
         //}
         //
-        //public copy () {
-        //    return ExtendUtils.extendDeep(this._children);
-        //}
-        //
+        public copy () {
+            return Collection.create<T>(ExtendUtils.extendDeep(this.children));
+        }
+
         public reverse () {
-            this._children.reverse();
+            this.children.reverse();
 
             return this;
         }
@@ -119,10 +119,10 @@ module dyCb {
             if (JudgeUtils.isFunction(arg)) {
                 let func = <Function>arg;
 
-                this._removeChild(this._children, func);
+                this._removeChild(this.children, func);
             }
             else if (arg.uid) {
-                this._removeChild(this._children, (e) => {
+                this._removeChild(this.children, (e) => {
                     if (!e.uid) {
                         return false;
                     }
@@ -130,7 +130,7 @@ module dyCb {
                 });
             }
             else {
-                this._removeChild(this._children,  (e) => {
+                this._removeChild(this.children,  (e) => {
                     return e === arg;
                 });
             }
@@ -139,17 +139,17 @@ module dyCb {
         }
 
         public sort(func){
-            this._children.sort(func);
+            this.children.sort(func);
 
             return this;
         }
 
         public map(func:Function){
-            return this._map(this._children, func);
+            return this._map(this.children, func);
         }
 
         public toArray(){
-            return this._children;
+            return ExtendUtils.extendDeep(this.children);
         }
 
         private _indexOf(arr:any[], arg:any) {
