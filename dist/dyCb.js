@@ -168,21 +168,14 @@ var dyCb;
 /// <reference path="definitions.d.ts"/>
 var dyCb;
 (function (dyCb) {
-    var Collection = (function () {
-        function Collection(children) {
-            if (children === void 0) { children = []; }
+    var List = (function () {
+        function List() {
             this.children = null;
-            this.children = children;
         }
-        Collection.create = function (children) {
-            if (children === void 0) { children = []; }
-            var obj = new this(children);
-            return obj;
-        };
-        Collection.prototype.getCount = function () {
+        List.prototype.getCount = function () {
             return this.children.length;
         };
-        Collection.prototype.hasChild = function (arg) {
+        List.prototype.hasChild = function (arg) {
             if (dyCb.JudgeUtils.isFunction(arguments[0])) {
                 var func = arguments[0];
                 return this._contain(this.children, function (c, i) {
@@ -200,22 +193,22 @@ var dyCb;
                 }
             });
         };
-        Collection.prototype.getChildren = function () {
+        List.prototype.getChildren = function () {
             return this.children;
         };
-        Collection.prototype.getChild = function (index) {
+        List.prototype.getChild = function (index) {
             return this.children[index];
         };
-        Collection.prototype.addChild = function (child) {
+        List.prototype.addChild = function (child) {
             this.children.push(child);
             return this;
         };
-        Collection.prototype.addChildren = function (arg) {
+        List.prototype.addChildren = function (arg) {
             if (dyCb.JudgeUtils.isArray(arg)) {
                 var children = arg;
                 this.children = this.children.concat(children);
             }
-            else if (arg instanceof Collection) {
+            else if (arg instanceof dyCb.Collection) {
                 var children = arg;
                 this.children = this.children.concat(children.toArray());
             }
@@ -225,15 +218,15 @@ var dyCb;
             }
             return this;
         };
-        Collection.prototype.removeAllChildren = function () {
+        List.prototype.removeAllChildren = function () {
             this.children = [];
             return this;
         };
-        Collection.prototype.forEach = function (func, context) {
+        List.prototype.forEach = function (func, context) {
             this._forEach(this.children, func, context);
             return this;
         };
-        Collection.prototype.filter = function (func) {
+        List.prototype.filter = function (func) {
             var scope = this.children, result = [];
             this._forEach(this.children, function (value, index) {
                 if (!func.call(scope, value, index)) {
@@ -241,7 +234,7 @@ var dyCb;
                 }
                 result.push(value);
             });
-            return Collection.create(result);
+            return dyCb.Collection.create(result);
         };
         //public removeChildAt (index) {
         //    Log.error(index < 0, "序号必须大于等于0");
@@ -249,14 +242,14 @@ var dyCb;
         //    this.children.splice(index, 1);
         //}
         //
-        Collection.prototype.copy = function () {
-            return Collection.create(dyCb.ExtendUtils.extendDeep(this.children));
-        };
-        Collection.prototype.reverse = function () {
+        //public copy () {
+        //    return Collection.create<T>(ExtendUtils.extendDeep(this.children));
+        //}
+        List.prototype.reverse = function () {
             this.children.reverse();
             return this;
         };
-        Collection.prototype.removeChild = function (arg) {
+        List.prototype.removeChild = function (arg) {
             if (dyCb.JudgeUtils.isFunction(arg)) {
                 var func = arg;
                 this._removeChild(this.children, func);
@@ -276,17 +269,17 @@ var dyCb;
             }
             return this;
         };
-        Collection.prototype.sort = function (func) {
+        List.prototype.sort = function (func) {
             this.children.sort(func);
             return this;
         };
-        Collection.prototype.map = function (func) {
+        List.prototype.map = function (func) {
             return this._map(this.children, func);
         };
-        Collection.prototype.toArray = function () {
+        List.prototype.toArray = function () {
             return dyCb.ExtendUtils.extendDeep(this.children);
         };
-        Collection.prototype._indexOf = function (arr, arg) {
+        List.prototype._indexOf = function (arr, arg) {
             var result = -1;
             if (dyCb.JudgeUtils.isFunction(arg)) {
                 var func = arg;
@@ -310,10 +303,10 @@ var dyCb;
             }
             return result;
         };
-        Collection.prototype._contain = function (arr, arg) {
+        List.prototype._contain = function (arr, arg) {
             return this._indexOf(arr, arg) > -1;
         };
-        Collection.prototype._forEach = function (arr, func, context) {
+        List.prototype._forEach = function (arr, func, context) {
             var scope = context || window, i = 0, len = arr.length;
             for (i = 0; i < len; i++) {
                 if (func.call(scope, arr[i], i) === dyCb.$BREAK) {
@@ -321,7 +314,7 @@ var dyCb;
                 }
             }
         };
-        Collection.prototype._map = function (arr, func) {
+        List.prototype._map = function (arr, func) {
             var resultArr = [];
             this._forEach(arr, function (e, index) {
                 var result = func(e, index);
@@ -330,9 +323,9 @@ var dyCb;
                 }
                 //e && e[handlerName] && e[handlerName].apply(context || e, valueArr);
             });
-            return Collection.create(resultArr);
+            return dyCb.Collection.create(resultArr);
         };
-        Collection.prototype._removeChild = function (arr, func) {
+        List.prototype._removeChild = function (arr, func) {
             var self = this, index = null;
             index = this._indexOf(arr, function (e, index) {
                 return !!func.call(self, e);
@@ -344,10 +337,37 @@ var dyCb;
             //return false;
             return arr;
         };
-        Collection.prototype._filter = function (arr, func, context) {
+        return List;
+    })();
+    dyCb.List = List;
+})(dyCb || (dyCb = {}));
+
+var __extends = this.__extends || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+/// <reference path="definitions.d.ts"/>
+var dyCb;
+(function (dyCb) {
+    var Collection = (function (_super) {
+        __extends(Collection, _super);
+        function Collection(children) {
+            if (children === void 0) { children = []; }
+            _super.call(this);
+            this.children = children;
+        }
+        Collection.create = function (children) {
+            if (children === void 0) { children = []; }
+            var obj = new this(children);
+            return obj;
+        };
+        Collection.prototype.copy = function () {
+            return Collection.create(dyCb.ExtendUtils.extendDeep(this.children));
         };
         return Collection;
-    })();
+    })(dyCb.List);
     dyCb.Collection = Collection;
 })(dyCb || (dyCb = {}));
 
@@ -489,9 +509,16 @@ var dyCb;
 (function (dyCb) {
     var Queue = (function (_super) {
         __extends(Queue, _super);
-        function Queue() {
-            _super.apply(this, arguments);
+        function Queue(children) {
+            if (children === void 0) { children = []; }
+            _super.call(this);
+            this.children = children;
         }
+        Queue.create = function (children) {
+            if (children === void 0) { children = []; }
+            var obj = new this(children);
+            return obj;
+        };
         Queue.prototype.push = function (element) {
             this.children.unshift(element);
         };
@@ -502,7 +529,7 @@ var dyCb;
             this.removeAllChildren();
         };
         return Queue;
-    })(dyCb.Collection);
+    })(dyCb.List);
     dyCb.Queue = Queue;
 })(dyCb || (dyCb = {}));
 
@@ -517,9 +544,16 @@ var dyCb;
 (function (dyCb) {
     var Stack = (function (_super) {
         __extends(Stack, _super);
-        function Stack() {
-            _super.apply(this, arguments);
+        function Stack(children) {
+            if (children === void 0) { children = []; }
+            _super.call(this);
+            this.children = children;
         }
+        Stack.create = function (children) {
+            if (children === void 0) { children = []; }
+            var obj = new this(children);
+            return obj;
+        };
         Stack.prototype.push = function (element) {
             this.children.push(element);
         };
@@ -530,7 +564,7 @@ var dyCb;
             this.removeAllChildren();
         };
         return Stack;
-    })(dyCb.Collection);
+    })(dyCb.List);
     dyCb.Stack = Stack;
 })(dyCb || (dyCb = {}));
 

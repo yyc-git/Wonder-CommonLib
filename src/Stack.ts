@@ -1,6 +1,18 @@
 /// <reference path="Collection"/>
 module dyCb {
-    export class Stack<T> extends Collection<T>{
+    export class Stack<T> extends List<T>{
+        public static create<T>(children = []){
+            var obj = new this(<Array<T>>children);
+
+            return obj;
+        }
+
+        constructor(children:Array<T> = []){
+            super();
+
+            this.children = children;
+        }
+
         public push(element:T){
             this.children.push(element);
         }

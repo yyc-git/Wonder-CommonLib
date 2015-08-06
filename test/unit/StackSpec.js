@@ -23,7 +23,6 @@ describe("Stack", function () {
         it("get the last element pushed in stack", function () {
             stack.push(2);
             stack.push(1);
-
             var result1 = stack.pop();
             var result2 = stack.pop();
 

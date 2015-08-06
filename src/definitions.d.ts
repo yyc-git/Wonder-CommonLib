@@ -2,6 +2,7 @@
 
 /// <reference path="Log"/>
 
+/// <reference path="List"/>
 /// <reference path="Collection"/>
 /// <reference path="Hash"/>
 /// <reference path="Queue"/>

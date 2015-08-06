@@ -64,23 +64,20 @@ declare module dyCb {
 
 /// <reference path="definitions.d.ts" />
 declare module dyCb {
-    class Collection<T> {
-        static create<T>(children?: any[]): Collection<T>;
-        constructor(children?: Array<T>);
+    class List<T> {
         protected children: Array<T>;
         getCount(): number;
         hasChild(arg: Function | T): boolean;
         getChildren(): T[];
         getChild(index: number): T;
-        addChild(child: T): Collection<T>;
-        addChildren(arg: Array<T> | Collection<T> | any): Collection<T>;
-        removeAllChildren(): Collection<T>;
-        forEach(func: Function, context?: any): Collection<T>;
+        addChild(child: T): List<T>;
+        addChildren(arg: Array<T> | Collection<T> | any): List<T>;
+        removeAllChildren(): List<T>;
+        forEach(func: Function, context?: any): List<T>;
         filter(func: any): Collection<T>;
-        copy(): Collection<T>;
-        reverse(): Collection<T>;
-        removeChild(arg: any): Collection<T>;
-        sort(func: any): Collection<T>;
+        reverse(): List<T>;
+        removeChild(arg: any): List<T>;
+        sort(func: any): List<T>;
         map(func: Function): Collection<T>;
         toArray(): any;
         private _indexOf(arr, arg);
@@ -88,7 +85,15 @@ declare module dyCb {
         private _forEach(arr, func, context?);
         private _map(arr, func);
         private _removeChild(arr, func);
-        private _filter(arr, func, context);
+    }
+}
+
+/// <reference path="definitions.d.ts" />
+declare module dyCb {
+    class Collection<T> extends List<T> {
+        static create<T>(children?: any[]): Collection<T>;
+        constructor(children?: Array<T>);
+        copy(): Collection<T>;
     }
 }
 
@@ -117,7 +122,9 @@ declare module dyCb {
 }
 
 declare module dyCb {
-    class Queue<T> extends Collection<T> {
+    class Queue<T> extends List<T> {
+        static create<T>(children?: any[]): Queue<T>;
+        constructor(children?: Array<T>);
         push(element: T): void;
         pop(): T;
         clear(): void;
@@ -125,7 +132,9 @@ declare module dyCb {
 }
 
 declare module dyCb {
-    class Stack<T> extends Collection<T> {
+    class Stack<T> extends List<T> {
+        static create<T>(children?: any[]): Stack<T>;
+        constructor(children?: Array<T>);
         push(element: T): void;
         pop(): T;
         clear(): void;
