@@ -13,8 +13,9 @@ module dyCb {
             this.children = children;
         }
 
-        public copy () {
-            return Collection.create<T>(ExtendUtils.extendDeep(this.children));
+        public copy (isDeep:boolean = false) {
+            return isDeep ? Collection.create<T>(ExtendUtils.extendDeep(this.children))
+                : Collection.create<T>(ExtendUtils.extend([], this.children));
         }
     }
 }

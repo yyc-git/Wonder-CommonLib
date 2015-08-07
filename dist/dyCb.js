@@ -363,8 +363,10 @@ var dyCb;
             var obj = new this(children);
             return obj;
         };
-        Collection.prototype.copy = function () {
-            return Collection.create(dyCb.ExtendUtils.extendDeep(this.children));
+        Collection.prototype.copy = function (isDeep) {
+            if (isDeep === void 0) { isDeep = false; }
+            return isDeep ? Collection.create(dyCb.ExtendUtils.extendDeep(this.children))
+                : Collection.create(dyCb.ExtendUtils.extend([], this.children));
         };
         return Collection;
     })(dyCb.List);

@@ -93,7 +93,7 @@ declare module dyCb {
     class Collection<T> extends List<T> {
         static create<T>(children?: any[]): Collection<T>;
         constructor(children?: Array<T>);
-        copy(): Collection<T>;
+        copy(isDeep?: boolean): Collection<T>;
     }
 }
 
