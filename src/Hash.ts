@@ -51,6 +51,10 @@ module dyCb {
             return this._children[key];
         }
 
+        public setValue(key:string, value:T){
+            this._children[key] = value;
+        }
+
         public addChild(key:string, value:T) {
             this._children[key] = value;
 

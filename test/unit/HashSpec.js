@@ -29,6 +29,17 @@ describe("Hash", function () {
         });
     });
 
+    describe("setValue", function () {
+        it("set value by key", function () {
+            hash._children = {"a1": 1};
+            hash.setValue("a1", 2);
+            hash.setValue("a2", 3);
+
+            expect(hash.getChild("a1")).toEqual(2);
+            expect(hash.getChild("a2")).toEqual(3);
+        });
+    });
+
     describe("getKeys", function(){
         it("get all keys", function(){
             hash.addChild("a1", 1);

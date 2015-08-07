@@ -411,6 +411,9 @@ var dyCb;
         Hash.prototype.getChild = function (key) {
             return this._children[key];
         };
+        Hash.prototype.setValue = function (key, value) {
+            this._children[key] = value;
+        };
         Hash.prototype.addChild = function (key, value) {
             this._children[key] = value;
             return this;
