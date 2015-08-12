@@ -52,7 +52,7 @@ module dyCb {
             else if(arg instanceof Collection){
                 let children:Collection<T> = arg;
 
-                this.children = this.children.concat(children.toArray());
+                this.children = this.children.concat(children.getChildren());
             }
             else {
                 let child:any = arg;

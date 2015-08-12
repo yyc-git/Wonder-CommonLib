@@ -213,7 +213,7 @@ var dyCb;
             }
             else if (arg instanceof dyCb.Collection) {
                 var children = arg;
-                this.children = this.children.concat(children.toArray());
+                this.children = this.children.concat(children.getChildren());
             }
             else {
                 var child = arg;
