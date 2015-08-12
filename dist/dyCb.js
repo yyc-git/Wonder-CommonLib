@@ -17,8 +17,11 @@ var dyCb;
          * @param {String} message
          */
         Log.log = function (message) {
-            if (console && console.log) {
-                console.log(message);
+            if (window.console && window.console.trace) {
+                window.console.trace(message);
+            }
+            else if (window.console && window.console.log) {
+                window.console.log(message);
             }
             else {
                 alert(message);
@@ -50,13 +53,13 @@ var dyCb;
          * @param message
          */
         Log.assert = function (cond, message) {
-            if (console.assert) {
-                console.assert(cond, message);
+            if (window.console.assert) {
+                window.console.assert(cond, message);
             }
             else {
                 if (!cond && message) {
-                    if (console && console.log) {
-                        console.log(message);
+                    if (window.console && window.console.log) {
+                        window.console.log(message);
                     }
                     else {
                         alert(message);

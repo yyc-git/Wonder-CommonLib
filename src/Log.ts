@@ -1,4 +1,6 @@
 module dyCb {
+    declare var window:any;
+
     export class Log {
         public static info = {
             INVALID_PARAM: "invalid parameter",
@@ -86,8 +88,11 @@ module dyCb {
          * @param {String} message
          */
         public static log(message) {
-            if (console && console.log) {
-                console.log(message);
+            if (window.console && window.console.trace) {
+                window.console.trace(message);
+            }
+            else if(window.console && window.console.log){
+                window.console.log(message);
             }
             else {
                 alert(message);
@@ -120,13 +125,13 @@ module dyCb {
          * @param message
          */
         public static assert(cond, message) {
-            if (console.assert) {
-                console.assert(cond, message);
+            if (window.console.assert) {
+                window.console.assert(cond, message);
             }
             else {
                 if (!cond && message) {
-                    if (console && console.log) {
-                        console.log(message);
+                    if (window.console && window.console.log) {
+                        window.console.log(message);
                     }
                     else {
                         alert(message);
