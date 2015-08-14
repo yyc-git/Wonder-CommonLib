@@ -1,4 +1,7 @@
 declare module dyCb {
+}
+
+declare module dyCb {
     const $BREAK: {
         break: boolean;
     };
@@ -250,7 +253,4 @@ declare module dyCb {
         constructor(domStr: any);
         get(index: any): any;
     }
-}
-
-declare module dyCb {
 }

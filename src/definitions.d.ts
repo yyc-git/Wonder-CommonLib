@@ -1,3 +1,4 @@
+/// <reference path="global/window"/>
 /// <reference path="global/Const"/>
 
 /// <reference path="Log"/>
