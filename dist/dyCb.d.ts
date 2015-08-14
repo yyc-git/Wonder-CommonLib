@@ -251,3 +251,6 @@ declare module dyCb {
         get(index: any): any;
     }
 }
+
+declare module dyCb {
+}
