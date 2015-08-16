@@ -103,6 +103,10 @@ module dyCb {
             return this;
         }
 
+        public removeAllChildren(){
+            this._children = {};
+        }
+
         public hasChild(arg:any):boolean {
             if (JudgeUtils.isFunction(arguments[0])) {
                 let func = <Function>arguments[0],

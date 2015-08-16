@@ -473,6 +473,9 @@ var dyCb;
             }
             return this;
         };
+        Hash.prototype.removeAllChildren = function () {
+            this._children = {};
+        };
         Hash.prototype.hasChild = function (arg) {
             if (dyCb.JudgeUtils.isFunction(arguments[0])) {
                 var func = arguments[0], result = false;

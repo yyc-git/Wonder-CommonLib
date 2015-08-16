@@ -118,6 +118,7 @@ declare module dyCb {
         addChild(key: string, value: T): Hash<T>;
         appendChild(key: string, value: any): Hash<T>;
         removeChild(arg: any): Hash<T>;
+        removeAllChildren(): void;
         hasChild(arg: any): boolean;
         forEach(func: Function, context?: any): Hash<T>;
         filter(func: Function): Hash<{}>;
