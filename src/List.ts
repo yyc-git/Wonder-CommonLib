@@ -1,5 +1,8 @@
 /// <reference path="definitions.d.ts"/>
 module dyCb {
+    //todo convert "Collection" type to "List" type
+    //todo remain common "forEach,filter,map..." methods
+
     export class List<T> {
         protected children:Array<T> = null;
 
@@ -189,7 +192,7 @@ module dyCb {
             }
         }
 
-        private _map(arr:T[], func:Function) {
+        private _map(arr:Array<T>, func:Function) {
             var resultArr = [];
 
             this._forEach(arr, (e, index) => {
@@ -201,7 +204,7 @@ module dyCb {
                 //e && e[handlerName] && e[handlerName].apply(context || e, valueArr);
             });
 
-            return Collection.create<T>(resultArr);
+            return Collection.create<any>(resultArr);
         }
 
         private _removeChild(arr:T[], func:Function) {

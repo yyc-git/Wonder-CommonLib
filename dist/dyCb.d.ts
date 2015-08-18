@@ -81,7 +81,7 @@ declare module dyCb {
         reverse(): List<T>;
         removeChild(arg: any): List<T>;
         sort(func: any): List<T>;
-        map(func: Function): Collection<T>;
+        map(func: Function): Collection<any>;
         toArray(): any;
         private _indexOf(arr, arg);
         private _contain(arr, arg);

@@ -189,6 +189,8 @@ var dyCb;
 /// <reference path="definitions.d.ts"/>
 var dyCb;
 (function (dyCb) {
+    //todo convert "Collection" type to "List" type
+    //todo remain common "forEach,filter,map..." methods
     var List = (function () {
         function List() {
             this.children = null;
