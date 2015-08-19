@@ -255,3 +255,11 @@ declare module dyCb {
         get(index: any): any;
     }
 }
+
+declare module dyCb {
+    class PathUtils {
+        static basename(path: string, ext?: string): string;
+        static extname(path: string): string;
+        private static _splitPath(fileName);
+    }
+}

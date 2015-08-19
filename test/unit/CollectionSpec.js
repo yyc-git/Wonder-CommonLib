@@ -1,4 +1,4 @@
-describe("", function () {
+describe("Collection", function () {
     var collection = null;
     var sandbox = null;
 

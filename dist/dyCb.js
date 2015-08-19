@@ -959,3 +959,31 @@ var dyCb;
     })();
     dyCb.DomQuery = DomQuery;
 })(dyCb || (dyCb = {}));
+
+var dyCb;
+(function (dyCb) {
+    var SPLITPATH_REGEX = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
+    var splitPath = function (filename) {
+        return SPLITPATH_REGEX.exec(filename).slice(1);
+    };
+    var PathUtils = (function () {
+        function PathUtils() {
+        }
+        PathUtils.basename = function (path, ext) {
+            var f = this._splitPath(path)[2];
+            // TODO: make this comparison case-insensitive on windows?
+            if (ext && f.substr(-1 * ext.length) === ext) {
+                f = f.substr(0, f.length - ext.length);
+            }
+            return f;
+        };
+        PathUtils.extname = function (path) {
+            return this._splitPath(path)[3];
+        };
+        PathUtils._splitPath = function (fileName) {
+            return SPLITPATH_REGEX.exec(fileName).slice(1);
+        };
+        return PathUtils;
+    })();
+    dyCb.PathUtils = PathUtils;
+})(dyCb || (dyCb = {}));

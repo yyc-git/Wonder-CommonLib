@@ -14,5 +14,6 @@
 /// <reference path="utils/ConvertUtils"/>
 /// <reference path="utils/EventUtils"/>
 /// <reference path="utils/ExtendUtils"/>
+/// <reference path="utils/PathUtils"/>
 /// <reference path="utils/DomQuery"/>
 
