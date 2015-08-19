@@ -143,7 +143,7 @@ module dyCb {
         }
 
         public toArray(){
-            return ExtendUtils.extendDeep(this.children);
+            return this.children;
         }
 
         private _indexOf(arr:any[], arg:any) {

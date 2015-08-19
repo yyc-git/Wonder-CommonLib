@@ -82,7 +82,7 @@ declare module dyCb {
         removeChild(arg: any): List<T>;
         sort(func: any): List<T>;
         map(func: Function): Collection<any>;
-        toArray(): any;
+        toArray(): T[];
         private _indexOf(arr, arg);
         private _contain(arr, arg);
         private _forEach(arr, func, context?);
@@ -248,18 +248,19 @@ declare module dyCb {
 
 /// <reference path="../definitions.d.ts" />
 declare module dyCb {
+    class PathUtils {
+        static basename(path: string, ext?: string): string;
+        static extname(path: string): string;
+        private static _splitPath(fileName);
+    }
+}
+
+/// <reference path="../definitions.d.ts" />
+declare module dyCb {
     class DomQuery {
         static create(domStr: string): DomQuery;
         private _doms;
         constructor(domStr: any);
         get(index: any): any;
-    }
-}
-
-declare module dyCb {
-    class PathUtils {
-        static basename(path: string, ext?: string): string;
-        static extname(path: string): string;
-        private static _splitPath(fileName);
     }
 }

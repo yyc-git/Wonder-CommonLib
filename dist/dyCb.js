@@ -300,7 +300,7 @@ var dyCb;
             return this._map(this.children, func);
         };
         List.prototype.toArray = function () {
-            return dyCb.ExtendUtils.extendDeep(this.children);
+            return this.children;
         };
         List.prototype._indexOf = function (arr, arg) {
             var result = -1;
@@ -937,6 +937,33 @@ var dyCb;
 /// <reference path="../definitions.d.ts"/>
 var dyCb;
 (function (dyCb) {
+    var SPLITPATH_REGEX = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
+    //todo refer to https://github.com/cookfront/learn-note/blob/master/blog-backup/2014/nodejs-path.md
+    var PathUtils = (function () {
+        function PathUtils() {
+        }
+        PathUtils.basename = function (path, ext) {
+            var f = this._splitPath(path)[2];
+            // TODO: make this comparison case-insensitive on windows?
+            if (ext && f.substr(-1 * ext.length) === ext) {
+                f = f.substr(0, f.length - ext.length);
+            }
+            return f;
+        };
+        PathUtils.extname = function (path) {
+            return this._splitPath(path)[3];
+        };
+        PathUtils._splitPath = function (fileName) {
+            return SPLITPATH_REGEX.exec(fileName).slice(1);
+        };
+        return PathUtils;
+    })();
+    dyCb.PathUtils = PathUtils;
+})(dyCb || (dyCb = {}));
+
+/// <reference path="../definitions.d.ts"/>
+var dyCb;
+(function (dyCb) {
     var DomQuery = (function () {
         function DomQuery(domStr) {
             this._doms = null;
@@ -958,32 +985,4 @@ var dyCb;
         return DomQuery;
     })();
     dyCb.DomQuery = DomQuery;
-})(dyCb || (dyCb = {}));
-
-var dyCb;
-(function (dyCb) {
-    var SPLITPATH_REGEX = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
-    var splitPath = function (filename) {
-        return SPLITPATH_REGEX.exec(filename).slice(1);
-    };
-    var PathUtils = (function () {
-        function PathUtils() {
-        }
-        PathUtils.basename = function (path, ext) {
-            var f = this._splitPath(path)[2];
-            // TODO: make this comparison case-insensitive on windows?
-            if (ext && f.substr(-1 * ext.length) === ext) {
-                f = f.substr(0, f.length - ext.length);
-            }
-            return f;
-        };
-        PathUtils.extname = function (path) {
-            return this._splitPath(path)[3];
-        };
-        PathUtils._splitPath = function (fileName) {
-            return SPLITPATH_REGEX.exec(fileName).slice(1);
-        };
-        return PathUtils;
-    })();
-    dyCb.PathUtils = PathUtils;
 })(dyCb || (dyCb = {}));
