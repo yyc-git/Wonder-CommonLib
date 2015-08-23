@@ -17,20 +17,6 @@ describe("List", function () {
     afterEach(function () {
         sandbox.restore();
     });
-    
-    describe("sort", function () {
-        it("对容器元素进行排序", function () {
-            list.addChild(2);
-            list.addChild(1);
-
-            list.sort(function (a, b) {
-                return a - b;
-            });
-
-            expect(list.getChildren()).toEqual([1, 2]);
-        });
-    });
-
 
     describe("hasChild", function () {
         it("如果参数为func,则使用func进行遍历判断", function () {
@@ -280,7 +266,7 @@ describe("List", function () {
     });
 
     describe("toArray", function(){
-        it("return the copied children", function(){
+        it("return children", function(){
             var arr = [1, {a: 1}];
             list.addChildren(arr);
 
@@ -289,24 +275,8 @@ describe("List", function () {
 
             expect(a === arr).toBeFalsy();
             expect(a.length).toEqual(2);
-            expect(arr[1].a).toEqual(1);
+            expect(arr[1].a).toEqual(100);
 
-        });
-    });
-
-    describe("reverse", function () {
-        it("reverse elements", function () {
-            var arr = [
-                {},
-                2,
-                3,
-                4
-            ];
-            list.addChildren(arr);
-
-            list.reverse();
-
-            expect(list.getChildren()).toEqual([4, 3, 2, {}]);
         });
     });
 
@@ -348,64 +318,6 @@ describe("List", function () {
             }, t);
 
             expect(a).toEqual(3);
-        });
-    });
-
-    describe("map", function () {
-        it("handle each value and return handled array", function(){
-            list.addChild(1);
-            list.addChild(2);
-
-            var result = list.map(function(val){
-                return val * 2;
-            });
-
-            expect(result.getChildren()).toEqual([2, 4]);
-            expect(list.getChildren()).toEqual([1, 2]);
-        });
-        it("if handler return $REMOVE, then remove it from the result", function(){
-            list.addChild(1);
-            list.addChild(2);
-
-            var result = list.map(function(val){
-                if(val === 2){
-                    return dyCb.$REMOVE;
-                }
-
-                return val * 2;
-            });
-
-            expect(result.getChildren()).toEqual([2]);
-            expect(list.getChildren()).toEqual([1, 2]);
-        });
-    });
-
-    describe("filter", function () {
-        it("return filtered element", function () {
-            var child1 = {a: 1},
-                child2 = {a: 2},
-                child3 = {a: 2};
-            list.addChildren([child1, child2, child3]);
-
-            var result = list.filter(function (e) {
-                return e.a === 2;
-            });
-
-            expect(list.getChildren()).toEqual([child1, child2, child3]);
-            expect(result.getChildren()).toEqual([child2, child3]);
-        });
-        it("this is point to container", function(){
-            var child1 = {a: 1},
-                child2 = {a: 2},
-                child3 = {a: 2};
-            list.addChildren([child1, child2, child3]);
-
-            var result = list.filter(function (value, index) {
-                return this[index].a === 2;
-            });
-
-            expect(list.getChildren()).toEqual([child1, child2, child3]);
-            expect(result.getChildren()).toEqual([child2, child3]);
         });
     });
 });

@@ -67,6 +67,14 @@ gulp.task("build", gulpSync.sync(["clean", "compileTs", "compileTsDebug"]));
 
 
 
+var tsFilePaths = ["src/*.ts", "src/**/*.ts"];
+
+gulp.task("watch", function(){
+    gulp.watch(tsFilePaths, ["compileTsDebug"]);
+});
+
+
+
 
 var karma = require("karma").server;
 var karmaConfPath = path.join(process.cwd(), "test/karma.conf.js");

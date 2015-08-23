@@ -1,8 +1,5 @@
 /// <reference path="definitions.d.ts"/>
 module dyCb {
-    //todo convert "Collection" type to "List" type
-    //todo remain common "forEach,filter,map..." methods
-
     export class List<T> {
         protected children:Array<T> = null;
 
@@ -46,14 +43,14 @@ module dyCb {
             return this;
         }
 
-        public addChildren(arg:Array<T>|Collection<T>|any) {
+        public addChildren(arg:Array<T>|List<T>|any) {
             if (JudgeUtils.isArray(arg)) {
                 let children:Array<T> = arg;
 
                 this.children = this.children.concat(children);
             }
-            else if(arg instanceof Collection){
-                let children:Collection<T> = arg;
+            else if(arg instanceof List){
+                let children:List<T> = arg;
 
                 this.children = this.children.concat(children.getChildren());
             }
@@ -78,36 +75,12 @@ module dyCb {
             return this;
         }
 
-        public filter(func):Collection<T> {
-            var scope = this.children,
-                result:Array<T> = [];
-
-            this._forEach(this.children, (value:T, index) => {
-                if (!func.call(scope, value, index)) {
-                    return;
-                }
-                result.push(value);
-            });
-
-            return Collection.create<T>(result);
-        }
-
         //public removeChildAt (index) {
         //    Log.error(index < 0, "序号必须大于等于0");
         //
         //    this.children.splice(index, 1);
         //}
         //
-
-        //public copy () {
-        //    return Collection.create<T>(ExtendUtils.extendDeep(this.children));
-        //}
-
-        public reverse () {
-            this.children.reverse();
-
-            return this;
-        }
 
         public removeChild(arg:any) {
             if (JudgeUtils.isFunction(arg)) {
@@ -132,18 +105,12 @@ module dyCb {
             return this;
         }
 
-        public sort(func){
-            this.children.sort(func);
-
-            return this;
-        }
-
-        public map(func:Function){
-            return this._map(this.children, func);
-        }
-
         public toArray(){
             return this.children;
+        }
+
+        protected copyChildren(){
+            return this.children.slice(0);
         }
 
         private _indexOf(arr:any[], arg:any) {
@@ -190,21 +157,6 @@ module dyCb {
                     break;
                 }
             }
-        }
-
-        private _map(arr:Array<T>, func:Function) {
-            var resultArr = [];
-
-            this._forEach(arr, (e, index) => {
-                var result = func(e, index);
-
-                if(result !== $REMOVE){
-                    resultArr.push(result);
-                }
-                //e && e[handlerName] && e[handlerName].apply(context || e, valueArr);
-            });
-
-            return Collection.create<any>(resultArr);
         }
 
         private _removeChild(arr:T[], func:Function) {

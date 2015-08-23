@@ -38,4 +38,89 @@ describe("Collection", function () {
             expect(arr[1].a).toEqual(1);
         });
     });
+
+    describe("reverse", function () {
+        it("return reversed elements", function () {
+            var arr = [
+                {},
+                2,
+                3,
+                4
+            ];
+            collection.addChildren(arr);
+
+            expect(collection.reverse().getChildren()).toEqual([4, 3, 2, {}]);
+            expect(collection.getChildren()).toEqual(arr);
+        });
+    });
+
+    describe("filter", function () {
+        it("return filtered element", function () {
+            var child1 = {a: 1},
+                child2 = {a: 2},
+                child3 = {a: 2};
+            collection.addChildren([child1, child2, child3]);
+
+            var result = collection.filter(function (e) {
+                return e.a === 2;
+            });
+
+            expect(collection.getChildren()).toEqual([child1, child2, child3]);
+            expect(result.getChildren()).toEqual([child2, child3]);
+        });
+        it("this is point to container", function(){
+            var child1 = {a: 1},
+                child2 = {a: 2},
+                child3 = {a: 2};
+            collection.addChildren([child1, child2, child3]);
+
+            var result = collection.filter(function (value, index) {
+                return this[index].a === 2;
+            });
+
+            expect(collection.getChildren()).toEqual([child1, child2, child3]);
+            expect(result.getChildren()).toEqual([child2, child3]);
+        });
+    });
+
+    describe("sort", function () {
+        it("return the sorted elements", function () {
+            collection.addChild(2);
+            collection.addChild(1);
+
+            expect(collection.sort(function (a, b) {
+                return a - b;
+            }).getChildren()).toEqual([1, 2]);
+            expect(collection.getChildren()).toEqual([2, 1]);
+        });
+    });
+
+    describe("map", function () {
+        it("handle each value and return handled array", function(){
+            collection.addChild(1);
+            collection.addChild(2);
+
+            var result = collection.map(function(val){
+                return val * 2;
+            });
+
+            expect(result.getChildren()).toEqual([2, 4]);
+            expect(collection.getChildren()).toEqual([1, 2]);
+        });
+        it("if handler return $REMOVE, then remove it from the result", function(){
+            collection.addChild(1);
+            collection.addChild(2);
+
+            var result = collection.map(function(val){
+                if(val === 2){
+                    return dyCb.$REMOVE;
+                }
+
+                return val * 2;
+            });
+
+            expect(result.getChildren()).toEqual([2]);
+            expect(collection.getChildren()).toEqual([1, 2]);
+        });
+    });
 });

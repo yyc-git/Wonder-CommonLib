@@ -189,7 +189,6 @@ var dyCb;
 /// <reference path="definitions.d.ts"/>
 var dyCb;
 (function (dyCb) {
-    //todo convert "Collection" type to "List" type
     //todo remain common "forEach,filter,map..." methods
     var List = (function () {
         function List() {
@@ -231,7 +230,7 @@ var dyCb;
                 var children = arg;
                 this.children = this.children.concat(children);
             }
-            else if (arg instanceof dyCb.Collection) {
+            else if (arg instanceof List) {
                 var children = arg;
                 this.children = this.children.concat(children.getChildren());
             }
@@ -249,29 +248,12 @@ var dyCb;
             this._forEach(this.children, func, context);
             return this;
         };
-        List.prototype.filter = function (func) {
-            var scope = this.children, result = [];
-            this._forEach(this.children, function (value, index) {
-                if (!func.call(scope, value, index)) {
-                    return;
-                }
-                result.push(value);
-            });
-            return dyCb.Collection.create(result);
-        };
         //public removeChildAt (index) {
         //    Log.error(index < 0, "序号必须大于等于0");
         //
         //    this.children.splice(index, 1);
         //}
         //
-        //public copy () {
-        //    return Collection.create<T>(ExtendUtils.extendDeep(this.children));
-        //}
-        List.prototype.reverse = function () {
-            this.children.reverse();
-            return this;
-        };
         List.prototype.removeChild = function (arg) {
             if (dyCb.JudgeUtils.isFunction(arg)) {
                 var func = arg;
@@ -292,15 +274,11 @@ var dyCb;
             }
             return this;
         };
-        List.prototype.sort = function (func) {
-            this.children.sort(func);
-            return this;
-        };
-        List.prototype.map = function (func) {
-            return this._map(this.children, func);
-        };
         List.prototype.toArray = function () {
             return this.children;
+        };
+        List.prototype.copyChildren = function () {
+            return this.children.slice(0);
         };
         List.prototype._indexOf = function (arr, arg) {
             var result = -1;
@@ -337,17 +315,6 @@ var dyCb;
                 }
             }
         };
-        List.prototype._map = function (arr, func) {
-            var resultArr = [];
-            this._forEach(arr, function (e, index) {
-                var result = func(e, index);
-                if (result !== dyCb.$REMOVE) {
-                    resultArr.push(result);
-                }
-                //e && e[handlerName] && e[handlerName].apply(context || e, valueArr);
-            });
-            return dyCb.Collection.create(resultArr);
-        };
         List.prototype._removeChild = function (arr, func) {
             var self = this, index = null;
             index = this._indexOf(arr, function (e, index) {
@@ -363,37 +330,6 @@ var dyCb;
         return List;
     })();
     dyCb.List = List;
-})(dyCb || (dyCb = {}));
-
-var __extends = this.__extends || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
-};
-/// <reference path="definitions.d.ts"/>
-var dyCb;
-(function (dyCb) {
-    var Collection = (function (_super) {
-        __extends(Collection, _super);
-        function Collection(children) {
-            if (children === void 0) { children = []; }
-            _super.call(this);
-            this.children = children;
-        }
-        Collection.create = function (children) {
-            if (children === void 0) { children = []; }
-            var obj = new this(children);
-            return obj;
-        };
-        Collection.prototype.copy = function (isDeep) {
-            if (isDeep === void 0) { isDeep = false; }
-            return isDeep ? Collection.create(dyCb.ExtendUtils.extendDeep(this.children))
-                : Collection.create(dyCb.ExtendUtils.extend([], this.children));
-        };
-        return Collection;
-    })(dyCb.List);
-    dyCb.Collection = Collection;
 })(dyCb || (dyCb = {}));
 
 /// <reference path="definitions.d.ts"/>
@@ -985,4 +921,62 @@ var dyCb;
         return DomQuery;
     })();
     dyCb.DomQuery = DomQuery;
+})(dyCb || (dyCb = {}));
+
+var __extends = this.__extends || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    __.prototype = b.prototype;
+    d.prototype = new __();
+};
+/// <reference path="definitions.d.ts"/>
+var dyCb;
+(function (dyCb) {
+    var Collection = (function (_super) {
+        __extends(Collection, _super);
+        function Collection(children) {
+            if (children === void 0) { children = []; }
+            _super.call(this);
+            this.children = children;
+        }
+        Collection.create = function (children) {
+            if (children === void 0) { children = []; }
+            var obj = new this(children);
+            return obj;
+        };
+        Collection.prototype.copy = function (isDeep) {
+            if (isDeep === void 0) { isDeep = false; }
+            return isDeep ? Collection.create(dyCb.ExtendUtils.extendDeep(this.children))
+                : Collection.create(dyCb.ExtendUtils.extend([], this.children));
+        };
+        Collection.prototype.filter = function (func) {
+            var scope = this.children, result = [];
+            this.forEach(function (value, index) {
+                if (!func.call(scope, value, index)) {
+                    return;
+                }
+                result.push(value);
+            });
+            return Collection.create(result);
+        };
+        Collection.prototype.reverse = function () {
+            return Collection.create(this.copyChildren().reverse());
+        };
+        Collection.prototype.sort = function (func) {
+            return Collection.create(this.copyChildren().sort(func));
+        };
+        Collection.prototype.map = function (func) {
+            var resultArr = [];
+            this.forEach(function (e, index) {
+                var result = func(e, index);
+                if (result !== dyCb.$REMOVE) {
+                    resultArr.push(result);
+                }
+                //e && e[handlerName] && e[handlerName].apply(context || e, valueArr);
+            });
+            return Collection.create(resultArr);
+        };
+        return Collection;
+    })(dyCb.List);
+    dyCb.Collection = Collection;
 })(dyCb || (dyCb = {}));

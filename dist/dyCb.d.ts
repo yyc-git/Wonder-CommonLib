@@ -74,29 +74,16 @@ declare module dyCb {
         getChildren(): T[];
         getChild(index: number): T;
         addChild(child: T): List<T>;
-        addChildren(arg: Array<T> | Collection<T> | any): List<T>;
+        addChildren(arg: Array<T> | List<T> | any): List<T>;
         removeAllChildren(): List<T>;
         forEach(func: Function, context?: any): List<T>;
-        filter(func: any): Collection<T>;
-        reverse(): List<T>;
         removeChild(arg: any): List<T>;
-        sort(func: any): List<T>;
-        map(func: Function): Collection<any>;
         toArray(): T[];
+        protected copyChildren(): T[];
         private _indexOf(arr, arg);
         private _contain(arr, arg);
         private _forEach(arr, func, context?);
-        private _map(arr, func);
         private _removeChild(arr, func);
-    }
-}
-
-/// <reference path="definitions.d.ts" />
-declare module dyCb {
-    class Collection<T> extends List<T> {
-        static create<T>(children?: any[]): Collection<T>;
-        constructor(children?: Array<T>);
-        copy(isDeep?: boolean): Collection<T>;
     }
 }
 
@@ -262,5 +249,18 @@ declare module dyCb {
         private _doms;
         constructor(domStr: any);
         get(index: any): any;
+    }
+}
+
+/// <reference path="definitions.d.ts" />
+declare module dyCb {
+    class Collection<T> extends List<T> {
+        static create<T>(children?: any[]): Collection<T>;
+        constructor(children?: Array<T>);
+        copy(isDeep?: boolean): Collection<T>;
+        filter(func: any): Collection<T>;
+        reverse(): Collection<any>;
+        sort(func: any): Collection<any>;
+        map(func: Function): Collection<any>;
     }
 }
