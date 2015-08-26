@@ -79,6 +79,9 @@ module dyCb {
             },
             FUNC_UNEXPECT: function(value){
                 return this.assertion("unexpected", value);
+            },
+            FUNC_NOT_EXIST: function(value){
+                return this.assertion("not exist", value);
             }
         };
 

@@ -28,6 +28,7 @@ declare module dyCb {
             FUNC_UNKNOW: (value: any) => any;
             FUNC_EXPECT: (value: any) => any;
             FUNC_UNEXPECT: (value: any) => any;
+            FUNC_NOT_EXIST: (value: any) => any;
         };
         /**
          * Output Debug message.

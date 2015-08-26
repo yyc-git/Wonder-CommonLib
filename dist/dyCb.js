@@ -179,6 +179,9 @@ var dyCb;
             },
             FUNC_UNEXPECT: function (value) {
                 return this.assertion("unexpected", value);
+            },
+            FUNC_NOT_EXIST: function (value) {
+                return this.assertion("not exist", value);
             }
         };
         return Log;
@@ -189,7 +192,6 @@ var dyCb;
 /// <reference path="definitions.d.ts"/>
 var dyCb;
 (function (dyCb) {
-    //todo remain common "forEach,filter,map..." methods
     var List = (function () {
         function List() {
             this.children = null;
