@@ -34,15 +34,14 @@ var dyCb;
          * @function
          * @param {String} message
          */
-        Log.log = function (message) {
-            if (window.console && window.console.trace) {
-                window.console.trace(message);
+        Log.log = function () {
+            var message = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                message[_i - 0] = arguments[_i];
             }
-            else if (window.console && window.console.log) {
-                window.console.log(message);
-            }
-            else {
-                alert(message);
+            this._exec("trace", Array.prototype.slice.call(arguments, 0));
+            if (!this._exec("log", arguments)) {
+                window.alert(Array.prototype.slice.call(arguments, 0).join(","));
             }
         };
         /**
@@ -70,25 +69,44 @@ var dyCb;
          * @param cond 如果cond返回false，则断言失败，显示message
          * @param message
          */
-        Log.assert = function (cond, message) {
-            if (window.console.assert) {
-                window.console.assert(cond, message);
+        Log.assert = function (cond) {
+            var message = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                message[_i - 1] = arguments[_i];
             }
-            else {
-                if (!cond && message) {
-                    if (window.console && window.console.log) {
-                        window.console.log(message);
-                    }
-                    else {
-                        alert(message);
-                    }
+            if (cond) {
+                if (!this._exec("assert", arguments, 1)) {
+                    this.log.apply(this, Array.prototype.slice.call(arguments, 1));
                 }
             }
         };
-        Log.error = function (cond, message) {
-            if (cond) {
-                throw new Error(message);
+        Log.error = function (cond) {
+            var message = [];
+            for (var _i = 1; _i < arguments.length; _i++) {
+                message[_i - 1] = arguments[_i];
             }
+            if (cond) {
+                if (!this._exec("error", arguments, 1)) {
+                    throw new Error(Array.prototype.slice.call(arguments, 1).join("\n"));
+                }
+            }
+        };
+        Log.warn = function () {
+            var message = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                message[_i - 0] = arguments[_i];
+            }
+            if (!this._exec("warn", arguments)) {
+                this.log.apply(this, arguments);
+            }
+        };
+        Log._exec = function (consoleMethod, args, sliceBegin) {
+            if (sliceBegin === void 0) { sliceBegin = 0; }
+            if (window.console && window.console[consoleMethod]) {
+                window.console[consoleMethod].apply(window.console, Array.prototype.slice.call(args, sliceBegin));
+                return true;
+            }
+            return false;
         };
         Log.info = {
             INVALID_PARAM: "invalid parameter",
@@ -876,7 +894,8 @@ var dyCb;
 var dyCb;
 (function (dyCb) {
     var SPLITPATH_REGEX = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
-    //todo refer to https://github.com/cookfront/learn-note/blob/master/blog-backup/2014/nodejs-path.md
+    //reference from
+    //https://github.com/cookfront/learn-note/blob/master/blog-backup/2014/nodejs-path.md
     var PathUtils = (function () {
         function PathUtils() {
         }

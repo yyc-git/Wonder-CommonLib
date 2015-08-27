@@ -3,7 +3,8 @@ module dyCb{
     var SPLITPATH_REGEX =
         /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
 
-    //todo refer to https://github.com/cookfront/learn-note/blob/master/blog-backup/2014/nodejs-path.md
+    //reference from
+    //https://github.com/cookfront/learn-note/blob/master/blog-backup/2014/nodejs-path.md
     export class PathUtils{
         public static basename(path:string, ext?:string){
             var f = this._splitPath(path)[2];

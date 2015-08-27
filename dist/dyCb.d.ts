@@ -35,7 +35,7 @@ declare module dyCb {
          * @function
          * @param {String} message
          */
-        static log(message: any): void;
+        static log(...message: any[]): void;
         /**
          * 断言失败时，会提示错误信息，但程序会继续执行下去
          * 使用断言捕捉不应该发生的非法情况。不要混淆非法情况与错误情况之间的区别，后者是必然存在的并且是一定要作出处理的。
@@ -61,8 +61,10 @@ declare module dyCb {
          * @param cond 如果cond返回false，则断言失败，显示message
          * @param message
          */
-        static assert(cond: any, message: any): void;
-        static error(cond: any, message: any): any;
+        static assert(cond: any, ...message: any[]): void;
+        static error(cond: any, ...message: any[]): any;
+        static warn(...message: any[]): void;
+        private static _exec(consoleMethod, args, sliceBegin?);
     }
 }
 

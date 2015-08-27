@@ -90,15 +90,11 @@ module dyCb {
          * @function
          * @param {String} message
          */
-        public static log(message) {
-            if (window.console && window.console.trace) {
-                window.console.trace(message);
-            }
-            else if(window.console && window.console.log){
-                window.console.log(message);
-            }
-            else {
-                alert(message);
+        public static log(...message) {
+            this._exec("trace", Array.prototype.slice.call(arguments, 0));
+
+            if(!this._exec("log", arguments)) {
+                window.alert(Array.prototype.slice.call(arguments, 0).join(","));
             }
         }
 
@@ -127,26 +123,36 @@ module dyCb {
          * @param cond 如果cond返回false，则断言失败，显示message
          * @param message
          */
-        public static assert(cond, message) {
-            if (window.console.assert) {
-                window.console.assert(cond, message);
-            }
-            else {
-                if (!cond && message) {
-                    if (window.console && window.console.log) {
-                        window.console.log(message);
-                    }
-                    else {
-                        alert(message);
-                    }
+        public static assert(cond, ...message) {
+            if (cond) {
+                if (!this._exec("assert", arguments, 1)) {
+                    this.log.apply(this, Array.prototype.slice.call(arguments, 1));
                 }
             }
         }
 
-        public static error(cond, message):any {
+        public static error(cond, ...message):any {
             if (cond) {
-                throw new Error(message);
+                if (!this._exec("error", arguments, 1)) {
+                    throw new Error(Array.prototype.slice.call(arguments, 1).join("\n"));
+                }
             }
+        }
+
+        public static warn(...message) {
+            if (!this._exec("warn", arguments)) {
+                this.log.apply(this, arguments);
+            }
+        }
+
+        private static _exec(consoleMethod, args, sliceBegin = 0) {
+            if (window.console && window.console[consoleMethod]) {
+                window.console[consoleMethod].apply(window.console, Array.prototype.slice.call(args, sliceBegin));
+
+                return true;
+            }
+
+            return false;
         }
     }
 }
