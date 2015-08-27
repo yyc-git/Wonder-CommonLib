@@ -17,14 +17,17 @@ describe("Log", function () {
     });
 
     describe("log", function(){
-        it("trace info", function(){
+        it("if trace exist, trace info", function(){
             sandbox.stub(console, "trace");
+            sandbox.stub(console, "log");
 
             Log.log("aaa %d", 2);
 
             expect(console.trace).toCalledWith("aaa %d", 2);
+            expect(console.log).not.toCalled();
         });
-        it("if console.log exist, use it", function(){
+        it("else if console.log exist, use it", function(){
+            sandbox.stub(console, "trace", null);
             sandbox.stub(console, "log");
             sandbox.stub(window, "alert");
 
@@ -34,6 +37,7 @@ describe("Log", function () {
             expect(window.alert).not.toCalled();
         });
         it("else, use window.alert", function(){
+            sandbox.stub(console, "trace", null);
             sandbox.stub(console, "log", null);
             sandbox.stub(window, "alert");
 
@@ -87,21 +91,23 @@ describe("Log", function () {
     });
 
     describe("warn", function(){
-            it("if console.warn exist, use it", function(){
-                sandbox.stub(console, "warn");
+        it("if console.warn exist, use it and trace info", function(){
+            sandbox.stub(console, "warn");
+            sandbox.stub(console, "trace");
 
-                Log.warn("aaa %d", 2);
+            Log.warn("aaa %d", 2);
 
-                expect(console.warn).toCalledWith("aaa %d", 2);
-            });
-            it("else, use Log.log", function(){
-                sandbox.stub(console, "warn", null);
-                sandbox.stub(Log, "log");
+            expect(console.warn).toCalledWith("aaa %d", 2);
+            expect(console.trace).toCalledWith("warn trace");
+        });
+        it("else, use Log.log", function(){
+            sandbox.stub(console, "warn", null);
+            sandbox.stub(Log, "log");
 
-                Log.warn("aaa %d", 2);
+            Log.warn("aaa %d", 2);
 
-                expect(Log.log).toCalledWith("aaa %d", 2);
-            });
+            expect(Log.log).toCalledWith("aaa %d", 2);
+        });
     });
 });
 

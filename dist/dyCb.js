@@ -39,9 +39,10 @@ var dyCb;
             for (var _i = 0; _i < arguments.length; _i++) {
                 message[_i - 0] = arguments[_i];
             }
-            this._exec("trace", Array.prototype.slice.call(arguments, 0));
-            if (!this._exec("log", arguments)) {
-                window.alert(Array.prototype.slice.call(arguments, 0).join(","));
+            if (!this._exec("trace", Array.prototype.slice.call(arguments, 0))) {
+                if (!this._exec("log", arguments)) {
+                    window.alert(Array.prototype.slice.call(arguments, 0).join(","));
+                }
             }
         };
         /**
@@ -96,8 +97,12 @@ var dyCb;
             for (var _i = 0; _i < arguments.length; _i++) {
                 message[_i - 0] = arguments[_i];
             }
-            if (!this._exec("warn", arguments)) {
+            var result = this._exec("warn", arguments);
+            if (!result) {
                 this.log.apply(this, arguments);
+            }
+            else {
+                this._exec("trace", ["warn trace"]);
             }
         };
         Log._exec = function (consoleMethod, args, sliceBegin) {

@@ -91,10 +91,10 @@ module dyCb {
          * @param {String} message
          */
         public static log(...message) {
-            this._exec("trace", Array.prototype.slice.call(arguments, 0));
-
-            if(!this._exec("log", arguments)) {
-                window.alert(Array.prototype.slice.call(arguments, 0).join(","));
+            if(!this._exec("trace", Array.prototype.slice.call(arguments, 0))){
+                if(!this._exec("log", arguments)) {
+                    window.alert(Array.prototype.slice.call(arguments, 0).join(","));
+                }
             }
         }
 
@@ -140,8 +140,13 @@ module dyCb {
         }
 
         public static warn(...message) {
-            if (!this._exec("warn", arguments)) {
+            var result = this._exec("warn", arguments);
+
+            if (!result) {
                 this.log.apply(this, arguments);
+            }
+            else{
+                this._exec("trace", ["warn trace"]);
             }
         }
 
