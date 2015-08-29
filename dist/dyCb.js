@@ -392,6 +392,15 @@ var dyCb;
             }
             return result;
         };
+        Hash.prototype.getValues = function () {
+            var result = dyCb.Collection.create(), children = this._children, key = null;
+            for (key in children) {
+                if (children.hasOwnProperty(key)) {
+                    result.addChild(children[key]);
+                }
+            }
+            return result;
+        };
         Hash.prototype.getChild = function (key) {
             return this._children[key];
         };

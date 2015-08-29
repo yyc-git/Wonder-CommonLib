@@ -47,6 +47,20 @@ module dyCb {
             return result;
         }
 
+        public getValues(){
+            var result = Collection.create(),
+                children = this._children,
+                key = null;
+
+            for(key in children){
+                if(children.hasOwnProperty(key)) {
+                    result.addChild(children[key]);
+                }
+            }
+
+            return result;
+        }
+
         public getChild(key:string) {
             return this._children[key];
         }

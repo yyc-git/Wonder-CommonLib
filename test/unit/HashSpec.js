@@ -49,7 +49,17 @@ describe("Hash", function () {
             expect(hash.getKeys().getChildren()).toEqual(["a1", "a2"]);
         });
     });
-    
+
+    describe("getValues", function(){
+        it("get all values", function(){
+            hash.addChild("a1", 1);
+            hash.addChild("a2", 2);
+
+            expect(hash.getValues()).toBeInstanceOf(dyCb.Collection);
+            expect(hash.getValues().getChildren()).toEqual([1, 2]);
+        });
+    });
+
     describe("getCount", function(){
         it("empty container's count is zero", function(){
             expect(hash.getCount()).toEqual(0);
