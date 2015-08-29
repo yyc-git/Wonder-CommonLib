@@ -18,7 +18,7 @@ module dyCb {
                 : Collection.create<T>(ExtendUtils.extend([], this.children));
         }
 
-        public filter(func):Collection<T> {
+        public filter(func:(value:T, index:number) => boolean):Collection<T> {
             var scope = this.children,
                 result:Array<T> = [];
 
@@ -32,15 +32,31 @@ module dyCb {
             return Collection.create<T>(result);
         }
 
+        public findOne(func:(value:T, index:number) => boolean){
+            var scope = this.children,
+                result:T = null;
+
+            this.forEach((value:T, index) => {
+                if (!func.call(scope, value, index)) {
+                    return;
+                }
+
+                result = value;
+                return $BREAK;
+            });
+
+            return result;
+        }
+
         public reverse () {
             return Collection.create<any>(this.copyChildren().reverse());
         }
 
-        public sort(func){
+        public sort(func:(a:T, b:T) => any){
             return Collection.create<any>(this.copyChildren().sort(func));
         }
 
-        public map(func:Function){
+        public map(func:(value:T, index:number) => any){
             var resultArr = [];
 
             this.forEach((e, index) => {

@@ -261,9 +261,10 @@ declare module dyCb {
         static create<T>(children?: any[]): Collection<T>;
         constructor(children?: Array<T>);
         copy(isDeep?: boolean): Collection<T>;
-        filter(func: any): Collection<T>;
+        filter(func: (value: T, index: number) => boolean): Collection<T>;
+        findOne(func: (value: T, index: number) => boolean): T;
         reverse(): Collection<any>;
-        sort(func: any): Collection<any>;
-        map(func: Function): Collection<any>;
+        sort(func: (a: T, b: T) => any): Collection<any>;
+        map(func: (value: T, index: number) => any): Collection<any>;
     }
 }

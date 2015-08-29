@@ -985,6 +985,17 @@ var dyCb;
             });
             return Collection.create(result);
         };
+        Collection.prototype.findOne = function (func) {
+            var scope = this.children, result = null;
+            this.forEach(function (value, index) {
+                if (!func.call(scope, value, index)) {
+                    return;
+                }
+                result = value;
+                return dyCb.$BREAK;
+            });
+            return result;
+        };
         Collection.prototype.reverse = function () {
             return Collection.create(this.copyChildren().reverse());
         };

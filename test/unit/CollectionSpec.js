@@ -83,6 +83,35 @@ describe("Collection", function () {
         });
     });
 
+    describe("findOne", function () {
+        it("return the first filtered element", function () {
+            var child1 = {a: 1},
+                child2 = {a: 2},
+                child3 = {a: 2};
+            collection.addChildren([child1, child2, child3]);
+
+            var result = collection.findOne(function (e) {
+                return e.a === 2;
+            });
+
+            expect(collection.getChildren()).toEqual([child1, child2, child3]);
+            expect(result).toEqual(child2);
+        });
+        it("this is point to container", function(){
+            var child1 = {a: 1},
+                child2 = {a: 2},
+                child3 = {a: 2};
+            collection.addChildren([child1, child2, child3]);
+
+            var result = collection.findOne(function (value, index) {
+                return this[index].a === 2;
+            });
+
+            expect(collection.getChildren()).toEqual([child1, child2, child3]);
+            expect(result).toEqual(child2);
+        });
+    });
+
     describe("sort", function () {
         it("return the sorted elements", function () {
             collection.addChild(2);
