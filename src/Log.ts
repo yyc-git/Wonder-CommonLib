@@ -133,9 +133,14 @@ module dyCb {
 
         public static error(cond, ...message):any {
             if (cond) {
-                if (!this._exec("error", arguments, 1)) {
+                /*!
+                console.error will not interrupt, it will throw error and continue exec the left statements
+
+                but here need interrupt! so not use it here.
+                 */
+                //if (!this._exec("error", arguments, 1)) {
                     throw new Error(Array.prototype.slice.call(arguments, 1).join("\n"));
-                }
+                //}
             }
         }
 

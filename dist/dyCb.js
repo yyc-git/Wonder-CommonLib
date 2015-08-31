@@ -87,9 +87,13 @@ var dyCb;
                 message[_i - 1] = arguments[_i];
             }
             if (cond) {
-                if (!this._exec("error", arguments, 1)) {
-                    throw new Error(Array.prototype.slice.call(arguments, 1).join("\n"));
-                }
+                /*!
+                console.error will not interrupt, it will throw error and continue exec the left statements
+
+                but here need interrupt! so not use it here.
+                 */
+                //if (!this._exec("error", arguments, 1)) {
+                throw new Error(Array.prototype.slice.call(arguments, 1).join("\n"));
             }
         };
         Log.warn = function () {

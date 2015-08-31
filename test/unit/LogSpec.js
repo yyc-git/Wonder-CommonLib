@@ -71,15 +71,15 @@ describe("Log", function () {
 
     describe("error", function(){
         describe("if true", function(){
-            it("if console.error exist, use it", function(){
-                sandbox.stub(console, "error");
-
-                expect(function(){
-                    Log.error(true, "aaa %d", 2);
-                }).not.toThrow();
-
-                expect(console.error).toCalledWith("aaa %d", 2);
-            });
+            //it("if console.error exist, use it", function(){
+            //    sandbox.stub(console, "error");
+            //
+            //    expect(function(){
+            //        Log.error(true, "aaa %d", 2);
+            //    }).not.toThrow();
+            //
+            //    expect(console.error).toCalledWith("aaa %d", 2);
+            //});
             it("else, throw error", function(){
                 sandbox.stub(console, "error", null);
 
