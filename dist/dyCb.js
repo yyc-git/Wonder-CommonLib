@@ -147,8 +147,14 @@ var dyCb;
                     throw new Error("arguments.length must <= 3");
                 }
             },
-            FUNC_INVALID: function (value) {
-                return this.assertion("invalid", value);
+            FUNC_INVALID: function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i - 0] = arguments[_i];
+                }
+                var arr = Array.prototype.slice.call(arguments, 0);
+                arr.unshift("invalid");
+                return this.assertion.apply(this, arr);
             },
             FUNC_MUST: function () {
                 var args = [];
@@ -186,29 +192,77 @@ var dyCb;
                 arr.unshift("should");
                 return this.assertion.apply(this, arr);
             },
-            FUNC_SUPPORT: function (value) {
-                return this.assertion("support", value);
+            FUNC_SUPPORT: function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i - 0] = arguments[_i];
+                }
+                var arr = Array.prototype.slice.call(arguments, 0);
+                arr.unshift("support");
+                return this.assertion.apply(this, arr);
             },
-            FUNC_NOT_SUPPORT: function (value) {
-                return this.assertion("not support", value);
+            FUNC_NOT_SUPPORT: function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i - 0] = arguments[_i];
+                }
+                var arr = Array.prototype.slice.call(arguments, 0);
+                arr.unshift("not support");
+                return this.assertion.apply(this, arr);
             },
-            FUNC_MUST_DEFINE: function (value) {
-                return this.assertion("must define", value);
+            FUNC_MUST_DEFINE: function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i - 0] = arguments[_i];
+                }
+                var arr = Array.prototype.slice.call(arguments, 0);
+                arr.unshift("must define");
+                return this.assertion.apply(this, arr);
             },
-            FUNC_MUST_NOT_DEFINE: function (value) {
-                return this.assertion("must not define", value);
+            FUNC_MUST_NOT_DEFINE: function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i - 0] = arguments[_i];
+                }
+                var arr = Array.prototype.slice.call(arguments, 0);
+                arr.unshift("must not define");
+                return this.assertion.apply(this, arr);
             },
-            FUNC_UNKNOW: function (value) {
-                return this.assertion("unknow", value);
+            FUNC_UNKNOW: function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i - 0] = arguments[_i];
+                }
+                var arr = Array.prototype.slice.call(arguments, 0);
+                arr.unshift("unknow");
+                return this.assertion.apply(this, arr);
             },
-            FUNC_EXPECT: function (value) {
-                return this.assertion("expect", value);
+            FUNC_EXPECT: function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i - 0] = arguments[_i];
+                }
+                var arr = Array.prototype.slice.call(arguments, 0);
+                arr.unshift("expect");
+                return this.assertion.apply(this, arr);
             },
-            FUNC_UNEXPECT: function (value) {
-                return this.assertion("unexpected", value);
+            FUNC_UNEXPECT: function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i - 0] = arguments[_i];
+                }
+                var arr = Array.prototype.slice.call(arguments, 0);
+                arr.unshift("unexpect");
+                return this.assertion.apply(this, arr);
             },
-            FUNC_NOT_EXIST: function (value) {
-                return this.assertion("not exist", value);
+            FUNC_NOT_EXIST: function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i - 0] = arguments[_i];
+                }
+                var arr = Array.prototype.slice.call(arguments, 0);
+                arr.unshift("not exist");
+                return this.assertion.apply(this, arr);
             }
         };
         return Log;

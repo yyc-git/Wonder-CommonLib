@@ -16,19 +16,19 @@ declare module dyCb {
             ABSTRACT_METHOD: string;
             helperFunc: (...args: any[]) => string;
             assertion: (...args: any[]) => any;
-            FUNC_INVALID: (value: any) => any;
+            FUNC_INVALID: (...args: any[]) => any;
             FUNC_MUST: (...args: any[]) => any;
             FUNC_MUST_BE: (...args: any[]) => any;
             FUNC_MUST_NOT_BE: (...args: any[]) => any;
             FUNC_SHOULD: (...args: any[]) => any;
-            FUNC_SUPPORT: (value: any) => any;
-            FUNC_NOT_SUPPORT: (value: any) => any;
-            FUNC_MUST_DEFINE: (value: any) => any;
-            FUNC_MUST_NOT_DEFINE: (value: any) => any;
-            FUNC_UNKNOW: (value: any) => any;
-            FUNC_EXPECT: (value: any) => any;
-            FUNC_UNEXPECT: (value: any) => any;
-            FUNC_NOT_EXIST: (value: any) => any;
+            FUNC_SUPPORT: (...args: any[]) => any;
+            FUNC_NOT_SUPPORT: (...args: any[]) => any;
+            FUNC_MUST_DEFINE: (...args: any[]) => any;
+            FUNC_MUST_NOT_DEFINE: (...args: any[]) => any;
+            FUNC_UNKNOW: (...args: any[]) => any;
+            FUNC_EXPECT: (...args: any[]) => any;
+            FUNC_UNEXPECT: (...args: any[]) => any;
+            FUNC_NOT_EXIST: (...args: any[]) => any;
         };
         /**
          * Output Debug message.

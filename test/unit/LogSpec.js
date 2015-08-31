@@ -14,6 +14,9 @@ describe("Log", function () {
         it("FUNC_MUST_NOT_BE", function(){
             expect(Log.info.FUNC_MUST_NOT_BE("a", "b")).toEqual("a must not be b");
         });
+        it("FUNC_MUST_NOT_DEFINE", function(){
+            expect(Log.info.FUNC_MUST_NOT_DEFINE("a", "b")).toEqual("a must not define b");
+        });
     });
 
     describe("log", function(){
