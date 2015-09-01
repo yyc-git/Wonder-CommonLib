@@ -82,29 +82,6 @@ module dyCb {
         //}
         //
 
-        public removeChild(arg:any) {
-            if (JudgeUtils.isFunction(arg)) {
-                let func = <Function>arg;
-
-                this._removeChild(this.children, func);
-            }
-            else if (arg.uid) {
-                this._removeChild(this.children, (e) => {
-                    if (!e.uid) {
-                        return false;
-                    }
-                    return e.uid === arg.uid;
-                });
-            }
-            else {
-                this._removeChild(this.children,  (e) => {
-                    return e === arg;
-                });
-            }
-
-            return this;
-        }
-
         public toArray(){
             return this.children;
         }
@@ -112,6 +89,32 @@ module dyCb {
         protected copyChildren(){
             return this.children.slice(0);
         }
+
+        protected removeChildHelper(arg:any):Array<T> {
+            var result = null;
+
+            if (JudgeUtils.isFunction(arg)) {
+                let func = <Function>arg;
+
+                result = this._removeChild(this.children, func);
+            }
+            else if (arg.uid) {
+                result = this._removeChild(this.children, (e) => {
+                    if (!e.uid) {
+                        return false;
+                    }
+                    return e.uid === arg.uid;
+                });
+            }
+            else {
+                result = this._removeChild(this.children,  (e) => {
+                    return e === arg;
+                });
+            }
+
+            return result;
+        }
+
 
         private _indexOf(arr:any[], arg:any) {
             var result = -1;
@@ -169,11 +172,11 @@ module dyCb {
 
             //if (index !== null && index !== -1) {
             if (index !== -1) {
-                arr.splice(index, 1);
+                return arr.splice(index, 1);
                 //return true;
             }
             //return false;
-            return arr;
+            return [];
         }
     }
 }

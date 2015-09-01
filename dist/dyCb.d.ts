@@ -80,9 +80,9 @@ declare module dyCb {
         addChildren(arg: Array<T> | List<T> | any): List<T>;
         removeAllChildren(): List<T>;
         forEach(func: Function, context?: any): List<T>;
-        removeChild(arg: any): List<T>;
         toArray(): T[];
         protected copyChildren(): T[];
+        protected removeChildHelper(arg: any): Array<T>;
         private _indexOf(arr, arg);
         private _contain(arr, arg);
         private _forEach(arr, func, context?);
@@ -108,7 +108,7 @@ declare module dyCb {
         setValue(key: string, value: T): void;
         addChild(key: string, value: T): Hash<T>;
         appendChild(key: string, value: any): Hash<T>;
-        removeChild(arg: any): Hash<T>;
+        removeChild(arg: any): Collection<{}>;
         removeAllChildren(): void;
         hasChild(arg: any): boolean;
         forEach(func: Function, context?: any): Hash<T>;
@@ -265,6 +265,7 @@ declare module dyCb {
         filter(func: (value: T, index: number) => boolean): Collection<T>;
         findOne(func: (value: T, index: number) => boolean): T;
         reverse(): Collection<any>;
+        removeChild(arg: any): Collection<{}>;
         sort(func: (a: T, b: T) => any): Collection<any>;
         map(func: (value: T, index: number) => any): Collection<any>;
     }

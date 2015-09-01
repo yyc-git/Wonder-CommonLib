@@ -113,15 +113,15 @@ describe("List", function () {
         });
     });
 
-    describe("removeChild", function () {
-        it("return list instance", function(){
+    describe("removeChildHelper", function () {
+        it("return removed elements", function(){
             var arr = [1, 2];
 
             list.addChildren(arr);
 
-            expect(list.removeChild(function (e) {
+            expect(list.removeChildHelper(function (e) {
                 return e === 1;
-            })).toEqual(list);
+            })).toEqual([arr[0]]);
         });
 
         describe("如果第一个参数为function", function () {
@@ -132,7 +132,7 @@ describe("List", function () {
                 };
                 list.addChild(child);
 
-                list.removeChild(function (e) {
+                list.removeChildHelper(function (e) {
                     if (e.x === 1 && e.y === 1) {
                         return true;
                     }
@@ -152,7 +152,7 @@ describe("List", function () {
                 };
                 list.addChild(child);
 
-                list.removeChild(function (e) {
+                list.removeChildHelper(function (e) {
                     if (e.x === target.x && e.y === target.y) {
                         return true;
                     }
@@ -166,10 +166,10 @@ describe("List", function () {
             //
             //    list.addChildren(arr);
             //
-            //    expect(list.removeChild(function (e) {
+            //    expect(list.removeChildHelper(function (e) {
             //        return e === 1;
             //    })).toBeTruthy();
-            //    expect(list.removeChild(function (e) {
+            //    expect(list.removeChildHelper(function (e) {
             //        return e === 1;
             //    })).toBeFalsy();
             //});
@@ -191,7 +191,7 @@ describe("List", function () {
                 var child = buildObj(1);
                 list.addChild(child);
 
-                list.removeChild(child);
+                list.removeChildHelper(child);
 
                 expect(list.getChildren().length).toEqual(0);
             });
@@ -200,8 +200,8 @@ describe("List", function () {
             //
             //    list.addChild(child);
             //
-            //    expect(list.removeChild(child)).toBeTruthy();
-            //    expect(list.removeChild(child)).toBeFalsy();
+            //    expect(list.removeChildHelper(child)).toBeTruthy();
+            //    expect(list.removeChildHelper(child)).toBeFalsy();
             //});
         });
 
@@ -214,11 +214,11 @@ describe("List", function () {
                 list.addChild(child);
                 list.addChild(1);
 
-                list.removeChild(child);
+                list.removeChildHelper(child);
 
                 expect(list.getChildren().length).toEqual(1);
 
-                list.removeChild(1);
+                list.removeChildHelper(1);
 
                 expect(list.getChildren().length).toEqual(0);
             });
@@ -227,8 +227,8 @@ describe("List", function () {
             //
             //    list.addChildren(arr);
             //
-            //    expect(list.removeChild(1)).toBeTruthy();
-            //    expect(list.removeChild(1)).toBeFalsy();
+            //    expect(list.removeChildHelper(1)).toBeTruthy();
+            //    expect(list.removeChildHelper(1)).toBeFalsy();
             //});
         });
 

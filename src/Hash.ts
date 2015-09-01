@@ -95,8 +95,12 @@ module dyCb {
         }
 
         public removeChild(arg:any){
+            var result = [];
+
             if(JudgeUtils.isString(arg)){
                 let key = <string>arg;
+
+                result.push(this._children[key]);
 
                 this._children[key] = undefined;
                 delete this._children[key];
@@ -105,16 +109,17 @@ module dyCb {
                 let func = <Function>arg,
                     self = this;
 
-                //return this._removeChild(this._children, arg);
                 this.forEach((val, key) => {
                     if(func(val, key)){
+                        result.push(self._children[key]);
+
                         self._children[key] = undefined;
                         delete self._children[key];
                     }
                 });
             }
 
-            return this;
+            return Collection.create(result);
         }
 
         public removeAllChildren(){

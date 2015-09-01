@@ -337,13 +337,20 @@ var dyCb;
         //    this.children.splice(index, 1);
         //}
         //
-        List.prototype.removeChild = function (arg) {
+        List.prototype.toArray = function () {
+            return this.children;
+        };
+        List.prototype.copyChildren = function () {
+            return this.children.slice(0);
+        };
+        List.prototype.removeChildHelper = function (arg) {
+            var result = null;
             if (dyCb.JudgeUtils.isFunction(arg)) {
                 var func = arg;
-                this._removeChild(this.children, func);
+                result = this._removeChild(this.children, func);
             }
             else if (arg.uid) {
-                this._removeChild(this.children, function (e) {
+                result = this._removeChild(this.children, function (e) {
                     if (!e.uid) {
                         return false;
                     }
@@ -351,17 +358,11 @@ var dyCb;
                 });
             }
             else {
-                this._removeChild(this.children, function (e) {
+                result = this._removeChild(this.children, function (e) {
                     return e === arg;
                 });
             }
-            return this;
-        };
-        List.prototype.toArray = function () {
-            return this.children;
-        };
-        List.prototype.copyChildren = function () {
-            return this.children.slice(0);
+            return result;
         };
         List.prototype._indexOf = function (arr, arg) {
             var result = -1;
@@ -405,10 +406,10 @@ var dyCb;
             });
             //if (index !== null && index !== -1) {
             if (index !== -1) {
-                arr.splice(index, 1);
+                return arr.splice(index, 1);
             }
             //return false;
-            return arr;
+            return [];
         };
         return List;
     })();
@@ -486,22 +487,24 @@ var dyCb;
             return this;
         };
         Hash.prototype.removeChild = function (arg) {
+            var result = [];
             if (dyCb.JudgeUtils.isString(arg)) {
                 var key = arg;
+                result.push(this._children[key]);
                 this._children[key] = undefined;
                 delete this._children[key];
             }
             else if (dyCb.JudgeUtils.isFunction(arg)) {
                 var func = arg, self_1 = this;
-                //return this._removeChild(this._children, arg);
                 this.forEach(function (val, key) {
                     if (func(val, key)) {
+                        result.push(self_1._children[key]);
                         self_1._children[key] = undefined;
                         delete self_1._children[key];
                     }
                 });
             }
-            return this;
+            return dyCb.Collection.create(result);
         };
         Hash.prototype.removeAllChildren = function () {
             this._children = {};
@@ -1065,6 +1068,9 @@ var dyCb;
         };
         Collection.prototype.reverse = function () {
             return Collection.create(this.copyChildren().reverse());
+        };
+        Collection.prototype.removeChild = function (arg) {
+            return Collection.create(this.removeChildHelper(arg));
         };
         Collection.prototype.sort = function (func) {
             return Collection.create(this.copyChildren().sort(func));

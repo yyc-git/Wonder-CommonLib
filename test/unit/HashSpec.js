@@ -139,12 +139,37 @@ describe("Hash", function () {
     });
 
     describe("removeChild", function () {
-        it("从容器中删除元素", function () {
+        describe("remove element", function () {
+            it("if param is string, remove the element which key===param", function(){
+                hash.addChild("a", {});
+
+                hash.removeChild("a");
+
+                expect(hash.getChild("a")).toBeUndefined();
+            });
+            it("else if param is function, remove the element which function return true", function(){
+                hash.addChild("a", {});
+                hash.addChild("b", 1);
+
+                hash.removeChild(function(val, key){
+                    return val === 1;
+                });
+
+                expect(hash.getChild("b")).toBeUndefined();
+            })
+        });
+
+        it("return removed elements", function(){
             hash.addChild("a", {});
+            hash.addChild("b", 1);
 
-            hash.removeChild("a");
+            var result1 = hash.removeChild("a");
+            var result2 = hash.removeChild(function(val, key){
+                return key === "b";
+            });
 
-            expect(hash.getChild("a")).toBeUndefined();
+            expect(result1.getChildren()).toEqual([{}]);
+            expect(result2.getChildren()).toEqual([1]);
         });
     });
 

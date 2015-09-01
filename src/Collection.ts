@@ -52,6 +52,10 @@ module dyCb {
             return Collection.create<any>(this.copyChildren().reverse());
         }
 
+        public removeChild(arg:any){
+            return Collection.create(this.removeChildHelper(arg));
+        }
+
         public sort(func:(a:T, b:T) => any){
             return Collection.create<any>(this.copyChildren().sort(func));
         }
