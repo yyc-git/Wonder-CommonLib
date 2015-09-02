@@ -49,15 +49,15 @@ module dyCb {
         }
 
         public reverse () {
-            return Collection.create<any>(this.copyChildren().reverse());
+            return Collection.create<T>(this.copyChildren().reverse());
         }
 
         public removeChild(arg:any){
-            return Collection.create(this.removeChildHelper(arg));
+            return Collection.create<T>(this.removeChildHelper(arg));
         }
 
         public sort(func:(a:T, b:T) => any){
-            return Collection.create<any>(this.copyChildren().sort(func));
+            return Collection.create<T>(this.copyChildren().sort(func));
         }
 
         public map(func:(value:T, index:number) => any){
