@@ -107,6 +107,9 @@ declare module dyCb {
         getChild(key: string): T;
         setValue(key: string, value: T): void;
         addChild(key: string, value: T): Hash<T>;
+        addChildren(children: {
+            any;
+        }): void;
         appendChild(key: string, value: any): Hash<T>;
         removeChild(arg: any): Collection<{}>;
         removeAllChildren(): void;

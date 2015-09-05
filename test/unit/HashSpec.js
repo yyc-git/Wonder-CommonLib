@@ -94,6 +94,24 @@ describe("Hash", function () {
         });
     });
 
+    describe("addChildren", function(){
+        it("add elements", function(){
+            hash.addChildren({
+                a: 1,
+                b: "b"
+            });
+            hash.addChildren({
+                c: true
+            });
+
+            expect(hash.getChildren()).toEqual({
+                a: 1,
+                b: "b",
+                c: true
+            });
+        });
+    });
+
     describe("appendChild", function () {
         it("如果容器中没有键为key的值，则将该key的值设为Collection并加入", function () {
             var value = null;

@@ -470,6 +470,14 @@ var dyCb;
             this._children[key] = value;
             return this;
         };
+        Hash.prototype.addChildren = function (children) {
+            var i = null;
+            for (i in children) {
+                if (children.hasOwnProperty(i)) {
+                    this.setValue(i, children[i]);
+                }
+            }
+        };
         Hash.prototype.appendChild = function (key, value) {
             //if (JudgeUtils.isArray(this._children[key])) {
             //    this._children[key].push(value);

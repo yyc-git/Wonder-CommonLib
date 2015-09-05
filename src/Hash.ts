@@ -75,6 +75,16 @@ module dyCb {
             return this;
         }
 
+        public addChildren(children:{any}){
+            var i = null;
+
+            for(i in children){
+                if(children.hasOwnProperty(i)){
+                    this.setValue(i, children[i]);
+                }
+            }
+        }
+
         public appendChild(key:string, value:any) {
             //if (JudgeUtils.isArray(this._children[key])) {
             //    this._children[key].push(value);
