@@ -114,14 +114,25 @@ describe("List", function () {
     });
 
     describe("removeChildHelper", function () {
-        it("return removed elements", function(){
-            var arr = [1, 2];
+        it("return all removed elements", function(){
+            var arr = [1, 2, 1];
 
             list.addChildren(arr);
 
             expect(list.removeChildHelper(function (e) {
                 return e === 1;
-            })).toEqual([arr[0]]);
+            })).toEqual([1, 1]);
+            expect(list.getChildren()).toEqual([2]);
+        });
+        it("event only remove 1 element, it will return array", function(){
+            var arr = [1, 2, 1];
+
+            list.addChildren(arr);
+
+            expect(list.removeChildHelper(function (e) {
+                return e === 2;
+            })).toEqual([2]);
+            expect(list.getChildren()).toEqual([1, 1]);
         });
 
         describe("如果第一个参数为function", function () {

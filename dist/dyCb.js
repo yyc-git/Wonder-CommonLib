@@ -400,16 +400,17 @@ var dyCb;
             }
         };
         List.prototype._removeChild = function (arr, func) {
-            var self = this, index = null;
-            index = this._indexOf(arr, function (e, index) {
-                return !!func.call(self, e);
+            var self = this, index = null, removedElementArr = [], remainElementArr = [];
+            this._forEach(arr, function (e, index) {
+                if (!!func.call(self, e)) {
+                    removedElementArr.push(e);
+                }
+                else {
+                    remainElementArr.push(e);
+                }
             });
-            //if (index !== null && index !== -1) {
-            if (index !== -1) {
-                return arr.splice(index, 1);
-            }
-            //return false;
-            return [];
+            this.children = remainElementArr;
+            return removedElementArr;
         };
         return List;
     })();

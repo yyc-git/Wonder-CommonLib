@@ -164,19 +164,22 @@ module dyCb {
 
         private _removeChild(arr:T[], func:Function) {
             var self = this,
-                index = null;
+                index = null,
+                removedElementArr = [],
+                remainElementArr = [];
 
-            index = this._indexOf(arr, (e, index) => {
-                return !!func.call(self, e);
+            this._forEach(arr, (e, index) => {
+                if(!!func.call(self, e)){
+                    removedElementArr.push(e);
+                }
+                else{
+                    remainElementArr.push(e);
+                }
             });
 
-            //if (index !== null && index !== -1) {
-            if (index !== -1) {
-                return arr.splice(index, 1);
-                //return true;
-            }
-            //return false;
-            return [];
+            this.children = remainElementArr;
+
+            return removedElementArr;
         }
     }
 }

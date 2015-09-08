@@ -152,4 +152,34 @@ describe("Collection", function () {
             expect(collection.getChildren()).toEqual([1, 2]);
         });
     });
+
+
+    describe("removeChild", function () {
+        it("return all removed elements Collection", function () {
+            var arr = [1, 2, 1];
+
+            collection.addChildren(arr);
+
+            var result = collection.removeChild(function (e) {
+                return e === 1;
+            });
+
+            expect(result).toBeInstanceOf(dyCb.Collection);
+            expect(result.getChildren()).toEqual([1, 1]);
+            expect(collection.getChildren()).toEqual([2]);
+        });
+        it("event only remove 1 element, it will return array", function () {
+            var arr = [1, 2, 1];
+
+            collection.addChildren(arr);
+
+            var result = collection.removeChild(function (e) {
+                return e === 2;
+            });
+
+            expect(result).toBeInstanceOf(dyCb.Collection);
+            expect(result.getChildren()).toEqual([2]);
+            expect(collection.getChildren()).toEqual([1, 1]);
+        });
+    });
 });
