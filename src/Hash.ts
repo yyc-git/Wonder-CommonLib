@@ -67,6 +67,8 @@ module dyCb {
 
         public setValue(key:string, value:T){
             this._children[key] = value;
+
+            return this;
         }
 
         public addChild(key:string, value:T) {
@@ -75,23 +77,25 @@ module dyCb {
             return this;
         }
 
-        public addChildren(children:{any}){
-            var i = null;
+        public addChildren(arg:{}|Hash<T>){
+            var i = null,
+                children = null;
+
+            if(arg instanceof Hash){
+                children = arg.getChildren();
+            }
+            else{
+                children = arg;
+            }
 
             for(i in children){
                 if(children.hasOwnProperty(i)){
-                    this.setValue(i, children[i]);
+                    this.addChild(i, children[i]);
                 }
             }
         }
 
         public appendChild(key:string, value:any) {
-            //if (JudgeUtils.isArray(this._children[key])) {
-            //    this._children[key].push(value);
-            //}
-            //else {
-            //    this._children[key] = [value];
-            //}
             if (this._children[key] instanceof Collection) {
                 let c = <any>(this._children[key]);
 

@@ -466,16 +466,23 @@ var dyCb;
         };
         Hash.prototype.setValue = function (key, value) {
             this._children[key] = value;
+            return this;
         };
         Hash.prototype.addChild = function (key, value) {
             this._children[key] = value;
             return this;
         };
-        Hash.prototype.addChildren = function (children) {
-            var i = null;
+        Hash.prototype.addChildren = function (arg) {
+            var i = null, children = null;
+            if (arg instanceof Hash) {
+                children = arg.getChildren();
+            }
+            else {
+                children = arg;
+            }
             for (i in children) {
                 if (children.hasOwnProperty(i)) {
-                    this.setValue(i, children[i]);
+                    this.addChild(i, children[i]);
                 }
             }
         };

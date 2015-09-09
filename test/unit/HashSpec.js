@@ -103,11 +103,15 @@ describe("Hash", function () {
             hash.addChildren({
                 c: true
             });
+            hash.addChildren(dyCb.Hash.create({
+                d: 2
+            }));
 
             expect(hash.getChildren()).toEqual({
                 a: 1,
                 b: "b",
-                c: true
+                c: true,
+                d: 2
             });
         });
     });
