@@ -105,8 +105,8 @@ declare module dyCb {
         getKeys(): Collection<{}>;
         getValues(): Collection<{}>;
         getChild(key: string): T;
-        setValue(key: string, value: T): Hash<T>;
-        addChild(key: string, value: T): Hash<T>;
+        setValue(key: string, value: any): Hash<T>;
+        addChild(key: string, value: any): Hash<T>;
         addChildren(arg: {} | Hash<T>): void;
         appendChild(key: string, value: any): Hash<T>;
         removeChild(arg: any): Collection<{}>;
@@ -115,6 +115,7 @@ declare module dyCb {
         forEach(func: Function, context?: any): Hash<T>;
         filter(func: Function): Hash<{}>;
         map(func: Function): Hash<{}>;
+        toCollection(): Collection<any>;
     }
 }
 

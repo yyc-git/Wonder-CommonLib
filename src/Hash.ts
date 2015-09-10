@@ -65,13 +65,13 @@ module dyCb {
             return this._children[key];
         }
 
-        public setValue(key:string, value:T){
+        public setValue(key:string, value:any){
             this._children[key] = value;
 
             return this;
         }
 
-        public addChild(key:string, value:T) {
+        public addChild(key:string, value:any) {
             this._children[key] = value;
 
             return this;
@@ -123,7 +123,7 @@ module dyCb {
                 let func = <Function>arg,
                     self = this;
 
-                this.forEach((val, key) => {
+                this.forEach((val:any, key:string) => {
                     if(func(val, key)){
                         result.push(self._children[key]);
 
@@ -145,7 +145,7 @@ module dyCb {
                 let func = <Function>arguments[0],
                     result = false;
 
-                this.forEach((val, key) => {
+                this.forEach((val:any, key:string) => {
                     if(func(val, key)){
                         result = true;
                         return $BREAK;
@@ -180,7 +180,7 @@ module dyCb {
             var result = {},
                 scope = this._children;
 
-            this.forEach((val, key) => {
+            this.forEach((val:any, key:string) => {
                 if(!func.call(scope, val, key)){
                     return;
                 }
@@ -194,7 +194,7 @@ module dyCb {
         public map(func:Function) {
             var resultMap = {};
 
-            this.forEach((val, key) => {
+            this.forEach((val:any, key:string) => {
                 var result = func(val, key);
 
                 if(result !== $REMOVE){
@@ -205,6 +205,24 @@ module dyCb {
             });
 
             return Hash.create(resultMap);
+        }
+
+        public toCollection(): Collection<any>{
+            var result = Collection.create<any>();
+
+            this.forEach((val:any, key:string) => {
+                if(val instanceof Collection){
+                    result.addChildren(val);
+                }
+                else if(val instanceof Hash){
+                    Log.error(true, Log.info.FUNC_NOT_SUPPORT("toCollection", "value is Hash"));
+                }
+                else{
+                    result.addChild(val);
+                }
+            });
+
+            return result;
         }
     }
 }

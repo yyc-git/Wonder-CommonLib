@@ -324,30 +324,21 @@ describe("Hash", function () {
         });
     });
 
-    //describe("map", function () {
-    //    it("遍历容器", function () {
-    //        var sprite1 = sandbox.createSpyObj("clear"),
-    //            sprite2 = sandbox.createSpyObj("clear");
-    //        hash.addChild("a",sprite1);
-    //        hash.addChild("b",sprite2);
-    //
-    //        hash.map("clear", [1, 2]);
-    //
-    //        expect(sprite1.clear).toCalledWith(1, 2);
-    //        expect(sprite2.clear).toCalledWith(1, 2);
-    //    });
-    //    it("方法的this指向元素", function () {
-    //        var fakeElement1 = {
-    //            a: 1,
-    //            judge: function () {
-    //                this.a = 2;
-    //            }
-    //        };
-    //        hash.addChild("a",fakeElement1);
-    //
-    //        hash.map("judge", null);
-    //
-    //        expect(fakeElement1.a).toEqual(2);
-    //    });
-    //});
+    describe("toCollection", function(){
+        it("convert to Collection", function(){
+            hash.addChild("1", dyCb.Collection.create([1, 2]));
+            hash.addChild("2", true);
+
+            var result = hash.toCollection();
+            expect(result).toBeInstanceOf(dyCb.Collection);
+            expect(result.getChildren()).toEqual([1, 2, true]);
+        });
+        it("if val is Hash, error", function(){
+            hash.addChild("1", dyCb.Hash.create());
+
+            expect(function(){
+                var result = hash.toCollection();
+            }).toThrow();
+        });
+    });
 });

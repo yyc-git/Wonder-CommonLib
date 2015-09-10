@@ -487,12 +487,6 @@ var dyCb;
             }
         };
         Hash.prototype.appendChild = function (key, value) {
-            //if (JudgeUtils.isArray(this._children[key])) {
-            //    this._children[key].push(value);
-            //}
-            //else {
-            //    this._children[key] = [value];
-            //}
             if (this._children[key] instanceof dyCb.Collection) {
                 var c = (this._children[key]);
                 c.addChild(value);
@@ -570,6 +564,21 @@ var dyCb;
                 }
             });
             return Hash.create(resultMap);
+        };
+        Hash.prototype.toCollection = function () {
+            var result = dyCb.Collection.create();
+            this.forEach(function (val, key) {
+                if (val instanceof dyCb.Collection) {
+                    result.addChildren(val);
+                }
+                else if (val instanceof Hash) {
+                    dyCb.Log.error(true, dyCb.Log.info.FUNC_NOT_SUPPORT("toCollection", "value is Hash"));
+                }
+                else {
+                    result.addChild(val);
+                }
+            });
+            return result;
         };
         return Hash;
     })();
