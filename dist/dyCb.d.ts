@@ -270,5 +270,6 @@ declare module dyCb {
         removeChild(arg: any): Collection<T>;
         sort(func: (a: T, b: T) => any): Collection<T>;
         map(func: (value: T, index: number) => any): Collection<any>;
+        removeRepeatItems(): Collection<T>;
     }
 }

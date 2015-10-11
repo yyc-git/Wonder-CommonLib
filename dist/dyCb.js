@@ -585,11 +585,10 @@ var dyCb;
     dyCb.Hash = Hash;
 })(dyCb || (dyCb = {}));
 
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /// <reference path="Collection"/>
 var dyCb;
@@ -620,11 +619,10 @@ var dyCb;
     dyCb.Queue = Queue;
 })(dyCb || (dyCb = {}));
 
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /// <reference path="Collection"/>
 var dyCb;
@@ -1044,11 +1042,10 @@ var dyCb;
     dyCb.DomQuery = DomQuery;
 })(dyCb || (dyCb = {}));
 
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /// <reference path="definitions.d.ts"/>
 var dyCb;
@@ -1110,6 +1107,16 @@ var dyCb;
                 //e && e[handlerName] && e[handlerName].apply(context || e, valueArr);
             });
             return Collection.create(resultArr);
+        };
+        Collection.prototype.removeRepeatItems = function () {
+            var resultList = Collection.create();
+            this.forEach(function (item) {
+                if (resultList.hasChild(item)) {
+                    return;
+                }
+                resultList.addChild(item);
+            });
+            return resultList;
         };
         return Collection;
     })(dyCb.List);

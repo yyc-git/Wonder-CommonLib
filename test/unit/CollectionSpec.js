@@ -182,4 +182,13 @@ describe("Collection", function () {
             expect(collection.getChildren()).toEqual([1, 1]);
         });
     });
+
+    describe("removeRepeatItems", function(){
+        it("remove repeat items, not affect origin collection", function(){
+            collection.addChild(1).addChild(2).addChild(1).addChild(1);
+
+            expect(collection.removeRepeatItems().getChildren()).toEqual([1, 2]);
+            expect(collection.getChildren()).toEqual([1, 2, 1, 1]);
+        });
+    });
 });

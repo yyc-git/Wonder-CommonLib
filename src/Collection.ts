@@ -74,5 +74,19 @@ module dyCb {
 
             return Collection.create<any>(resultArr);
         }
+
+        public removeRepeatItems(){
+            var resultList =  Collection.create<T>();
+
+            this.forEach((item:T) => {
+                if (resultList.hasChild(item)) {
+                    return;
+                }
+
+                resultList.addChild(item);
+            });
+
+            return resultList;
+        }
     }
 }
