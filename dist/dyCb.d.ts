@@ -21,6 +21,7 @@ declare module dyCb {
             FUNC_MUST_BE: (...args: any[]) => any;
             FUNC_MUST_NOT_BE: (...args: any[]) => any;
             FUNC_SHOULD: (...args: any[]) => any;
+            FUNC_SHOULD_NOT: (...args: any[]) => any;
             FUNC_SUPPORT: (...args: any[]) => any;
             FUNC_NOT_SUPPORT: (...args: any[]) => any;
             FUNC_MUST_DEFINE: (...args: any[]) => any;

@@ -62,6 +62,13 @@ module dyCb {
 
                 return this.assertion.apply(this, arr);
             },
+            FUNC_SHOULD_NOT: function (...args) {
+                var arr = Array.prototype.slice.call(arguments, 0);
+
+                arr.unshift("should not");
+
+                return this.assertion.apply(this, arr);
+            },
             FUNC_SUPPORT: function(...args){
                 var arr = Array.prototype.slice.call(arguments, 0);
 

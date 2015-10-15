@@ -192,6 +192,15 @@ var dyCb;
                 arr.unshift("should");
                 return this.assertion.apply(this, arr);
             },
+            FUNC_SHOULD_NOT: function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i - 0] = arguments[_i];
+                }
+                var arr = Array.prototype.slice.call(arguments, 0);
+                arr.unshift("should not");
+                return this.assertion.apply(this, arr);
+            },
             FUNC_SUPPORT: function () {
                 var args = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
