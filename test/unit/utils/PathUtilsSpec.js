@@ -18,10 +18,17 @@ describe("PathUtils", function () {
             expect(Utils.extname("index")).toEqual("");
         })
     });
+
     describe("basename", function(){
         it("get filename+extname", function(){
             expect(Utils.basename("/foo/bar/baz/asdf/quux.html")).toEqual("quux.html");
             expect(Utils.basename("/foo/bar/baz/asdf/quux.html", ".html")).toEqual("quux");
+        });
+    });
+
+    describe("dirname", function(){
+        it("return the directory name of a path", function(){
+            expect(Utils.dirname("/foo/bar/baz/asdf/quux")).toEqual("/foo/bar/baz/asdf");
         });
     });
 });

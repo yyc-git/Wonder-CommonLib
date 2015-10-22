@@ -245,6 +245,7 @@ declare module dyCb {
     class PathUtils {
         static basename(path: string, ext?: string): string;
         static extname(path: string): string;
+        static dirname(path: string): string;
         private static _splitPath(fileName);
     }
 }

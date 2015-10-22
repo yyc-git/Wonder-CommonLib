@@ -1017,6 +1017,18 @@ var dyCb;
         PathUtils.extname = function (path) {
             return this._splitPath(path)[3];
         };
+        PathUtils.dirname = function (path) {
+            var result = this._splitPath(path), root = result[0], dir = result[1];
+            if (!root && !dir) {
+                //no dirname whatsoever
+                return '.';
+            }
+            if (dir) {
+                //it has a dirname, strip trailing slash
+                dir = dir.substr(0, dir.length - 1);
+            }
+            return root + dir;
+        };
         PathUtils._splitPath = function (fileName) {
             return SPLITPATH_REGEX.exec(fileName).slice(1);
         };

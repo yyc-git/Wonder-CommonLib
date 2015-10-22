@@ -20,6 +20,24 @@ module dyCb{
             return this._splitPath(path)[3];
         }
 
+        public static dirname(path:string){
+            var result = this._splitPath(path),
+                root = result[0],
+                dir = result[1];
+
+            if (!root && !dir) {
+                //no dirname whatsoever
+                return '.';
+            }
+
+            if (dir) {
+                //it has a dirname, strip trailing slash
+                dir = dir.substr(0, dir.length - 1);
+            }
+
+            return root + dir;
+        }
+
         private static _splitPath(fileName:string){
             return SPLITPATH_REGEX.exec(fileName).slice(1);
         }
