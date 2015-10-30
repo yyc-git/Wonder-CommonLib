@@ -341,4 +341,35 @@ describe("Hash", function () {
             }).toThrow();
         });
     });
+
+    describe("findOne", function () {
+        it("return the first filtered element", function () {
+            hash.addChildren({
+                a:1,
+                b:2,
+                c:3
+            });
+
+            var result = hash.findOne(function (value) {
+                return value === 2;
+            });
+
+            expect(hash.getCount()).toEqual(3);
+            expect(result).toEqual(["b", 2]);
+        });
+        it("this is point to container", function(){
+            hash.addChildren({
+                a:1,
+                b:2,
+                c:3
+            });
+
+            var result = hash.findOne(function (value, key) {
+                return this[key] === 2;
+            });
+
+            expect(hash.getCount()).toEqual(3);
+            expect(result).toEqual(["b", 2]);
+        });
+    });
 });

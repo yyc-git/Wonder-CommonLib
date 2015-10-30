@@ -191,6 +191,23 @@ module dyCb {
             return Hash.create(result);
         }
 
+        public findOne(func:Function){
+            var result = [],
+                self = this,
+                scope = this._children;
+
+            this.forEach((val:any, key:string) => {
+                if(!func.call(scope, val, key)){
+                    return;
+                }
+
+                result = [key, self.getChild(key)];
+                return $BREAK;
+            });
+
+            return result;
+        }
+
         public map(func:Function) {
             var resultMap = {};
 

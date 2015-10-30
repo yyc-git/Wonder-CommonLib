@@ -115,6 +115,7 @@ declare module dyCb {
         hasChild(arg: any): boolean;
         forEach(func: Function, context?: any): Hash<T>;
         filter(func: Function): Hash<{}>;
+        findOne(func: Function): any[];
         map(func: Function): Hash<{}>;
         toCollection(): Collection<any>;
     }

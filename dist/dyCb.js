@@ -563,6 +563,17 @@ var dyCb;
             });
             return Hash.create(result);
         };
+        Hash.prototype.findOne = function (func) {
+            var result = [], self = this, scope = this._children;
+            this.forEach(function (val, key) {
+                if (!func.call(scope, val, key)) {
+                    return;
+                }
+                result = [key, self.getChild(key)];
+                return dyCb.$BREAK;
+            });
+            return result;
+        };
         Hash.prototype.map = function (func) {
             var resultMap = {};
             this.forEach(function (val, key) {
