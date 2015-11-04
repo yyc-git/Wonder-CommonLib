@@ -150,7 +150,7 @@ module dyCb {
         }
 
         private _forEach(arr:T[], func:Function, context?:any) {
-            var scope = context || window,
+            var scope = context || root,
                 i = 0,
                 len = arr.length;
 

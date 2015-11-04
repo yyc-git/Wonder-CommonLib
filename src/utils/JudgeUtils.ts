@@ -1,4 +1,6 @@
 module dyCb {
+    declare var global:any, module:any;
+
     export class JudgeUtils {
         public static isArray(val) {
             return Object.prototype.toString.call(val) === "[object Array]";
@@ -54,6 +56,10 @@ module dyCb {
             return type === "function" ||
                 (type === "object" && !!object[property]) ||
                 type === "unknown";
+        }
+
+        public static isNodeJs(){
+            return ((typeof global != "undefined" && global.module) || (typeof module != "undefined")) && typeof module.exports != "undefined";
         }
     }
 }

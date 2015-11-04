@@ -1,4 +1,6 @@
-/// <reference path="global/window"/>
+/// <reference path="utils/JudgeUtils"/>
+/// <reference path="global/Variable"/>
+/// <reference path="global/extend"/>
 /// <reference path="global/Const"/>
 
 /// <reference path="Log"/>
@@ -9,7 +11,6 @@
 /// <reference path="Queue"/>
 /// <reference path="Stack"/>
 
-/// <reference path="utils/JudgeUtils"/>
 /// <reference path="utils/AjaxUtils"/>
 /// <reference path="utils/ConvertUtils"/>
 /// <reference path="utils/EventUtils"/>

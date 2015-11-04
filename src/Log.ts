@@ -1,6 +1,4 @@
 module dyCb {
-    declare var window:any;
-
     export class Log {
         public static info = {
             INVALID_PARAM: "invalid parameter",
@@ -135,7 +133,7 @@ module dyCb {
         public static log(...message) {
             if(!this._exec("trace", Array.prototype.slice.call(arguments, 0))){
                 if(!this._exec("log", arguments)) {
-                    window.alert(Array.prototype.slice.call(arguments, 0).join(","));
+                    root.alert(Array.prototype.slice.call(arguments, 0).join(","));
                 }
             }
         }
@@ -198,8 +196,8 @@ module dyCb {
         }
 
         private static _exec(consoleMethod, args, sliceBegin = 0) {
-            if (window.console && window.console[consoleMethod]) {
-                window.console[consoleMethod].apply(window.console, Array.prototype.slice.call(args, sliceBegin));
+            if (root.console && root.console[consoleMethod]) {
+                root.console[consoleMethod].apply(root.console, Array.prototype.slice.call(args, sliceBegin));
 
                 return true;
             }

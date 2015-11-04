@@ -81,7 +81,7 @@ var karmaConfPath = path.join(process.cwd(), "test/karma.conf.js");
 
 
 
-gulp.task("test", gulpSync.sync(["build"]), function (done) {
+gulp.task("test", function (done) {
     karma.start({
         configFile: karmaConfPath
     }, done);

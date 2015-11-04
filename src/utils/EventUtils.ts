@@ -1,6 +1,5 @@
 /// <reference path="../definitions.d.ts"/>
 module dyCb {
-    //declare var window:any;
     export class EventUtils {
         public static bindEvent(context, func) {
             //var args = Array.prototype.slice.call(arguments, 2),

@@ -1,4 +1,39 @@
 declare module dyCb {
+    class JudgeUtils {
+        static isArray(val: any): boolean;
+        static isFunction(func: any): boolean;
+        static isNumber(obj: any): boolean;
+        static isString(str: any): boolean;
+        static isBoolean(obj: any): boolean;
+        static isDom(obj: any): boolean;
+        /**
+         * 判断是否为对象字面量（{}）
+         */
+        static isDirectObject(obj: any): boolean;
+        /**
+         * 检查宿主对象是否可调用
+         *
+         * 任何对象，如果其语义在ECMAScript规范中被定义过，那么它被称为原生对象；
+         环境所提供的，而在ECMAScript规范中没有被描述的对象，我们称之为宿主对象。
+
+         该方法用于特性检测，判断对象是否可用。用法如下：
+
+         MyEngine addEvent():
+         if (Tool.judge.isHostMethod(dom, "addEventListener")) {    //判断dom是否具有addEventListener方法
+            dom.addEventListener(sEventType, fnHandler, false);
+            }
+         */
+        static isHostMethod(object: any, property: any): boolean;
+        static isNodeJs(): boolean;
+    }
+}
+
+/// <reference path="../definitions.d.ts" />
+declare module dyCb {
+    var root: any;
+}
+
+declare module dyCb {
 }
 
 declare module dyCb {
@@ -138,35 +173,6 @@ declare module dyCb {
         push(element: T): void;
         pop(): T;
         clear(): void;
-    }
-}
-
-declare module dyCb {
-    class JudgeUtils {
-        static isArray(val: any): boolean;
-        static isFunction(func: any): boolean;
-        static isNumber(obj: any): boolean;
-        static isString(str: any): boolean;
-        static isBoolean(obj: any): boolean;
-        static isDom(obj: any): boolean;
-        /**
-         * 判断是否为对象字面量（{}）
-         */
-        static isDirectObject(obj: any): boolean;
-        /**
-         * 检查宿主对象是否可调用
-         *
-         * 任何对象，如果其语义在ECMAScript规范中被定义过，那么它被称为原生对象；
-         环境所提供的，而在ECMAScript规范中没有被描述的对象，我们称之为宿主对象。
-
-         该方法用于特性检测，判断对象是否可用。用法如下：
-
-         MyEngine addEvent():
-         if (Tool.judge.isHostMethod(dom, "addEventListener")) {    //判断dom是否具有addEventListener方法
-            dom.addEventListener(sEventType, fnHandler, false);
-            }
-         */
-        static isHostMethod(object: any, property: any): boolean;
     }
 }
 

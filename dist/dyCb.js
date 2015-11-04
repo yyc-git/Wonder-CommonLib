@@ -1,16 +1,89 @@
 var dyCb;
 (function (dyCb) {
-    if ('performance' in window === false) {
-        window.performance = {};
+    var JudgeUtils = (function () {
+        function JudgeUtils() {
+        }
+        JudgeUtils.isArray = function (val) {
+            return Object.prototype.toString.call(val) === "[object Array]";
+        };
+        JudgeUtils.isFunction = function (func) {
+            return Object.prototype.toString.call(func) === "[object Function]";
+        };
+        JudgeUtils.isNumber = function (obj) {
+            return Object.prototype.toString.call(obj) === "[object Number]";
+        };
+        JudgeUtils.isString = function (str) {
+            return Object.prototype.toString.call(str) === "[object String]";
+        };
+        JudgeUtils.isBoolean = function (obj) {
+            return Object.prototype.toString.call(obj) === "[object Boolean]";
+        };
+        JudgeUtils.isDom = function (obj) {
+            return obj instanceof HTMLElement;
+        };
+        /**
+         * 判断是否为对象字面量（{}）
+         */
+        JudgeUtils.isDirectObject = function (obj) {
+            if (Object.prototype.toString.call(obj) === "[object Object]") {
+                return true;
+            }
+            return false;
+        };
+        /**
+         * 检查宿主对象是否可调用
+         *
+         * 任何对象，如果其语义在ECMAScript规范中被定义过，那么它被称为原生对象；
+         环境所提供的，而在ECMAScript规范中没有被描述的对象，我们称之为宿主对象。
+
+         该方法用于特性检测，判断对象是否可用。用法如下：
+
+         MyEngine addEvent():
+         if (Tool.judge.isHostMethod(dom, "addEventListener")) {    //判断dom是否具有addEventListener方法
+            dom.addEventListener(sEventType, fnHandler, false);
+            }
+         */
+        JudgeUtils.isHostMethod = function (object, property) {
+            var type = typeof object[property];
+            return type === "function" ||
+                (type === "object" && !!object[property]) ||
+                type === "unknown";
+        };
+        JudgeUtils.isNodeJs = function () {
+            return ((typeof global != "undefined" && global.module) || (typeof module != "undefined")) && typeof module.exports != "undefined";
+        };
+        return JudgeUtils;
+    })();
+    dyCb.JudgeUtils = JudgeUtils;
+})(dyCb || (dyCb = {}));
+
+/// <reference path="../definitions.d.ts"/>
+var dyCb;
+(function (dyCb) {
+    Object.defineProperty(dyCb, "root", {
+        get: function () {
+            if (dyCb.JudgeUtils.isNodeJs()) {
+                return global;
+            }
+            return window;
+        }
+    });
+})(dyCb || (dyCb = {}));
+
+var dyCb;
+(function (dyCb) {
+    // performance.now polyfill
+    if ('performance' in dyCb.root === false) {
+        dyCb.root.performance = {};
     }
     // IE 8
     Date.now = (Date.now || function () {
         return new Date().getTime();
     });
-    if ('now' in window.performance === false) {
-        var offset = window.performance.timing && window.performance.timing.navigationStart ? performance.timing.navigationStart
+    if ('now' in dyCb.root.performance === false) {
+        var offset = dyCb.root.performance.timing && dyCb.root.performance.timing.navigationStart ? performance.timing.navigationStart
             : Date.now();
-        window.performance.now = function () {
+        dyCb.root.performance.now = function () {
             return Date.now() - offset;
         };
     }
@@ -41,7 +114,7 @@ var dyCb;
             }
             if (!this._exec("trace", Array.prototype.slice.call(arguments, 0))) {
                 if (!this._exec("log", arguments)) {
-                    window.alert(Array.prototype.slice.call(arguments, 0).join(","));
+                    dyCb.root.alert(Array.prototype.slice.call(arguments, 0).join(","));
                 }
             }
         };
@@ -111,8 +184,8 @@ var dyCb;
         };
         Log._exec = function (consoleMethod, args, sliceBegin) {
             if (sliceBegin === void 0) { sliceBegin = 0; }
-            if (window.console && window.console[consoleMethod]) {
-                window.console[consoleMethod].apply(window.console, Array.prototype.slice.call(args, sliceBegin));
+            if (dyCb.root.console && dyCb.root.console[consoleMethod]) {
+                dyCb.root.console[consoleMethod].apply(dyCb.root.console, Array.prototype.slice.call(args, sliceBegin));
                 return true;
             }
             return false;
@@ -401,7 +474,7 @@ var dyCb;
             return this._indexOf(arr, arg) > -1;
         };
         List.prototype._forEach = function (arr, func, context) {
-            var scope = context || window, i = 0, len = arr.length;
+            var scope = context || dyCb.root, i = 0, len = arr.length;
             for (i = 0; i < len; i++) {
                 if (func.call(scope, arr[i], i) === dyCb.$BREAK) {
                     break;
@@ -675,62 +748,6 @@ var dyCb;
 
 var dyCb;
 (function (dyCb) {
-    var JudgeUtils = (function () {
-        function JudgeUtils() {
-        }
-        JudgeUtils.isArray = function (val) {
-            return Object.prototype.toString.call(val) === "[object Array]";
-        };
-        JudgeUtils.isFunction = function (func) {
-            return Object.prototype.toString.call(func) === "[object Function]";
-        };
-        JudgeUtils.isNumber = function (obj) {
-            return Object.prototype.toString.call(obj) === "[object Number]";
-        };
-        JudgeUtils.isString = function (str) {
-            return Object.prototype.toString.call(str) === "[object String]";
-        };
-        JudgeUtils.isBoolean = function (obj) {
-            return Object.prototype.toString.call(obj) === "[object Boolean]";
-        };
-        JudgeUtils.isDom = function (obj) {
-            return obj instanceof HTMLElement;
-        };
-        /**
-         * 判断是否为对象字面量（{}）
-         */
-        JudgeUtils.isDirectObject = function (obj) {
-            if (Object.prototype.toString.call(obj) === "[object Object]") {
-                return true;
-            }
-            return false;
-        };
-        /**
-         * 检查宿主对象是否可调用
-         *
-         * 任何对象，如果其语义在ECMAScript规范中被定义过，那么它被称为原生对象；
-         环境所提供的，而在ECMAScript规范中没有被描述的对象，我们称之为宿主对象。
-
-         该方法用于特性检测，判断对象是否可用。用法如下：
-
-         MyEngine addEvent():
-         if (Tool.judge.isHostMethod(dom, "addEventListener")) {    //判断dom是否具有addEventListener方法
-            dom.addEventListener(sEventType, fnHandler, false);
-            }
-         */
-        JudgeUtils.isHostMethod = function (object, property) {
-            var type = typeof object[property];
-            return type === "function" ||
-                (type === "object" && !!object[property]) ||
-                type === "unknown";
-        };
-        return JudgeUtils;
-    })();
-    dyCb.JudgeUtils = JudgeUtils;
-})(dyCb || (dyCb = {}));
-
-var dyCb;
-(function (dyCb) {
     var AjaxUtils = (function () {
         function AjaxUtils() {
         }
@@ -866,7 +883,6 @@ var dyCb;
 /// <reference path="../definitions.d.ts"/>
 var dyCb;
 (function (dyCb) {
-    //declare var window:any;
     var EventUtils = (function () {
         function EventUtils() {
         }
