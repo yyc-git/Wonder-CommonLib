@@ -6,13 +6,13 @@ var del = require('del');
 var gulpSync = require('gulp-sync')(gulp);
 var merge = require('merge2');
 var path = require('path');
+var buildPublishFile = require("./gulp/publishToNPM/buildPublishFile");
+var config = require("./gulp/common/config");
 
-var tsFilePaths = [
- 'src/definitions.d.ts',
-    'src/*.ts',
-    'src/**/*.ts'
-];
-var distPath = "dist";
+require("./gulp/publishToNPM/publishToNPM");
+
+var tsFilePaths = config.tsFilePaths;
+var distPath = config.distPath;
 
 gulp.task('clean', function() {
     return del.sync([distPath], {
@@ -63,7 +63,15 @@ gulp.task('compileTsDebug', function() {
             .pipe(gulp.dest('dist/'));
 });
 
-gulp.task("build", gulpSync.sync(["clean", "compileTs", "compileTsDebug"]));
+
+
+gulp.task("buildPublishFile", function(done){
+    buildPublishFile();
+
+    done();
+});
+
+gulp.task("build", gulpSync.sync(["clean", "compileTs", "compileTsDebug", "publishToNPM", "buildPublishFile"]));
 
 
 
