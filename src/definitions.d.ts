@@ -12,6 +12,7 @@
 /// <reference path="Stack"/>
 
 /// <reference path="utils/AjaxUtils"/>
+/// <reference path="utils/ArrayUtils"/>
 /// <reference path="utils/ConvertUtils"/>
 /// <reference path="utils/EventUtils"/>
 /// <reference path="utils/ExtendUtils"/>
