@@ -63,6 +63,10 @@ module dyCb {
             return this;
         }
 
+        public unShiftChild(child:T){
+            this.children.unshift(child);
+        }
+
         public removeAllChildren() {
             this.children = [];
 

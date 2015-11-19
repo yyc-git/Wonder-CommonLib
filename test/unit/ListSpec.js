@@ -105,6 +105,16 @@ describe("List", function () {
         });
     });
 
+    describe("unShiftChild", function(){
+        it("add child to the top", function(){
+            list.addChildren([1, 2]);
+
+            list.unShiftChild(3);
+
+            expect(list.getChildren()).toEqual([3, 1, 2]);
+        });
+    });
+
     describe("getCount", function () {
         it("返回元素个数", function () {
             list.addChildren([1, 2]);

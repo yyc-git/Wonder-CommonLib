@@ -114,6 +114,7 @@ declare module dyCb {
         getChild(index: number): T;
         addChild(child: T): List<T>;
         addChildren(arg: Array<T> | List<T> | any): List<T>;
+        unShiftChild(child: T): void;
         removeAllChildren(): List<T>;
         forEach(func: Function, context?: any): List<T>;
         toArray(): T[];
@@ -182,6 +183,14 @@ declare module dyCb {
         private static _createAjax(error);
         private static _isLocalFile(status);
         private static _isSoundFile(dataType);
+    }
+}
+
+/// <reference path="../definitions.d.ts" />
+declare module dyCb {
+    class ArrayUtils {
+        static removeRepeatItems(arr: Array<any>, isEqual?: (a: any, b: any) => boolean): any[];
+        static contain(arr: Array<any>, ele: any): boolean;
     }
 }
 
@@ -280,13 +289,5 @@ declare module dyCb {
         sort(func: (a: T, b: T) => any): Collection<T>;
         map(func: (value: T, index: number) => any): Collection<any>;
         removeRepeatItems(): Collection<T>;
-    }
-}
-
-/// <reference path="../definitions.d.ts" />
-declare module dyCb {
-    class ArrayUtils {
-        static removeRepeatItems(arr: Array<any>, isEqual?: (a: any, b: any) => boolean): any[];
-        static contain(arr: Array<any>, ele: any): boolean;
     }
 }
