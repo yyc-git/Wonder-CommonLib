@@ -292,6 +292,14 @@ declare module dyCb {
     }
 }
 
+/// <reference path="../definitions.d.ts" />
+declare module dyCb {
+    class ArrayUtils {
+        static removeRepeatItems(arr: Array<any>, isEqual?: (a: any, b: any) => boolean): any[];
+        static contain(arr: Array<any>, ele: any): boolean;
+    }
+}
+
 declare module "dycb" {
 export = dyCb;
 }

@@ -291,3 +291,11 @@ declare module dyCb {
         removeRepeatItems(): Collection<T>;
     }
 }
+
+/// <reference path="../definitions.d.ts" />
+declare module dyCb {
+    class ArrayUtils {
+        static removeRepeatItems(arr: Array<any>, isEqual?: (a: any, b: any) => boolean): any[];
+        static contain(arr: Array<any>, ele: any): boolean;
+    }
+}
