@@ -269,14 +269,20 @@ declare module dyCb {
 /// <reference path="../filePath.d.ts" />
 declare module dyCb {
     class DomQuery {
-        static create(eleStr: string): DomQuery;
+        static create(eleStr: string): any;
+        static create(dom: HTMLElement): any;
         private _doms;
-        constructor(eleStr: any);
+        constructor(eleStr: string);
+        constructor(dom: HTMLElement);
         get(index: any): HTMLElement;
-        createElement(eleStr: any): any;
-        prepend(eleStr: string): DomQuery;
+        prepend(eleStr: string): any;
+        prepend(dom: HTMLElement): any;
+        prependTo(eleStr: string): DomQuery;
         remove(): DomQuery;
+        private _isDomEleStr(eleStr);
         private _buildDom(eleStr);
+        private _buildDom(dom);
+        private _createElement(eleStr);
     }
 }
 

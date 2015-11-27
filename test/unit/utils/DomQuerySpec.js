@@ -31,6 +31,14 @@ describe("DomQuery", function () {
             });
         });
 
+        describe("prependTo", function(){
+            it("prepend to the target dom", function(){
+                var query = Query.create("<canvas></canvas>").prependTo("#DomQueryTest");
+
+                expect(Query.create("#DomQueryTest").get(0).firstChild).toEqual(query.get(0));
+            });
+        });
+
         describe("remove", function () {
             it("remove dom", function () {
                 var query = Query.create("#DomQueryTest");
@@ -38,6 +46,14 @@ describe("DomQuery", function () {
                 query.remove();
 
                 expect($("#DomQueryTest").length).toEqual(0);
+            });
+        });
+
+        describe("create dom", function(){
+            it("create dom by passing element str", function(){
+                var query = Query.create("<canvas></canvas>");
+
+                expect(query.get(0).tagName.toLowerCase()).toEqual("canvas");
             });
         });
     });

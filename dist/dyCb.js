@@ -1118,33 +1118,56 @@ var dyCb;
 var dyCb;
 (function (dyCb) {
     var DomQuery = (function () {
-        function DomQuery(eleStr) {
+        function DomQuery() {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i - 0] = arguments[_i];
+            }
             this._doms = null;
-            if (dyCb.JudgeUtils.isDom(arguments[0])) {
-                this._doms = [arguments[0]];
+            if (dyCb.JudgeUtils.isDom(args[0])) {
+                this._doms = [args[0]];
+            }
+            else if (this._isDomEleStr(args[0])) {
+                this._doms = [this._buildDom(args[0])];
             }
             else {
-                this._doms = document.querySelectorAll(eleStr);
+                this._doms = document.querySelectorAll(args[0]);
             }
             return this;
         }
-        DomQuery.create = function (eleStr) {
-            var obj = new this(eleStr);
+        DomQuery.create = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i - 0] = arguments[_i];
+            }
+            var obj = new this(args[0]);
             return obj;
         };
         DomQuery.prototype.get = function (index) {
             return this._doms[index];
         };
-        DomQuery.prototype.createElement = function (eleStr) {
-            return document.createElement(eleStr);
-        };
-        DomQuery.prototype.prepend = function (eleStr) {
+        DomQuery.prototype.prepend = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i - 0] = arguments[_i];
+            }
             var targetDom = null;
-            targetDom = this._buildDom(eleStr);
+            targetDom = this._buildDom(args[0]);
+            for (var _a = 0, _b = this._doms; _a < _b.length; _a++) {
+                var dom = _b[_a];
+                if (dom.nodeType === 1) {
+                    dom.insertBefore(targetDom, dom.firstChild);
+                }
+            }
+            return this;
+        };
+        DomQuery.prototype.prependTo = function (eleStr) {
+            var targetDom = null;
+            targetDom = DomQuery.create(eleStr);
             for (var _i = 0, _a = this._doms; _i < _a.length; _i++) {
                 var dom = _a[_i];
                 if (dom.nodeType === 1) {
-                    dom.insertBefore(targetDom, dom.firstChild);
+                    targetDom.prepend(dom);
                 }
             }
             return this;
@@ -1158,10 +1181,23 @@ var dyCb;
             }
             return this;
         };
-        DomQuery.prototype._buildDom = function (eleStr) {
-            var div = document.createElement("div");
-            div.innerHTML = eleStr;
-            return div.firstChild;
+        DomQuery.prototype._isDomEleStr = function (eleStr) {
+            return eleStr.match(/<(\w+)><\/\1>/) !== null;
+        };
+        DomQuery.prototype._buildDom = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i - 0] = arguments[_i];
+            }
+            if (dyCb.JudgeUtils.isString(args[0])) {
+                var div = this._createElement("div"), eleStr = args[0];
+                div.innerHTML = eleStr;
+                return div.firstChild;
+            }
+            return args[0];
+        };
+        DomQuery.prototype._createElement = function (eleStr) {
+            return document.createElement(eleStr);
         };
         return DomQuery;
     })();
