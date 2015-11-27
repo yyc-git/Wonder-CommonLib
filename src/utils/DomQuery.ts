@@ -77,6 +77,12 @@ module dyCb {
             return this;
         }
 
+        public css(property:string, value:string){
+            for (let dom of this._doms) {
+                dom.style[property] = value;
+            }
+        }
+
         private _isDomEleStr(eleStr:string){
             return eleStr.match(/<(\w+)><\/\1>/) !== null;
         }

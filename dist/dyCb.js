@@ -1181,6 +1181,12 @@ var dyCb;
             }
             return this;
         };
+        DomQuery.prototype.css = function (property, value) {
+            for (var _i = 0, _a = this._doms; _i < _a.length; _i++) {
+                var dom = _a[_i];
+                dom.style[property] = value;
+            }
+        };
         DomQuery.prototype._isDomEleStr = function (eleStr) {
             return eleStr.match(/<(\w+)><\/\1>/) !== null;
         };

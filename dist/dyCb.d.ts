@@ -279,6 +279,7 @@ declare module dyCb {
         prepend(dom: HTMLElement): any;
         prependTo(eleStr: string): DomQuery;
         remove(): DomQuery;
+        css(property: string, value: string): void;
         private _isDomEleStr(eleStr);
         private _buildDom(eleStr);
         private _buildDom(dom);
