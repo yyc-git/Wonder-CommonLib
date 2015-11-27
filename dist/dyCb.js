@@ -1118,22 +1118,50 @@ var dyCb;
 var dyCb;
 (function (dyCb) {
     var DomQuery = (function () {
-        function DomQuery(domStr) {
+        function DomQuery(eleStr) {
             this._doms = null;
             if (dyCb.JudgeUtils.isDom(arguments[0])) {
                 this._doms = [arguments[0]];
             }
             else {
-                this._doms = document.querySelectorAll(domStr);
+                this._doms = document.querySelectorAll(eleStr);
             }
             return this;
         }
-        DomQuery.create = function (domStr) {
-            var obj = new this(domStr);
+        DomQuery.create = function (eleStr) {
+            var obj = new this(eleStr);
             return obj;
         };
         DomQuery.prototype.get = function (index) {
             return this._doms[index];
+        };
+        DomQuery.prototype.createElement = function (eleStr) {
+            return document.createElement(eleStr);
+        };
+        DomQuery.prototype.prepend = function (eleStr) {
+            var targetDom = null;
+            targetDom = this._buildDom(eleStr);
+            for (var _i = 0, _a = this._doms; _i < _a.length; _i++) {
+                var dom = _a[_i];
+                if (dom.nodeType === 1) {
+                    dom.insertBefore(targetDom, dom.firstChild);
+                }
+            }
+            return this;
+        };
+        DomQuery.prototype.remove = function () {
+            for (var _i = 0, _a = this._doms; _i < _a.length; _i++) {
+                var dom = _a[_i];
+                if (dom && dom.parentNode && dom.tagName != 'BODY') {
+                    dom.parentNode.removeChild(dom);
+                }
+            }
+            return this;
+        };
+        DomQuery.prototype._buildDom = function (eleStr) {
+            var div = document.createElement("div");
+            div.innerHTML = eleStr;
+            return div.firstChild;
         };
         return DomQuery;
     })();
