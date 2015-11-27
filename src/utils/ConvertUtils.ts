@@ -1,4 +1,4 @@
-/// <reference path="../definitions.d.ts"/>
+/// <reference path="../filePath.d.ts"/>
 module dyCb{
     export class ConvertUtils{
         public static toString(obj:any){

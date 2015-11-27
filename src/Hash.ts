@@ -1,4 +1,4 @@
-/// <reference path="definitions.d.ts"/>
+/// <reference path="filePath.d.ts"/>
 module dyCb {
     export class Hash<T> {
         public static create<T>(children = {}){

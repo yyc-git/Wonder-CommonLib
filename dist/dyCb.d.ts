@@ -28,7 +28,7 @@ declare module dyCb {
     }
 }
 
-/// <reference path="../definitions.d.ts" />
+/// <reference path="../filePath.d.ts" />
 declare module dyCb {
     var root: any;
 }
@@ -104,7 +104,7 @@ declare module dyCb {
     }
 }
 
-/// <reference path="definitions.d.ts" />
+/// <reference path="filePath.d.ts" />
 declare module dyCb {
     class List<T> {
         protected children: Array<T>;
@@ -127,7 +127,7 @@ declare module dyCb {
     }
 }
 
-/// <reference path="definitions.d.ts" />
+/// <reference path="filePath.d.ts" />
 declare module dyCb {
     class Hash<T> {
         static create<T>(children?: {}): Hash<T>;
@@ -186,7 +186,7 @@ declare module dyCb {
     }
 }
 
-/// <reference path="../definitions.d.ts" />
+/// <reference path="../filePath.d.ts" />
 declare module dyCb {
     class ArrayUtils {
         static removeRepeatItems(arr: Array<any>, isEqual?: (a: any, b: any) => boolean): any[];
@@ -194,7 +194,7 @@ declare module dyCb {
     }
 }
 
-/// <reference path="../definitions.d.ts" />
+/// <reference path="../filePath.d.ts" />
 declare module dyCb {
     class ConvertUtils {
         static toString(obj: any): string;
@@ -202,7 +202,7 @@ declare module dyCb {
     }
 }
 
-/// <reference path="../definitions.d.ts" />
+/// <reference path="../filePath.d.ts" />
 declare module dyCb {
     class EventUtils {
         static bindEvent(context: any, func: any): (event: any) => any;
@@ -211,7 +211,7 @@ declare module dyCb {
     }
 }
 
-/// <reference path="../definitions.d.ts" />
+/// <reference path="../filePath.d.ts" />
 declare module dyCb {
     class ExtendUtils {
         /**
@@ -256,7 +256,7 @@ declare module dyCb {
     }
 }
 
-/// <reference path="../definitions.d.ts" />
+/// <reference path="../filePath.d.ts" />
 declare module dyCb {
     class PathUtils {
         static basename(path: string, ext?: string): string;
@@ -266,7 +266,7 @@ declare module dyCb {
     }
 }
 
-/// <reference path="../definitions.d.ts" />
+/// <reference path="../filePath.d.ts" />
 declare module dyCb {
     class DomQuery {
         static create(eleStr: string): DomQuery;
@@ -280,7 +280,7 @@ declare module dyCb {
     }
 }
 
-/// <reference path="definitions.d.ts" />
+/// <reference path="filePath.d.ts" />
 declare module dyCb {
     class Collection<T> extends List<T> {
         static create<T>(children?: any[]): Collection<T>;

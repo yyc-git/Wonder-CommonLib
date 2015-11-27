@@ -57,7 +57,7 @@ var dyCb;
     dyCb.JudgeUtils = JudgeUtils;
 })(dyCb || (dyCb = {}));
 
-/// <reference path="../definitions.d.ts"/>
+/// <reference path="../filePath.d.ts"/>
 var dyCb;
 (function (dyCb) {
     Object.defineProperty(dyCb, "root", {
@@ -352,7 +352,7 @@ var dyCb;
     dyCb.Log = Log;
 })(dyCb || (dyCb = {}));
 
-/// <reference path="definitions.d.ts"/>
+/// <reference path="filePath.d.ts"/>
 var dyCb;
 (function (dyCb) {
     var List = (function () {
@@ -502,7 +502,7 @@ var dyCb;
     dyCb.List = List;
 })(dyCb || (dyCb = {}));
 
-/// <reference path="definitions.d.ts"/>
+/// <reference path="filePath.d.ts"/>
 var dyCb;
 (function (dyCb) {
     var Hash = (function () {
@@ -854,7 +854,7 @@ var dyCb;
     dyCb.AjaxUtils = AjaxUtils;
 })(dyCb || (dyCb = {}));
 
-/// <reference path="../definitions.d.ts"/>
+/// <reference path="../filePath.d.ts"/>
 var dyCb;
 (function (dyCb) {
     var ArrayUtils = (function () {
@@ -901,7 +901,7 @@ var dyCb;
     dyCb.ArrayUtils = ArrayUtils;
 })(dyCb || (dyCb = {}));
 
-/// <reference path="../definitions.d.ts"/>
+/// <reference path="../filePath.d.ts"/>
 var dyCb;
 (function (dyCb) {
     var ConvertUtils = (function () {
@@ -930,7 +930,7 @@ var dyCb;
     dyCb.ConvertUtils = ConvertUtils;
 })(dyCb || (dyCb = {}));
 
-/// <reference path="../definitions.d.ts"/>
+/// <reference path="../filePath.d.ts"/>
 var dyCb;
 (function (dyCb) {
     var EventUtils = (function () {
@@ -971,7 +971,7 @@ var dyCb;
     dyCb.EventUtils = EventUtils;
 })(dyCb || (dyCb = {}));
 
-/// <reference path="../definitions.d.ts"/>
+/// <reference path="../filePath.d.ts"/>
 var dyCb;
 (function (dyCb) {
     var ExtendUtils = (function () {
@@ -1074,7 +1074,7 @@ var dyCb;
     dyCb.ExtendUtils = ExtendUtils;
 })(dyCb || (dyCb = {}));
 
-/// <reference path="../definitions.d.ts"/>
+/// <reference path="../filePath.d.ts"/>
 var dyCb;
 (function (dyCb) {
     var SPLITPATH_REGEX = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
@@ -1114,7 +1114,7 @@ var dyCb;
     dyCb.PathUtils = PathUtils;
 })(dyCb || (dyCb = {}));
 
-/// <reference path="../definitions.d.ts"/>
+/// <reference path="../filePath.d.ts"/>
 var dyCb;
 (function (dyCb) {
     var DomQuery = (function () {
@@ -1173,7 +1173,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-/// <reference path="definitions.d.ts"/>
+/// <reference path="filePath.d.ts"/>
 var dyCb;
 (function (dyCb) {
     var Collection = (function (_super) {
