@@ -1290,3 +1290,19 @@ var dyCb;
     })(dyCb.List);
     dyCb.Collection = Collection;
 })(dyCb || (dyCb = {}));
+
+/// <reference path="../filePath.d.ts"/>
+var dyCb;
+(function (dyCb) {
+    var FunctionUtils = (function () {
+        function FunctionUtils() {
+        }
+        FunctionUtils.bind = function (object, func) {
+            return function () {
+                return func.apply(object, arguments);
+            };
+        };
+        return FunctionUtils;
+    })();
+    dyCb.FunctionUtils = FunctionUtils;
+})(dyCb || (dyCb = {}));

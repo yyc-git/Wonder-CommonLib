@@ -302,3 +302,10 @@ declare module dyCb {
         removeRepeatItems(): Collection<T>;
     }
 }
+
+/// <reference path="../filePath.d.ts" />
+declare module dyCb {
+    class FunctionUtils {
+        static bind(object: any, func: Function): () => any;
+    }
+}
