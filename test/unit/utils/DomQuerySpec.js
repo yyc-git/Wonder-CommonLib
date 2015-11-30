@@ -4,7 +4,7 @@ describe("DomQuery", function () {
 
     beforeEach(function () {
         sandbox = sinon.sandbox.create();
-        Query = dyCb.DomQuery;
+        Query = wdCb.DomQuery;
         $("body").append($("<div id='DomQueryTest'></div>"));
     });
     afterEach(function () {

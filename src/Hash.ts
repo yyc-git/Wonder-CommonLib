@@ -1,5 +1,5 @@
 /// <reference path="filePath.d.ts"/>
-module dyCb {
+module wdCb {
     export class Hash<T> {
         public static create<T>(children = {}){
             var obj = new this(<{ [s:string]:T }>children);

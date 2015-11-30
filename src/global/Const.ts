@@ -1,4 +1,4 @@
-module dyCb{
+module wdCb{
     export const $BREAK = {
         break:true
     };

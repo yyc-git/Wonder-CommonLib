@@ -1,5 +1,5 @@
 /// <reference path="Collection"/>
-module dyCb {
+module wdCb {
     export class Stack<T> extends List<T>{
         public static create<T>(children = []){
             var obj = new this(<Array<T>>children);

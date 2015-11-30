@@ -17,15 +17,15 @@ module.exports = function(config) {
         'bower_components/jquery/dist/jquery.js',
         'bower_components/yyctoolbox/tool/yTool.js',
 
-        'dist/dyCb.debug.js',
+        'dist/wdCb.debug.js',
 
         'test/helper/jasmine/**',
         'test/helper/sinonJs/*.js',
 
         'test/unit/**'
 
-        //{pattern: 'dist/dyCb.d.ts', watched: false, included: false, served: true},
-        //{pattern: 'dist/dyCb.js.map', watched: false, included: false, served: true},
+        //{pattern: 'dist/wdCb.d.ts', watched: false, included: false, served: true},
+        //{pattern: 'dist/wdCb.js.map', watched: false, included: false, served: true},
         //{pattern: 'src/**', watched: false, included: false, served: true}
     ],
 

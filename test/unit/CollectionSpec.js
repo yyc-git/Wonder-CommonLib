@@ -4,7 +4,7 @@ describe("Collection", function () {
 
     beforeEach(function () {
         sandbox = sinon.sandbox.create();
-        collection = new dyCb.Collection();
+        collection = new wdCb.Collection();
     });
     afterEach(function () {
         sandbox.restore();
@@ -142,7 +142,7 @@ describe("Collection", function () {
 
             var result = collection.map(function(val){
                 if(val === 2){
-                    return dyCb.$REMOVE;
+                    return wdCb.$REMOVE;
                 }
 
                 return val * 2;
@@ -164,7 +164,7 @@ describe("Collection", function () {
                 return e === 1;
             });
 
-            expect(result).toBeInstanceOf(dyCb.Collection);
+            expect(result).toBeInstanceOf(wdCb.Collection);
             expect(result.getChildren()).toEqual([1, 1]);
             expect(collection.getChildren()).toEqual([2]);
         });
@@ -177,7 +177,7 @@ describe("Collection", function () {
                 return e === 2;
             });
 
-            expect(result).toBeInstanceOf(dyCb.Collection);
+            expect(result).toBeInstanceOf(wdCb.Collection);
             expect(result.getChildren()).toEqual([2]);
             expect(collection.getChildren()).toEqual([1, 1]);
         });

@@ -1,4 +1,4 @@
-module dyCb {
+module wdCb {
     export class Log {
         public static info = {
             INVALID_PARAM: "invalid parameter",

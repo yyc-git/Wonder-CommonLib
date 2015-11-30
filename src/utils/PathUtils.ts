@@ -1,5 +1,5 @@
 /// <reference path="../filePath.d.ts"/>
-module dyCb{
+module wdCb{
     var SPLITPATH_REGEX =
         /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
 

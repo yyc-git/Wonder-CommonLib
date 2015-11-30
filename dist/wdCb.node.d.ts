@@ -1,4 +1,4 @@
-declare module dyCb {
+declare module wdCb {
     class JudgeUtils {
         static isArray(val: any): boolean;
         static isFunction(func: any): boolean;
@@ -29,21 +29,21 @@ declare module dyCb {
 }
 
 /// <reference path="../filePath.d.ts" />
-declare module dyCb {
+declare module wdCb {
     var root: any;
 }
 
-declare module dyCb {
+declare module wdCb {
 }
 
-declare module dyCb {
+declare module wdCb {
     const $BREAK: {
         break: boolean;
     };
     const $REMOVE: any;
 }
 
-declare module dyCb {
+declare module wdCb {
     class Log {
         static info: {
             INVALID_PARAM: string;
@@ -105,7 +105,7 @@ declare module dyCb {
 }
 
 /// <reference path="filePath.d.ts" />
-declare module dyCb {
+declare module wdCb {
     class List<T> {
         protected children: Array<T>;
         getCount(): number;
@@ -128,7 +128,7 @@ declare module dyCb {
 }
 
 /// <reference path="filePath.d.ts" />
-declare module dyCb {
+declare module wdCb {
     class Hash<T> {
         static create<T>(children?: {}): Hash<T>;
         constructor(children?: {
@@ -157,7 +157,7 @@ declare module dyCb {
     }
 }
 
-declare module dyCb {
+declare module wdCb {
     class Queue<T> extends List<T> {
         static create<T>(children?: any[]): Queue<T>;
         constructor(children?: Array<T>);
@@ -167,7 +167,7 @@ declare module dyCb {
     }
 }
 
-declare module dyCb {
+declare module wdCb {
     class Stack<T> extends List<T> {
         static create<T>(children?: any[]): Stack<T>;
         constructor(children?: Array<T>);
@@ -177,7 +177,7 @@ declare module dyCb {
     }
 }
 
-declare module dyCb {
+declare module wdCb {
     class AjaxUtils {
         static ajax(conf: any): void;
         private static _createAjax(error);
@@ -187,7 +187,7 @@ declare module dyCb {
 }
 
 /// <reference path="../filePath.d.ts" />
-declare module dyCb {
+declare module wdCb {
     class ArrayUtils {
         static removeRepeatItems(arr: Array<any>, isEqual?: (a: any, b: any) => boolean): any[];
         static contain(arr: Array<any>, ele: any): boolean;
@@ -195,7 +195,7 @@ declare module dyCb {
 }
 
 /// <reference path="../filePath.d.ts" />
-declare module dyCb {
+declare module wdCb {
     class ConvertUtils {
         static toString(obj: any): string;
         private static _convertCodeToString(fn);
@@ -203,7 +203,7 @@ declare module dyCb {
 }
 
 /// <reference path="../filePath.d.ts" />
-declare module dyCb {
+declare module wdCb {
     class EventUtils {
         static bindEvent(context: any, func: any): (event: any) => any;
         static addEvent(dom: any, eventName: any, handler: any): void;
@@ -212,7 +212,7 @@ declare module dyCb {
 }
 
 /// <reference path="../filePath.d.ts" />
-declare module dyCb {
+declare module wdCb {
     class ExtendUtils {
         /**
          * 深拷贝
@@ -257,7 +257,7 @@ declare module dyCb {
 }
 
 /// <reference path="../filePath.d.ts" />
-declare module dyCb {
+declare module wdCb {
     class PathUtils {
         static basename(path: string, ext?: string): string;
         static extname(path: string): string;
@@ -267,7 +267,7 @@ declare module dyCb {
 }
 
 /// <reference path="../filePath.d.ts" />
-declare module dyCb {
+declare module wdCb {
     class DomQuery {
         static create(eleStr: string): any;
         static create(dom: HTMLElement): any;
@@ -288,7 +288,7 @@ declare module dyCb {
 }
 
 /// <reference path="filePath.d.ts" />
-declare module dyCb {
+declare module wdCb {
     class Collection<T> extends List<T> {
         static create<T>(children?: any[]): Collection<T>;
         constructor(children?: Array<T>);
@@ -304,12 +304,12 @@ declare module dyCb {
 }
 
 /// <reference path="../filePath.d.ts" />
-declare module dyCb {
+declare module wdCb {
     class FunctionUtils {
         static bind(object: any, func: Function): () => any;
     }
 }
 
-declare module "dycb" {
-export = dyCb;
+declare module "wdcb" {
+export = wdCb;
 }

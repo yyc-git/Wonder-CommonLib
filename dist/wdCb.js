@@ -1,5 +1,5 @@
-var dyCb;
-(function (dyCb) {
+var wdCb;
+(function (wdCb) {
     var JudgeUtils = (function () {
         function JudgeUtils() {
         }
@@ -54,51 +54,51 @@ var dyCb;
         };
         return JudgeUtils;
     })();
-    dyCb.JudgeUtils = JudgeUtils;
-})(dyCb || (dyCb = {}));
+    wdCb.JudgeUtils = JudgeUtils;
+})(wdCb || (wdCb = {}));
 
 /// <reference path="../filePath.d.ts"/>
-var dyCb;
-(function (dyCb) {
-    Object.defineProperty(dyCb, "root", {
+var wdCb;
+(function (wdCb) {
+    Object.defineProperty(wdCb, "root", {
         get: function () {
-            if (dyCb.JudgeUtils.isNodeJs()) {
+            if (wdCb.JudgeUtils.isNodeJs()) {
                 return global;
             }
             return window;
         }
     });
-})(dyCb || (dyCb = {}));
+})(wdCb || (wdCb = {}));
 
-var dyCb;
-(function (dyCb) {
+var wdCb;
+(function (wdCb) {
     // performance.now polyfill
-    if ('performance' in dyCb.root === false) {
-        dyCb.root.performance = {};
+    if ('performance' in wdCb.root === false) {
+        wdCb.root.performance = {};
     }
     // IE 8
     Date.now = (Date.now || function () {
         return new Date().getTime();
     });
-    if ('now' in dyCb.root.performance === false) {
-        var offset = dyCb.root.performance.timing && dyCb.root.performance.timing.navigationStart ? performance.timing.navigationStart
+    if ('now' in wdCb.root.performance === false) {
+        var offset = wdCb.root.performance.timing && wdCb.root.performance.timing.navigationStart ? performance.timing.navigationStart
             : Date.now();
-        dyCb.root.performance.now = function () {
+        wdCb.root.performance.now = function () {
             return Date.now() - offset;
         };
     }
-})(dyCb || (dyCb = {}));
+})(wdCb || (wdCb = {}));
 
-var dyCb;
-(function (dyCb) {
-    dyCb.$BREAK = {
+var wdCb;
+(function (wdCb) {
+    wdCb.$BREAK = {
         break: true
     };
-    dyCb.$REMOVE = void 0;
-})(dyCb || (dyCb = {}));
+    wdCb.$REMOVE = void 0;
+})(wdCb || (wdCb = {}));
 
-var dyCb;
-(function (dyCb) {
+var wdCb;
+(function (wdCb) {
     var Log = (function () {
         function Log() {
         }
@@ -114,7 +114,7 @@ var dyCb;
             }
             if (!this._exec("trace", Array.prototype.slice.call(arguments, 0))) {
                 if (!this._exec("log", arguments)) {
-                    dyCb.root.alert(Array.prototype.slice.call(arguments, 0).join(","));
+                    wdCb.root.alert(Array.prototype.slice.call(arguments, 0).join(","));
                 }
             }
         };
@@ -184,8 +184,8 @@ var dyCb;
         };
         Log._exec = function (consoleMethod, args, sliceBegin) {
             if (sliceBegin === void 0) { sliceBegin = 0; }
-            if (dyCb.root.console && dyCb.root.console[consoleMethod]) {
-                dyCb.root.console[consoleMethod].apply(dyCb.root.console, Array.prototype.slice.call(args, sliceBegin));
+            if (wdCb.root.console && wdCb.root.console[consoleMethod]) {
+                wdCb.root.console[consoleMethod].apply(wdCb.root.console, Array.prototype.slice.call(args, sliceBegin));
                 return true;
             }
             return false;
@@ -349,12 +349,12 @@ var dyCb;
         };
         return Log;
     })();
-    dyCb.Log = Log;
-})(dyCb || (dyCb = {}));
+    wdCb.Log = Log;
+})(wdCb || (wdCb = {}));
 
 /// <reference path="filePath.d.ts"/>
-var dyCb;
-(function (dyCb) {
+var wdCb;
+(function (wdCb) {
     var List = (function () {
         function List() {
             this.children = null;
@@ -363,7 +363,7 @@ var dyCb;
             return this.children.length;
         };
         List.prototype.hasChild = function (arg) {
-            if (dyCb.JudgeUtils.isFunction(arguments[0])) {
+            if (wdCb.JudgeUtils.isFunction(arguments[0])) {
                 var func = arguments[0];
                 return this._contain(this.children, function (c, i) {
                     return func(c, i);
@@ -391,7 +391,7 @@ var dyCb;
             return this;
         };
         List.prototype.addChildren = function (arg) {
-            if (dyCb.JudgeUtils.isArray(arg)) {
+            if (wdCb.JudgeUtils.isArray(arg)) {
                 var children = arg;
                 this.children = this.children.concat(children);
             }
@@ -430,7 +430,7 @@ var dyCb;
         };
         List.prototype.removeChildHelper = function (arg) {
             var result = null;
-            if (dyCb.JudgeUtils.isFunction(arg)) {
+            if (wdCb.JudgeUtils.isFunction(arg)) {
                 var func = arg;
                 result = this._removeChild(this.children, func);
             }
@@ -451,12 +451,12 @@ var dyCb;
         };
         List.prototype._indexOf = function (arr, arg) {
             var result = -1;
-            if (dyCb.JudgeUtils.isFunction(arg)) {
+            if (wdCb.JudgeUtils.isFunction(arg)) {
                 var func = arg;
                 this._forEach(arr, function (value, index) {
                     if (!!func.call(null, value, index)) {
                         result = index;
-                        return dyCb.$BREAK; //如果包含，则置返回值为true,跳出循环
+                        return wdCb.$BREAK; //如果包含，则置返回值为true,跳出循环
                     }
                 });
             }
@@ -467,7 +467,7 @@ var dyCb;
                         || (value.contain && value.contain(val))
                         || (value.indexOf && value.indexOf(val) > -1)) {
                         result = index;
-                        return dyCb.$BREAK; //如果包含，则置返回值为true,跳出循环
+                        return wdCb.$BREAK; //如果包含，则置返回值为true,跳出循环
                     }
                 });
             }
@@ -477,9 +477,9 @@ var dyCb;
             return this._indexOf(arr, arg) > -1;
         };
         List.prototype._forEach = function (arr, func, context) {
-            var scope = context || dyCb.root, i = 0, len = arr.length;
+            var scope = context || wdCb.root, i = 0, len = arr.length;
             for (i = 0; i < len; i++) {
-                if (func.call(scope, arr[i], i) === dyCb.$BREAK) {
+                if (func.call(scope, arr[i], i) === wdCb.$BREAK) {
                     break;
                 }
             }
@@ -499,12 +499,12 @@ var dyCb;
         };
         return List;
     })();
-    dyCb.List = List;
-})(dyCb || (dyCb = {}));
+    wdCb.List = List;
+})(wdCb || (wdCb = {}));
 
 /// <reference path="filePath.d.ts"/>
-var dyCb;
-(function (dyCb) {
+var wdCb;
+(function (wdCb) {
     var Hash = (function () {
         function Hash(children) {
             if (children === void 0) { children = {}; }
@@ -529,7 +529,7 @@ var dyCb;
             return result;
         };
         Hash.prototype.getKeys = function () {
-            var result = dyCb.Collection.create(), children = this._children, key = null;
+            var result = wdCb.Collection.create(), children = this._children, key = null;
             for (key in children) {
                 if (children.hasOwnProperty(key)) {
                     result.addChild(key);
@@ -538,7 +538,7 @@ var dyCb;
             return result;
         };
         Hash.prototype.getValues = function () {
-            var result = dyCb.Collection.create(), children = this._children, key = null;
+            var result = wdCb.Collection.create(), children = this._children, key = null;
             for (key in children) {
                 if (children.hasOwnProperty(key)) {
                     result.addChild(children[key]);
@@ -572,24 +572,24 @@ var dyCb;
             }
         };
         Hash.prototype.appendChild = function (key, value) {
-            if (this._children[key] instanceof dyCb.Collection) {
+            if (this._children[key] instanceof wdCb.Collection) {
                 var c = (this._children[key]);
                 c.addChild(value);
             }
             else {
-                this._children[key] = (dyCb.Collection.create().addChild(value));
+                this._children[key] = (wdCb.Collection.create().addChild(value));
             }
             return this;
         };
         Hash.prototype.removeChild = function (arg) {
             var result = [];
-            if (dyCb.JudgeUtils.isString(arg)) {
+            if (wdCb.JudgeUtils.isString(arg)) {
                 var key = arg;
                 result.push(this._children[key]);
                 this._children[key] = undefined;
                 delete this._children[key];
             }
-            else if (dyCb.JudgeUtils.isFunction(arg)) {
+            else if (wdCb.JudgeUtils.isFunction(arg)) {
                 var func = arg, self_1 = this;
                 this.forEach(function (val, key) {
                     if (func(val, key)) {
@@ -599,18 +599,18 @@ var dyCb;
                     }
                 });
             }
-            return dyCb.Collection.create(result);
+            return wdCb.Collection.create(result);
         };
         Hash.prototype.removeAllChildren = function () {
             this._children = {};
         };
         Hash.prototype.hasChild = function (arg) {
-            if (dyCb.JudgeUtils.isFunction(arguments[0])) {
+            if (wdCb.JudgeUtils.isFunction(arguments[0])) {
                 var func = arguments[0], result = false;
                 this.forEach(function (val, key) {
                     if (func(val, key)) {
                         result = true;
-                        return dyCb.$BREAK;
+                        return wdCb.$BREAK;
                     }
                 });
                 return result;
@@ -622,7 +622,7 @@ var dyCb;
             var i = null, children = this._children;
             for (i in children) {
                 if (children.hasOwnProperty(i)) {
-                    if (func.call(context, children[i], i) === dyCb.$BREAK) {
+                    if (func.call(context, children[i], i) === wdCb.$BREAK) {
                         break;
                     }
                 }
@@ -646,7 +646,7 @@ var dyCb;
                     return;
                 }
                 result = [key, self.getChild(key)];
-                return dyCb.$BREAK;
+                return wdCb.$BREAK;
             });
             return result;
         };
@@ -654,21 +654,21 @@ var dyCb;
             var resultMap = {};
             this.forEach(function (val, key) {
                 var result = func(val, key);
-                if (result !== dyCb.$REMOVE) {
-                    dyCb.Log.error(!dyCb.JudgeUtils.isArray(result) || result.length !== 2, dyCb.Log.info.FUNC_MUST_BE("iterator", "[key, value]"));
+                if (result !== wdCb.$REMOVE) {
+                    wdCb.Log.error(!wdCb.JudgeUtils.isArray(result) || result.length !== 2, wdCb.Log.info.FUNC_MUST_BE("iterator", "[key, value]"));
                     resultMap[result[0]] = result[1];
                 }
             });
             return Hash.create(resultMap);
         };
         Hash.prototype.toCollection = function () {
-            var result = dyCb.Collection.create();
+            var result = wdCb.Collection.create();
             this.forEach(function (val, key) {
-                if (val instanceof dyCb.Collection) {
+                if (val instanceof wdCb.Collection) {
                     result.addChildren(val);
                 }
                 else if (val instanceof Hash) {
-                    dyCb.Log.error(true, dyCb.Log.info.FUNC_NOT_SUPPORT("toCollection", "value is Hash"));
+                    wdCb.Log.error(true, wdCb.Log.info.FUNC_NOT_SUPPORT("toCollection", "value is Hash"));
                 }
                 else {
                     result.addChild(val);
@@ -678,8 +678,8 @@ var dyCb;
         };
         return Hash;
     })();
-    dyCb.Hash = Hash;
-})(dyCb || (dyCb = {}));
+    wdCb.Hash = Hash;
+})(wdCb || (wdCb = {}));
 
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -687,8 +687,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /// <reference path="Collection"/>
-var dyCb;
-(function (dyCb) {
+var wdCb;
+(function (wdCb) {
     var Queue = (function (_super) {
         __extends(Queue, _super);
         function Queue(children) {
@@ -711,9 +711,9 @@ var dyCb;
             this.removeAllChildren();
         };
         return Queue;
-    })(dyCb.List);
-    dyCb.Queue = Queue;
-})(dyCb || (dyCb = {}));
+    })(wdCb.List);
+    wdCb.Queue = Queue;
+})(wdCb || (wdCb = {}));
 
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -721,8 +721,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /// <reference path="Collection"/>
-var dyCb;
-(function (dyCb) {
+var wdCb;
+(function (wdCb) {
     var Stack = (function (_super) {
         __extends(Stack, _super);
         function Stack(children) {
@@ -745,12 +745,12 @@ var dyCb;
             this.removeAllChildren();
         };
         return Stack;
-    })(dyCb.List);
-    dyCb.Stack = Stack;
-})(dyCb || (dyCb = {}));
+    })(wdCb.List);
+    wdCb.Stack = Stack;
+})(wdCb || (wdCb = {}));
 
-var dyCb;
-(function (dyCb) {
+var wdCb;
+(function (wdCb) {
     var AjaxUtils = (function () {
         function AjaxUtils() {
         }
@@ -851,12 +851,12 @@ var dyCb;
         };
         return AjaxUtils;
     })();
-    dyCb.AjaxUtils = AjaxUtils;
-})(dyCb || (dyCb = {}));
+    wdCb.AjaxUtils = AjaxUtils;
+})(wdCb || (wdCb = {}));
 
 /// <reference path="../filePath.d.ts"/>
-var dyCb;
-(function (dyCb) {
+var wdCb;
+(function (wdCb) {
     var ArrayUtils = (function () {
         function ArrayUtils() {
         }
@@ -876,7 +876,7 @@ var dyCb;
             return resultArr;
         };
         ArrayUtils.contain = function (arr, ele) {
-            if (dyCb.JudgeUtils.isFunction(ele)) {
+            if (wdCb.JudgeUtils.isFunction(ele)) {
                 var func = ele;
                 for (var i = 0, len = arr.length; i < len; i++) {
                     var value = arr[i];
@@ -898,26 +898,26 @@ var dyCb;
         ;
         return ArrayUtils;
     })();
-    dyCb.ArrayUtils = ArrayUtils;
-})(dyCb || (dyCb = {}));
+    wdCb.ArrayUtils = ArrayUtils;
+})(wdCb || (wdCb = {}));
 
 /// <reference path="../filePath.d.ts"/>
-var dyCb;
-(function (dyCb) {
+var wdCb;
+(function (wdCb) {
     var ConvertUtils = (function () {
         function ConvertUtils() {
         }
         ConvertUtils.toString = function (obj) {
-            if (dyCb.JudgeUtils.isNumber(obj)) {
+            if (wdCb.JudgeUtils.isNumber(obj)) {
                 return String(obj);
             }
             //if (JudgeUtils.isjQuery(obj)) {
             //    return _jqToString(obj);
             //}
-            if (dyCb.JudgeUtils.isFunction(obj)) {
+            if (wdCb.JudgeUtils.isFunction(obj)) {
                 return this._convertCodeToString(obj);
             }
-            if (dyCb.JudgeUtils.isDirectObject(obj) || dyCb.JudgeUtils.isArray(obj)) {
+            if (wdCb.JudgeUtils.isDirectObject(obj) || wdCb.JudgeUtils.isArray(obj)) {
                 return JSON.stringify(obj);
             }
             return String(obj);
@@ -927,12 +927,12 @@ var dyCb;
         };
         return ConvertUtils;
     })();
-    dyCb.ConvertUtils = ConvertUtils;
-})(dyCb || (dyCb = {}));
+    wdCb.ConvertUtils = ConvertUtils;
+})(wdCb || (wdCb = {}));
 
 /// <reference path="../filePath.d.ts"/>
-var dyCb;
-(function (dyCb) {
+var wdCb;
+(function (wdCb) {
     var EventUtils = (function () {
         function EventUtils() {
         }
@@ -945,10 +945,10 @@ var dyCb;
             };
         };
         EventUtils.addEvent = function (dom, eventName, handler) {
-            if (dyCb.JudgeUtils.isHostMethod(dom, "addEventListener")) {
+            if (wdCb.JudgeUtils.isHostMethod(dom, "addEventListener")) {
                 dom.addEventListener(eventName, handler, false);
             }
-            else if (dyCb.JudgeUtils.isHostMethod(dom, "attachEvent")) {
+            else if (wdCb.JudgeUtils.isHostMethod(dom, "attachEvent")) {
                 dom.attachEvent("on" + eventName, handler);
             }
             else {
@@ -956,10 +956,10 @@ var dyCb;
             }
         };
         EventUtils.removeEvent = function (dom, eventName, handler) {
-            if (dyCb.JudgeUtils.isHostMethod(dom, "removeEventListener")) {
+            if (wdCb.JudgeUtils.isHostMethod(dom, "removeEventListener")) {
                 dom.removeEventListener(eventName, handler, false);
             }
-            else if (dyCb.JudgeUtils.isHostMethod(dom, "detachEvent")) {
+            else if (wdCb.JudgeUtils.isHostMethod(dom, "detachEvent")) {
                 dom.detachEvent("on" + eventName, handler);
             }
             else {
@@ -968,12 +968,12 @@ var dyCb;
         };
         return EventUtils;
     })();
-    dyCb.EventUtils = EventUtils;
-})(dyCb || (dyCb = {}));
+    wdCb.EventUtils = EventUtils;
+})(wdCb || (wdCb = {}));
 
 /// <reference path="../filePath.d.ts"/>
-var dyCb;
-(function (dyCb) {
+var wdCb;
+(function (wdCb) {
     var ExtendUtils = (function () {
         function ExtendUtils() {
         }
@@ -1065,18 +1065,18 @@ var dyCb;
             var property = null, destination = {};
             this.extendDeep(source, destination, function (item, property) {
                 return property.slice(0, 1) !== "_"
-                    && !dyCb.JudgeUtils.isFunction(item);
+                    && !wdCb.JudgeUtils.isFunction(item);
             });
             return destination;
         };
         return ExtendUtils;
     })();
-    dyCb.ExtendUtils = ExtendUtils;
-})(dyCb || (dyCb = {}));
+    wdCb.ExtendUtils = ExtendUtils;
+})(wdCb || (wdCb = {}));
 
 /// <reference path="../filePath.d.ts"/>
-var dyCb;
-(function (dyCb) {
+var wdCb;
+(function (wdCb) {
     var SPLITPATH_REGEX = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
     //reference from
     //https://github.com/cookfront/learn-note/blob/master/blog-backup/2014/nodejs-path.md
@@ -1111,12 +1111,12 @@ var dyCb;
         };
         return PathUtils;
     })();
-    dyCb.PathUtils = PathUtils;
-})(dyCb || (dyCb = {}));
+    wdCb.PathUtils = PathUtils;
+})(wdCb || (wdCb = {}));
 
 /// <reference path="../filePath.d.ts"/>
-var dyCb;
-(function (dyCb) {
+var wdCb;
+(function (wdCb) {
     var DomQuery = (function () {
         function DomQuery() {
             var args = [];
@@ -1124,7 +1124,7 @@ var dyCb;
                 args[_i - 0] = arguments[_i];
             }
             this._doms = null;
-            if (dyCb.JudgeUtils.isDom(args[0])) {
+            if (wdCb.JudgeUtils.isDom(args[0])) {
                 this._doms = [args[0]];
             }
             else if (this._isDomEleStr(args[0])) {
@@ -1195,7 +1195,7 @@ var dyCb;
             for (var _i = 0; _i < arguments.length; _i++) {
                 args[_i - 0] = arguments[_i];
             }
-            if (dyCb.JudgeUtils.isString(args[0])) {
+            if (wdCb.JudgeUtils.isString(args[0])) {
                 var div = this._createElement("div"), eleStr = args[0];
                 div.innerHTML = eleStr;
                 return div.firstChild;
@@ -1207,8 +1207,8 @@ var dyCb;
         };
         return DomQuery;
     })();
-    dyCb.DomQuery = DomQuery;
-})(dyCb || (dyCb = {}));
+    wdCb.DomQuery = DomQuery;
+})(wdCb || (wdCb = {}));
 
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
@@ -1216,8 +1216,8 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /// <reference path="filePath.d.ts"/>
-var dyCb;
-(function (dyCb) {
+var wdCb;
+(function (wdCb) {
     var Collection = (function (_super) {
         __extends(Collection, _super);
         function Collection(children) {
@@ -1232,8 +1232,8 @@ var dyCb;
         };
         Collection.prototype.copy = function (isDeep) {
             if (isDeep === void 0) { isDeep = false; }
-            return isDeep ? Collection.create(dyCb.ExtendUtils.extendDeep(this.children))
-                : Collection.create(dyCb.ExtendUtils.extend([], this.children));
+            return isDeep ? Collection.create(wdCb.ExtendUtils.extendDeep(this.children))
+                : Collection.create(wdCb.ExtendUtils.extend([], this.children));
         };
         Collection.prototype.filter = function (func) {
             var scope = this.children, result = [];
@@ -1252,7 +1252,7 @@ var dyCb;
                     return;
                 }
                 result = value;
-                return dyCb.$BREAK;
+                return wdCb.$BREAK;
             });
             return result;
         };
@@ -1269,7 +1269,7 @@ var dyCb;
             var resultArr = [];
             this.forEach(function (e, index) {
                 var result = func(e, index);
-                if (result !== dyCb.$REMOVE) {
+                if (result !== wdCb.$REMOVE) {
                     resultArr.push(result);
                 }
                 //e && e[handlerName] && e[handlerName].apply(context || e, valueArr);
@@ -1287,13 +1287,13 @@ var dyCb;
             return resultList;
         };
         return Collection;
-    })(dyCb.List);
-    dyCb.Collection = Collection;
-})(dyCb || (dyCb = {}));
+    })(wdCb.List);
+    wdCb.Collection = Collection;
+})(wdCb || (wdCb = {}));
 
 /// <reference path="../filePath.d.ts"/>
-var dyCb;
-(function (dyCb) {
+var wdCb;
+(function (wdCb) {
     var FunctionUtils = (function () {
         function FunctionUtils() {
         }
@@ -1304,5 +1304,5 @@ var dyCb;
         };
         return FunctionUtils;
     })();
-    dyCb.FunctionUtils = FunctionUtils;
-})(dyCb || (dyCb = {}));
+    wdCb.FunctionUtils = FunctionUtils;
+})(wdCb || (wdCb = {}));

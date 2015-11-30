@@ -1,4 +1,4 @@
-module dyCb{
+module wdCb{
 // performance.now polyfill
 
     if ('performance' in root === false) {

@@ -1,5 +1,5 @@
 /// <reference path="../filePath.d.ts"/>
-module dyCb{
+module wdCb{
     export class ConvertUtils{
         public static toString(obj:any){
             if (JudgeUtils.isNumber(obj)) {

@@ -7,8 +7,8 @@ var config = require("../common/config");
 var distPath = config.distPath;
 
 module.exports = function buildPublishFile() {
-    fs.copySync(path.join(distPath, "dyCb.d.ts"), path.join(distPath, "dyCb.node.d.ts"));
+    fs.copySync(path.join(distPath, "wdCb.d.ts"), path.join(distPath, "wdCb.node.d.ts"));
 
-    addModuleNameConverter(path.join(distPath, "dyCb.node.d.ts"), "dyCb", "dycb");
+    addModuleNameConverter(path.join(distPath, "wdCb.node.d.ts"), "wdCb", "wdcb");
 }
 

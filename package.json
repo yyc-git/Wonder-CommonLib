@@ -1,10 +1,11 @@
 {
-  "name": "dycb",
-  "version": "0.1.2",
-  "main": "dist/dyCb.node.js",
+  "name": "wdcb",
+  "version": "0.1.1",
+  "main": "dist/wdCb.node.js",
   "keywords": [
     "common lib",
-    "dycb"
+    "Wonder-CommonLib",
+    "Wonder"
   ],
   "devDependencies": {
     "del": "^1.2.0",

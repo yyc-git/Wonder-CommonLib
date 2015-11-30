@@ -1,4 +1,4 @@
-module dyCb{
+module wdCb{
     declare var document:any;
 
     export class AjaxUtils{

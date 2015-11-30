@@ -26,11 +26,11 @@ gulp.task('publishToNPM', function() {
 
     return  merge([
         tsResult.dts
-            .pipe(gulpConcat('dyCb.node.d.ts'))
+            .pipe(gulpConcat('wdCb.node.d.ts'))
             .pipe(gulp.dest(distPath)),
         tsResult.js
-            .pipe(gulpConcat('dyCb.node.js'))
-            .pipe(addModuleExports("dyCb"))
+            .pipe(gulpConcat('wdCb.node.js'))
+            .pipe(addModuleExports("wdCb"))
             .pipe(gulpSourcemaps.write())
             .pipe(gulp.dest(distPath))
     ])

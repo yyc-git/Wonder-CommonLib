@@ -4,7 +4,7 @@ describe("Hash", function () {
 
     beforeEach(function () {
         sandbox = sinon.sandbox.create();
-        hash = new dyCb.Hash();
+        hash = new wdCb.Hash();
     });
     afterEach(function () {
         sandbox.restore();
@@ -45,7 +45,7 @@ describe("Hash", function () {
             hash.addChild("a1", 1);
             hash.addChild("a2", 1);
 
-            expect(hash.getKeys()).toBeInstanceOf(dyCb.Collection);
+            expect(hash.getKeys()).toBeInstanceOf(wdCb.Collection);
             expect(hash.getKeys().getChildren()).toEqual(["a1", "a2"]);
         });
     });
@@ -55,7 +55,7 @@ describe("Hash", function () {
             hash.addChild("a1", 1);
             hash.addChild("a2", 2);
 
-            expect(hash.getValues()).toBeInstanceOf(dyCb.Collection);
+            expect(hash.getValues()).toBeInstanceOf(wdCb.Collection);
             expect(hash.getValues().getChildren()).toEqual([1, 2]);
         });
     });
@@ -103,7 +103,7 @@ describe("Hash", function () {
             hash.addChildren({
                 c: true
             });
-            hash.addChildren(dyCb.Hash.create({
+            hash.addChildren(wdCb.Hash.create({
                 d: 2
             }));
 
@@ -123,7 +123,7 @@ describe("Hash", function () {
             hash.appendChild("a1", "1");
             value = hash.getChild("a1");
 
-            expect(value).toBeInstanceOf(dyCb.Collection);
+            expect(value).toBeInstanceOf(wdCb.Collection);
             expect(value.getChildren()).toEqual(["1"]);
         });
         it("否则，则将该key的值加入到Collection最后", function () {
@@ -133,7 +133,7 @@ describe("Hash", function () {
             hash.appendChild("a1", "2");
             value = hash.getChild("a1");
 
-            expect(value).toBeInstanceOf(dyCb.Collection);
+            expect(value).toBeInstanceOf(wdCb.Collection);
             expect(value.getChildren()).toEqual(["1", "2"]);
         });
     });
@@ -218,7 +218,7 @@ describe("Hash", function () {
 
             hash.forEach(function (val, key) {
                 a += val;
-                return dyCb.$BREAK;
+                return wdCb.$BREAK;
             });
 
             expect(a).toEqual(1);
@@ -261,7 +261,7 @@ describe("Hash", function () {
 
             var result = hash.map(function(val, key){
                 if(val === 2){
-                    return dyCb.$REMOVE;
+                    return wdCb.$REMOVE;
                 }
 
                 return [key, val * 2];
@@ -326,15 +326,15 @@ describe("Hash", function () {
 
     describe("toCollection", function(){
         it("convert to Collection", function(){
-            hash.addChild("1", dyCb.Collection.create([1, 2]));
+            hash.addChild("1", wdCb.Collection.create([1, 2]));
             hash.addChild("2", true);
 
             var result = hash.toCollection();
-            expect(result).toBeInstanceOf(dyCb.Collection);
+            expect(result).toBeInstanceOf(wdCb.Collection);
             expect(result.getChildren()).toEqual([1, 2, true]);
         });
         it("if val is Hash, error", function(){
-            hash.addChild("1", dyCb.Hash.create());
+            hash.addChild("1", wdCb.Hash.create());
 
             expect(function(){
                 var result = hash.toCollection();

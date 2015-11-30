@@ -1,5 +1,5 @@
 /// <reference path="../filePath.d.ts"/>
-module dyCb {
+module wdCb {
     export class ArrayUtils {
         public static removeRepeatItems(arr:Array<any>, isEqual:(a:any, b:any) => boolean = (a, b)=> {
             return a === b;

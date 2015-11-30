@@ -4,7 +4,7 @@ describe("ArrayUtils", function () {
 
     beforeEach(function () {
         sandbox = sinon.sandbox.create();
-        Utils = dyCb.ArrayUtils;
+        Utils = wdCb.ArrayUtils;
     });
     afterEach(function () {
         sandbox.restore();

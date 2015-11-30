@@ -1,5 +1,5 @@
 /// <reference path="../filePath.d.ts"/>
-module dyCb {
+module wdCb {
     export class EventUtils {
         public static bindEvent(context, func) {
             //var args = Array.prototype.slice.call(arguments, 2),

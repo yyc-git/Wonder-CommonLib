@@ -4,7 +4,7 @@ describe("Queue", function () {
 
     beforeEach(function () {
         sandbox = sinon.sandbox.create();
-        queue = new dyCb.Queue();
+        queue = new wdCb.Queue();
     });
     afterEach(function () {
         sandbox.restore();

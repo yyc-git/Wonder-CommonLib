@@ -1,5 +1,5 @@
 /// <reference path="filePath.d.ts"/>
-module dyCb {
+module wdCb {
     export class Collection<T> extends List<T>{
         public static create<T>(children = []){
             var obj = new this(<Array<T>>children);

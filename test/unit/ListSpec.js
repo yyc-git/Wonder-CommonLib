@@ -3,7 +3,7 @@ describe("List", function () {
     var sandbox = null;
 
     function create(children){
-        var list = new dyCb.List();
+        var list = new wdCb.List();
 
         list.children = children;
 
@@ -323,7 +323,7 @@ describe("List", function () {
 
             list.forEach(function (ele, index) {
                 a += ele;
-                return dyCb.$BREAK;
+                return wdCb.$BREAK;
             });
 
             expect(a).toEqual(1);

@@ -1,5 +1,5 @@
 /// <reference path="../filePath.d.ts"/>
-module dyCb {
+module wdCb {
     declare var document:any;
 
     export class DomQuery {

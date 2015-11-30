@@ -1,4 +1,4 @@
-module dyCb {
+module wdCb {
     declare var global:any, module:any;
 
     export class JudgeUtils {

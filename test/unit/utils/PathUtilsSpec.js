@@ -4,7 +4,7 @@ describe("PathUtils", function () {
 
     beforeEach(function () {
         sandbox = sinon.sandbox.create();
-        Utils = dyCb.PathUtils;
+        Utils = wdCb.PathUtils;
     });
     afterEach(function () {
         sandbox.restore();

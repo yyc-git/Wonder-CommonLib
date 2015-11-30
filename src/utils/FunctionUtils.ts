@@ -1,5 +1,5 @@
 /// <reference path="../filePath.d.ts"/>
-module dyCb {
+module wdCb {
     export class FunctionUtils {
         public static bind(object:any, func:Function) {
             return function () {

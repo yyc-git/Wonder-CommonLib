@@ -4,7 +4,7 @@ describe("Stack", function () {
 
     beforeEach(function () {
         sandbox = sinon.sandbox.create();
-        stack = new dyCb.Stack();
+        stack = new wdCb.Stack();
     });
     afterEach(function () {
         sandbox.restore();

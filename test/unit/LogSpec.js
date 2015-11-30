@@ -4,7 +4,7 @@ describe("Log", function () {
 
     beforeEach(function () {
         sandbox = sinon.sandbox.create();
-        Log = dyCb.Log;
+        Log = wdCb.Log;
     });
     afterEach(function () {
         sandbox.restore();

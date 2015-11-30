@@ -1,5 +1,5 @@
 /// <reference path="filePath.d.ts"/>
-module dyCb {
+module wdCb {
     export class List<T> {
         protected children:Array<T> = null;
 
