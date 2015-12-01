@@ -71,7 +71,7 @@ declare module wdCb {
          * @function
          * @param {String} message
          */
-        static log(...message: any[]): void;
+        static log(...messages: any[]): void;
         /**
          * 断言失败时，会提示错误信息，但程序会继续执行下去
          * 使用断言捕捉不应该发生的非法情况。不要混淆非法情况与错误情况之间的区别，后者是必然存在的并且是一定要作出处理的。
@@ -97,7 +97,7 @@ declare module wdCb {
          * @param cond 如果cond返回false，则断言失败，显示message
          * @param message
          */
-        static assert(cond: any, ...message: any[]): void;
+        static assert(cond: any, ...messages: any[]): void;
         static error(cond: any, ...message: any[]): any;
         static warn(...message: any[]): void;
         private static _exec(consoleMethod, args, sliceBegin?);
@@ -112,11 +112,11 @@ declare module wdCb {
         hasChild(arg: Function | T): boolean;
         getChildren(): T[];
         getChild(index: number): T;
-        addChild(child: T): List<T>;
-        addChildren(arg: Array<T> | List<T> | any): List<T>;
+        addChild(child: T): this;
+        addChildren(arg: Array<T> | List<T> | any): this;
         unShiftChild(child: T): void;
-        removeAllChildren(): List<T>;
-        forEach(func: Function, context?: any): List<T>;
+        removeAllChildren(): this;
+        forEach(func: Function, context?: any): this;
         toArray(): T[];
         protected copyChildren(): T[];
         protected removeChildHelper(arg: any): Array<T>;
@@ -142,14 +142,14 @@ declare module wdCb {
         getKeys(): Collection<{}>;
         getValues(): Collection<{}>;
         getChild(key: string): T;
-        setValue(key: string, value: any): Hash<T>;
-        addChild(key: string, value: any): Hash<T>;
+        setValue(key: string, value: any): this;
+        addChild(key: string, value: any): this;
         addChildren(arg: {} | Hash<T>): void;
-        appendChild(key: string, value: any): Hash<T>;
+        appendChild(key: string, value: any): this;
         removeChild(arg: any): Collection<{}>;
         removeAllChildren(): void;
         hasChild(arg: any): boolean;
-        forEach(func: Function, context?: any): Hash<T>;
+        forEach(func: Function, context?: any): this;
         filter(func: Function): Hash<{}>;
         findOne(func: Function): any[];
         map(func: Function): Hash<{}>;
@@ -277,8 +277,8 @@ declare module wdCb {
         get(index: any): HTMLElement;
         prepend(eleStr: string): any;
         prepend(dom: HTMLElement): any;
-        prependTo(eleStr: string): DomQuery;
-        remove(): DomQuery;
+        prependTo(eleStr: string): this;
+        remove(): this;
         css(property: string, value: string): void;
         private _isDomEleStr(eleStr);
         private _buildDom(eleStr);

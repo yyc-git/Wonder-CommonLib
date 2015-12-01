@@ -108,15 +108,14 @@ var wdCb;
          * @param {String} message
          */
         Log.log = function () {
-            var message = [];
+            var messages = [];
             for (var _i = 0; _i < arguments.length; _i++) {
-                message[_i - 0] = arguments[_i];
+                messages[_i - 0] = arguments[_i];
             }
-            if (!this._exec("trace", Array.prototype.slice.call(arguments, 0))) {
-                if (!this._exec("log", arguments)) {
-                    wdCb.root.alert(Array.prototype.slice.call(arguments, 0).join(","));
-                }
+            if (!this._exec("log", messages)) {
+                wdCb.root.alert(messages.join(","));
             }
+            this._exec("trace", messages);
         };
         /**
          * 断言失败时，会提示错误信息，但程序会继续执行下去
@@ -144,9 +143,9 @@ var wdCb;
          * @param message
          */
         Log.assert = function (cond) {
-            var message = [];
+            var messages = [];
             for (var _i = 1; _i < arguments.length; _i++) {
-                message[_i - 1] = arguments[_i];
+                messages[_i - 1] = arguments[_i];
             }
             if (cond) {
                 if (!this._exec("assert", arguments, 1)) {
@@ -200,7 +199,7 @@ var wdCb;
                     args[_i - 0] = arguments[_i];
                 }
                 var result = "";
-                Array.prototype.slice.call(arguments, 0).forEach(function (val) {
+                args.forEach(function (val) {
                     result += String(val) + " ";
                 });
                 return result.slice(0, -1);
@@ -210,14 +209,14 @@ var wdCb;
                 for (var _i = 0; _i < arguments.length; _i++) {
                     args[_i - 0] = arguments[_i];
                 }
-                if (arguments.length === 2) {
-                    return this.helperFunc(arguments[0], arguments[1]);
+                if (args.length === 2) {
+                    return this.helperFunc(args[0], args[1]);
                 }
-                else if (arguments.length === 3) {
-                    return this.helperFunc(arguments[1], arguments[0], arguments[2]);
+                else if (args.length === 3) {
+                    return this.helperFunc(args[1], args[0], args[2]);
                 }
                 else {
-                    throw new Error("arguments.length must <= 3");
+                    throw new Error("args.length must <= 3");
                 }
             },
             FUNC_INVALID: function () {
@@ -225,126 +224,112 @@ var wdCb;
                 for (var _i = 0; _i < arguments.length; _i++) {
                     args[_i - 0] = arguments[_i];
                 }
-                var arr = Array.prototype.slice.call(arguments, 0);
-                arr.unshift("invalid");
-                return this.assertion.apply(this, arr);
+                args.unshift("invalid");
+                return this.assertion.apply(this, args);
             },
             FUNC_MUST: function () {
                 var args = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     args[_i - 0] = arguments[_i];
                 }
-                var arr = Array.prototype.slice.call(arguments, 0);
-                arr.unshift("must");
-                return this.assertion.apply(this, arr);
+                args.unshift("must");
+                return this.assertion.apply(this, args);
             },
             FUNC_MUST_BE: function () {
                 var args = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     args[_i - 0] = arguments[_i];
                 }
-                var arr = Array.prototype.slice.call(arguments, 0);
-                arr.unshift("must be");
-                return this.assertion.apply(this, arr);
+                args.unshift("must be");
+                return this.assertion.apply(this, args);
             },
             FUNC_MUST_NOT_BE: function () {
                 var args = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     args[_i - 0] = arguments[_i];
                 }
-                var arr = Array.prototype.slice.call(arguments, 0);
-                arr.unshift("must not be");
-                return this.assertion.apply(this, arr);
+                args.unshift("must not be");
+                return this.assertion.apply(this, args);
             },
             FUNC_SHOULD: function () {
                 var args = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     args[_i - 0] = arguments[_i];
                 }
-                var arr = Array.prototype.slice.call(arguments, 0);
-                arr.unshift("should");
-                return this.assertion.apply(this, arr);
+                args.unshift("should");
+                return this.assertion.apply(this, args);
             },
             FUNC_SHOULD_NOT: function () {
                 var args = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     args[_i - 0] = arguments[_i];
                 }
-                var arr = Array.prototype.slice.call(arguments, 0);
-                arr.unshift("should not");
-                return this.assertion.apply(this, arr);
+                args.unshift("should not");
+                return this.assertion.apply(this, args);
             },
             FUNC_SUPPORT: function () {
                 var args = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     args[_i - 0] = arguments[_i];
                 }
-                var arr = Array.prototype.slice.call(arguments, 0);
-                arr.unshift("support");
-                return this.assertion.apply(this, arr);
+                args.unshift("support");
+                return this.assertion.apply(this, args);
             },
             FUNC_NOT_SUPPORT: function () {
                 var args = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     args[_i - 0] = arguments[_i];
                 }
-                var arr = Array.prototype.slice.call(arguments, 0);
-                arr.unshift("not support");
-                return this.assertion.apply(this, arr);
+                args.unshift("not support");
+                return this.assertion.apply(this, args);
             },
             FUNC_MUST_DEFINE: function () {
                 var args = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     args[_i - 0] = arguments[_i];
                 }
-                var arr = Array.prototype.slice.call(arguments, 0);
-                arr.unshift("must define");
-                return this.assertion.apply(this, arr);
+                args.unshift("must define");
+                return this.assertion.apply(this, args);
             },
             FUNC_MUST_NOT_DEFINE: function () {
                 var args = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     args[_i - 0] = arguments[_i];
                 }
-                var arr = Array.prototype.slice.call(arguments, 0);
-                arr.unshift("must not define");
-                return this.assertion.apply(this, arr);
+                args.unshift("must not define");
+                return this.assertion.apply(this, args);
             },
             FUNC_UNKNOW: function () {
                 var args = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     args[_i - 0] = arguments[_i];
                 }
-                var arr = Array.prototype.slice.call(arguments, 0);
-                arr.unshift("unknow");
-                return this.assertion.apply(this, arr);
+                args.unshift("unknow");
+                return this.assertion.apply(this, args);
             },
             FUNC_EXPECT: function () {
                 var args = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     args[_i - 0] = arguments[_i];
                 }
-                var arr = Array.prototype.slice.call(arguments, 0);
-                arr.unshift("expect");
-                return this.assertion.apply(this, arr);
+                args.unshift("expect");
+                return this.assertion.apply(this, args);
             },
             FUNC_UNEXPECT: function () {
                 var args = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     args[_i - 0] = arguments[_i];
                 }
-                var arr = Array.prototype.slice.call(arguments, 0);
-                arr.unshift("unexpect");
-                return this.assertion.apply(this, arr);
+                args.unshift("unexpect");
+                return this.assertion.apply(this, args);
             },
             FUNC_NOT_EXIST: function () {
                 var args = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
                     args[_i - 0] = arguments[_i];
                 }
-                var arr = Array.prototype.slice.call(arguments, 0);
-                arr.unshift("not exist");
-                return this.assertion.apply(this, arr);
+                args.unshift("not exist");
+                return this.assertion.apply(this, args);
             }
         };
         return Log;

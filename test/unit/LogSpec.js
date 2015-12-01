@@ -22,15 +22,15 @@ describe("Log", function () {
     describe("log", function(){
         it("if trace exist, trace info", function(){
             sandbox.stub(console, "trace");
-            sandbox.stub(console, "log");
+            //sandbox.stub(console, "log");
 
             Log.log("aaa %d", 2);
 
+            //expect(console.log).toCalled();
             expect(console.trace).toCalledWith("aaa %d", 2);
-            expect(console.log).not.toCalled();
         });
-        it("else if console.log exist, use it", function(){
-            sandbox.stub(console, "trace", null);
+        it("if console.log exist, use it", function(){
+            sandbox.stub(console, "trace");
             sandbox.stub(console, "log");
             sandbox.stub(window, "alert");
 
@@ -38,15 +38,17 @@ describe("Log", function () {
 
             expect(console.log).toCalledWith("aaa %d", 2);
             expect(window.alert).not.toCalled();
+            expect(console.trace).toCalledWith("aaa %d", 2);
         });
         it("else, use window.alert", function(){
-            sandbox.stub(console, "trace", null);
+            sandbox.stub(console, "trace");
             sandbox.stub(console, "log", null);
             sandbox.stub(window, "alert");
 
             Log.log("aaa %d", 2);
 
             expect(window.alert).toCalledWith("aaa %d,2");
+            expect(console.trace).toCalledWith("aaa %d", 2);
         });
     });
 

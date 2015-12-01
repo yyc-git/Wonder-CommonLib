@@ -8,120 +8,93 @@ module wdCb {
             helperFunc: function(...args){
                 var result = "";
 
-                Array.prototype.slice.call(arguments, 0).forEach(function(val){
+                args.forEach(function(val){
                     result += String(val) + " ";
                 });
 
                 return result.slice(0, -1);
             },
             assertion: function(...args){
-                if(arguments.length === 2){
-                    return this.helperFunc(arguments[0], arguments[1]);
+                if(args.length === 2){
+                    return this.helperFunc(args[0], args[1]);
                 }
-                else if(arguments.length === 3){
-                    return this.helperFunc(arguments[1], arguments[0], arguments[2]);
+                else if(args.length === 3){
+                    return this.helperFunc(args[1], args[0], args[2]);
                 }
                 else{
-                    throw new Error("arguments.length must <= 3");
+                    throw new Error("args.length must <= 3");
                 }
             },
 
             FUNC_INVALID: function (...args) {
-                var arr = Array.prototype.slice.call(arguments, 0);
+                args.unshift("invalid");
 
-                arr.unshift("invalid");
-
-                return this.assertion.apply(this, arr);            },
+                return this.assertion.apply(this, args);
+            },
             FUNC_MUST: function (...args) {
-                var arr = Array.prototype.slice.call(arguments, 0);
+                args.unshift("must");
 
-                arr.unshift("must");
-
-                return this.assertion.apply(this, arr);
+                return this.assertion.apply(this, args);
             },
             FUNC_MUST_BE: function (...args) {
-                var arr = Array.prototype.slice.call(arguments, 0);
+                args.unshift("must be");
 
-                arr.unshift("must be");
-
-                return this.assertion.apply(this, arr);
+                return this.assertion.apply(this, args);
             },
             FUNC_MUST_NOT_BE: function (...args) {
-                var arr = Array.prototype.slice.call(arguments, 0);
+                args.unshift("must not be");
 
-                arr.unshift("must not be");
-
-                return this.assertion.apply(this, arr);
+                return this.assertion.apply(this, args);
             },
             FUNC_SHOULD: function (...args) {
-                var arr = Array.prototype.slice.call(arguments, 0);
+                args.unshift("should");
 
-                arr.unshift("should");
-
-                return this.assertion.apply(this, arr);
+                return this.assertion.apply(this, args);
             },
             FUNC_SHOULD_NOT: function (...args) {
-                var arr = Array.prototype.slice.call(arguments, 0);
+                args.unshift("should not");
 
-                arr.unshift("should not");
-
-                return this.assertion.apply(this, arr);
+                return this.assertion.apply(this, args);
             },
             FUNC_SUPPORT: function(...args){
-                var arr = Array.prototype.slice.call(arguments, 0);
+                args.unshift("support");
 
-                arr.unshift("support");
-
-                return this.assertion.apply(this, arr);
+                return this.assertion.apply(this, args);
             },
             FUNC_NOT_SUPPORT: function(...args){
-                var arr = Array.prototype.slice.call(arguments, 0);
+                args.unshift("not support");
 
-                arr.unshift("not support");
-
-                return this.assertion.apply(this, arr);
+                return this.assertion.apply(this, args);
             },
             FUNC_MUST_DEFINE: function(...args){
-                var arr = Array.prototype.slice.call(arguments, 0);
+                args.unshift("must define");
 
-                arr.unshift("must define");
-
-                return this.assertion.apply(this, arr);
+                return this.assertion.apply(this, args);
             },
             FUNC_MUST_NOT_DEFINE: function(...args){
-                var arr = Array.prototype.slice.call(arguments, 0);
+                args.unshift("must not define");
 
-                arr.unshift("must not define");
-
-                return this.assertion.apply(this, arr);
+                return this.assertion.apply(this, args);
             },
             FUNC_UNKNOW: function(...args){
-                var arr = Array.prototype.slice.call(arguments, 0);
+                args.unshift("unknow");
 
-                arr.unshift("unknow");
-
-                return this.assertion.apply(this, arr);
+                return this.assertion.apply(this, args);
             },
             FUNC_EXPECT: function(...args){
-                var arr = Array.prototype.slice.call(arguments, 0);
+                args.unshift("expect");
 
-                arr.unshift("expect");
-
-                return this.assertion.apply(this, arr);
+                return this.assertion.apply(this, args);
             },
             FUNC_UNEXPECT: function(...args){
-                var arr = Array.prototype.slice.call(arguments, 0);
+                args.unshift("unexpect");
 
-                arr.unshift("unexpect");
-
-                return this.assertion.apply(this, arr);
+                return this.assertion.apply(this, args);
             },
             FUNC_NOT_EXIST: function(...args){
-                var arr = Array.prototype.slice.call(arguments, 0);
+                args.unshift("not exist");
 
-                arr.unshift("not exist");
-
-                return this.assertion.apply(this, arr);
+                return this.assertion.apply(this, args);
             }
         };
 
@@ -130,12 +103,12 @@ module wdCb {
          * @function
          * @param {String} message
          */
-        public static log(...message) {
-            if(!this._exec("trace", Array.prototype.slice.call(arguments, 0))){
-                if(!this._exec("log", arguments)) {
-                    root.alert(Array.prototype.slice.call(arguments, 0).join(","));
-                }
+        public static log(...messages) {
+            if(!this._exec("log", messages)) {
+                root.alert(messages.join(","));
             }
+
+            this._exec("trace", messages);
         }
 
         /**
@@ -163,7 +136,7 @@ module wdCb {
          * @param cond 如果cond返回false，则断言失败，显示message
          * @param message
          */
-        public static assert(cond, ...message) {
+        public static assert(cond, ...messages) {
             if (cond) {
                 if (!this._exec("assert", arguments, 1)) {
                     this.log.apply(this, Array.prototype.slice.call(arguments, 1));

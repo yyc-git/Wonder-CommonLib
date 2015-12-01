@@ -62,7 +62,7 @@ describe("DomQuery", function () {
                 it("change style", function(){
                     var query = Query.create("#DomQueryTest").css("margin", "1px 2px 3px 4px");
 
-                    expect($("#DomQueryTest").css("margin")).toEqual("1px 2px 3px 4px");
+                    expect(document.getElementById("DomQueryTest").style.margin).toEqual("1px 2px 3px 4px");
                 });
             });
         });
