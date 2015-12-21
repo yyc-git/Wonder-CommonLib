@@ -23,7 +23,7 @@ module wdCb {
         }
 
         public static isDom(obj) {
-            return obj instanceof HTMLElement;
+            return Object.prototype.toString.call(obj).match(/\[object HTML\w+/) !== null;
         }
 
         /**
