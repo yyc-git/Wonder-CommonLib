@@ -55,6 +55,12 @@ describe("DomQuery", function () {
 
                 expect(query.get(0).tagName.toLowerCase()).toEqual("canvas");
             });
+            it("can set dom id", function(){
+                var query = Query.create("<style id='aaa'></style>");
+
+                expect(query.get(0).tagName.toLowerCase()).toEqual("style");
+                expect(query.get(0).id).toEqual("aaa");
+            });
         });
 
         describe("change css", function(){

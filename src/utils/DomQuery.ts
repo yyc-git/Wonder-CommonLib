@@ -84,7 +84,7 @@ module wdCb {
         }
 
         private _isDomEleStr(eleStr:string){
-            return eleStr.match(/<(\w+)><\/\1>/) !== null;
+            return eleStr.match(/<(\w+)[^>]*><\/\1>/) !== null;
         }
 
         private _buildDom(eleStr:string):HTMLElement;

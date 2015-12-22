@@ -1173,7 +1173,7 @@ var wdCb;
             }
         };
         DomQuery.prototype._isDomEleStr = function (eleStr) {
-            return eleStr.match(/<(\w+)><\/\1>/) !== null;
+            return eleStr.match(/<(\w+)[^>]*><\/\1>/) !== null;
         };
         DomQuery.prototype._buildDom = function () {
             var args = [];
