@@ -1089,6 +1089,7 @@ var wdCb;
             return pathStr.substring(0, index) + extname + tempStr;
         };
         PathUtils.changeBasename = function (pathStr, basename, isSameExt) {
+            if (isSameExt === void 0) { isSameExt = false; }
             var index = null, tempStr = null, ext = null;
             if (basename.indexOf(".") == 0) {
                 return this.changeExtname(pathStr, basename);

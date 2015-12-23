@@ -35,7 +35,7 @@ module wdCb{
             return pathStr.substring(0, index) + extname + tempStr;
         }
 
-        public static changeBasename(pathStr:string, basename:string, isSameExt:boolean) {
+        public static changeBasename(pathStr:string, basename:string, isSameExt:boolean = false) {
             var index = null,
                 tempStr = null,
                 ext = null;
