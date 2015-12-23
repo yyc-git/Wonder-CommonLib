@@ -83,6 +83,25 @@ module wdCb {
             }
         }
 
+        public attr(name:string);
+        public attr(name:string, value:string);
+
+        public attr(...args){
+            if(args.length === 1){
+                let name = args[0];
+
+                return this.get(0).getAttribute(name);
+            }
+            else{
+                let name = args[0],
+                    value = args[1];
+
+                for (let dom of this._doms) {
+                    dom.setAttribute(name, value);
+                }
+            }
+        }
+
         private _isDomEleStr(eleStr:string){
             return eleStr.match(/<(\w+)[^>]*><\/\1>/) !== null;
         }

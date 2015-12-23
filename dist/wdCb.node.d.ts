@@ -280,6 +280,8 @@ declare module wdCb {
         prependTo(eleStr: string): this;
         remove(): this;
         css(property: string, value: string): void;
+        attr(name: string): any;
+        attr(name: string, value: string): any;
         private _isDomEleStr(eleStr);
         private _buildDom(eleStr);
         private _buildDom(dom);

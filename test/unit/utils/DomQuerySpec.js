@@ -72,6 +72,34 @@ describe("DomQuery", function () {
                 });
             });
         });
+
+        describe("attr", function(){
+            beforeEach(function () {
+                $("body").append($("<div id='DomQueryTest2'></div>"));
+            });
+            afterEach(function () {
+                $("#DomQueryTest2").remove();
+            });
+
+            it("get attribute of the first dom", function(){
+                var query = Query.create("div").attr("id");
+
+                expect(Query.create("#DomQueryTest").attr("id")).toEqual("DomQueryTest");
+            });
+
+            describe("set attribute", function(){
+                it("test set single dom attribute", function(){
+                    var query = Query.create("#DomQueryTest2");
+
+                    query.attr("name", "div1");
+                    query.attr("id", "id1");
+
+                    var dom = query.get(0);
+                    expect(dom.id).toEqual("id1");
+                    expect(dom.getAttribute("name")).toEqual("div1");
+                });
+            });
+        })
     });
 });
 

@@ -1172,6 +1172,23 @@ var wdCb;
                 dom.style[property] = value;
             }
         };
+        DomQuery.prototype.attr = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i - 0] = arguments[_i];
+            }
+            if (args.length === 1) {
+                var name_1 = args[0];
+                return this.get(0).getAttribute(name_1);
+            }
+            else {
+                var name_2 = args[0], value = args[1];
+                for (var _a = 0, _b = this._doms; _a < _b.length; _a++) {
+                    var dom = _b[_a];
+                    dom.setAttribute(name_2, value);
+                }
+            }
+        };
         DomQuery.prototype._isDomEleStr = function (eleStr) {
             return eleStr.match(/<(\w+)[^>]*><\/\1>/) !== null;
         };
