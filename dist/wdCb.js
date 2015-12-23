@@ -1076,6 +1076,34 @@ var wdCb;
             }
             return f;
         };
+        PathUtils.changeExtname = function (pathStr, extname) {
+            var extname = extname || "", index = pathStr.indexOf("?"), tempStr = "";
+            if (index > 0) {
+                tempStr = pathStr.substring(index);
+                pathStr = pathStr.substring(0, index);
+            }
+            index = pathStr.lastIndexOf(".");
+            if (index < 0) {
+                return pathStr + extname + tempStr;
+            }
+            return pathStr.substring(0, index) + extname + tempStr;
+        };
+        PathUtils.changeBasename = function (pathStr, basename, isSameExt) {
+            var index = null, tempStr = null, ext = null;
+            if (basename.indexOf(".") == 0) {
+                return this.changeExtname(pathStr, basename);
+            }
+            index = pathStr.indexOf("?");
+            tempStr = "";
+            ext = isSameExt ? this.extname(pathStr) : "";
+            if (index > 0) {
+                tempStr = pathStr.substring(index);
+                pathStr = pathStr.substring(0, index);
+            }
+            index = pathStr.lastIndexOf("/");
+            index = index <= 0 ? 0 : index + 1;
+            return pathStr.substring(0, index) + basename + ext + tempStr;
+        };
         PathUtils.extname = function (path) {
             return this._splitPath(path)[3];
         };
