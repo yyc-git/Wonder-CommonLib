@@ -1,4 +1,3 @@
-/// <reference path="../filePath.d.ts"/>
 module wdCb{
     export class ConvertUtils{
         public static toString(obj:any){

@@ -1,4 +1,3 @@
-/// <reference path="filePath.d.ts"/>
 module wdCb {
     export class Hash<T> {
         public static create<T>(children = {}){

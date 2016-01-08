@@ -1,4 +1,3 @@
-/// <reference path="Collection"/>
 module wdCb {
     export class Stack<T> extends List<T>{
         public static create<T>(children = []){

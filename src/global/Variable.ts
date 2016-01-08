@@ -1,5 +1,3 @@
-/// <reference path="../filePath.d.ts"/>
-
 module wdCb{
     declare var global:any,window:any;
 

@@ -1,4 +1,3 @@
-/// <reference path="filePath.d.ts"/>
 module wdCb {
     export class List<T> {
         protected children:Array<T> = null;

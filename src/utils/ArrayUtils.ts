@@ -1,4 +1,3 @@
-/// <reference path="../filePath.d.ts"/>
 module wdCb {
     export class ArrayUtils {
         public static removeRepeatItems(arr:Array<any>, isEqual:(a:any, b:any) => boolean = (a, b)=> {

@@ -1,4 +1,3 @@
-/// <reference path="filePath.d.ts"/>
 module wdCb {
     export class Collection<T> extends List<T>{
         public static create<T>(children = []){

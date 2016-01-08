@@ -1,4 +1,3 @@
-/// <reference path="../filePath.d.ts"/>
 module wdCb {
     export class FunctionUtils {
         public static bind(object:any, func:Function) {

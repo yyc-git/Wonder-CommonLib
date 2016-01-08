@@ -1,4 +1,3 @@
-/// <reference path="../filePath.d.ts"/>
 module wdCb {
     declare var document:any;
 

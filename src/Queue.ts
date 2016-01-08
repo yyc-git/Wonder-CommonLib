@@ -1,4 +1,3 @@
-/// <reference path="Collection"/>
 module wdCb {
     export class Queue<T> extends List<T>{
         public static create<T>(children = []){

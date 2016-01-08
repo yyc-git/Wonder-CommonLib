@@ -21,28 +21,12 @@ var wdCb;
         JudgeUtils.isDom = function (obj) {
             return Object.prototype.toString.call(obj).match(/\[object HTML\w+/) !== null;
         };
-        /**
-         * 判断是否为对象字面量（{}）
-         */
         JudgeUtils.isDirectObject = function (obj) {
             if (Object.prototype.toString.call(obj) === "[object Object]") {
                 return true;
             }
             return false;
         };
-        /**
-         * 检查宿主对象是否可调用
-         *
-         * 任何对象，如果其语义在ECMAScript规范中被定义过，那么它被称为原生对象；
-         环境所提供的，而在ECMAScript规范中没有被描述的对象，我们称之为宿主对象。
-
-         该方法用于特性检测，判断对象是否可用。用法如下：
-
-         MyEngine addEvent():
-         if (Tool.judge.isHostMethod(dom, "addEventListener")) {    //判断dom是否具有addEventListener方法
-            dom.addEventListener(sEventType, fnHandler, false);
-            }
-         */
         JudgeUtils.isHostMethod = function (object, property) {
             var type = typeof object[property];
             return type === "function" ||
@@ -57,7 +41,6 @@ var wdCb;
     wdCb.JudgeUtils = JudgeUtils;
 })(wdCb || (wdCb = {}));
 
-/// <reference path="../filePath.d.ts"/>
 var wdCb;
 (function (wdCb) {
     Object.defineProperty(wdCb, "root", {
@@ -72,11 +55,9 @@ var wdCb;
 
 var wdCb;
 (function (wdCb) {
-    // performance.now polyfill
     if ('performance' in wdCb.root === false) {
         wdCb.root.performance = {};
     }
-    // IE 8
     Date.now = (Date.now || function () {
         return new Date().getTime();
     });
@@ -102,11 +83,6 @@ var wdCb;
     var Log = (function () {
         function Log() {
         }
-        /**
-         * Output Debug message.
-         * @function
-         * @param {String} message
-         */
         Log.log = function () {
             var messages = [];
             for (var _i = 0; _i < arguments.length; _i++) {
@@ -117,31 +93,6 @@ var wdCb;
             }
             this._exec("trace", messages);
         };
-        /**
-         * 断言失败时，会提示错误信息，但程序会继续执行下去
-         * 使用断言捕捉不应该发生的非法情况。不要混淆非法情况与错误情况之间的区别，后者是必然存在的并且是一定要作出处理的。
-         *
-         * 1）对非预期错误使用断言
-         断言中的布尔表达式的反面一定要描述一个非预期错误，下面所述的在一定情况下为非预期错误的一些例子：
-         （1）空指针。
-         （2）输入或者输出参数的值不在预期范围内。
-         （3）数组的越界。
-         非预期错误对应的就是预期错误，我们通常使用错误处理代码来处理预期错误，而使用断言处理非预期错误。在代码执行过程中，有些错误永远不应该发生，这样的错误是非预期错误。断言可以被看成是一种可执行的注释，你不能依赖它来让代码正常工作（《Code Complete 2》）。例如：
-         int nRes = f(); // nRes 由 f 函数控制， f 函数保证返回值一定在 -100 ~ 100
-         Assert(-100 <= nRes && nRes <= 100); // 断言，一个可执行的注释
-         由于 f 函数保证了返回值处于 -100 ~ 100，那么如果出现了 nRes 不在这个范围的值时，就表明一个非预期错误的出现。后面会讲到“隔栏”，那时会对断言有更加深刻的理解。
-         2）不要把需要执行的代码放入断言中
-         断言用于软件的开发和维护，而通常不在发行版本中包含断言。
-         需要执行的代码放入断言中是不正确的，因为在发行版本中，这些代码通常不会被执行，例如：
-         Assert(f()); // f 函数通常在发行版本中不会被执行
-         而使用如下方法则比较安全：
-         res = f();
-         Assert(res); // 安全
-         3）对来源于内部系统的可靠的数据使用断言，而不要对外部不可靠的数据使用断言，对于外部不可靠数据，应该使用错误处理代码。
-         再次强调，把断言看成可执行的注释。
-         * @param cond 如果cond返回false，则断言失败，显示message
-         * @param message
-         */
         Log.assert = function (cond) {
             var messages = [];
             for (var _i = 1; _i < arguments.length; _i++) {
@@ -159,12 +110,6 @@ var wdCb;
                 message[_i - 1] = arguments[_i];
             }
             if (cond) {
-                /*!
-                console.error will not interrupt, it will throw error and continue exec the left statements
-
-                but here need interrupt! so not use it here.
-                 */
-                //if (!this._exec("error", arguments, 1)) {
                 throw new Error(Array.prototype.slice.call(arguments, 1).join("\n"));
             }
         };
@@ -337,7 +282,6 @@ var wdCb;
     wdCb.Log = Log;
 })(wdCb || (wdCb = {}));
 
-/// <reference path="filePath.d.ts"/>
 var wdCb;
 (function (wdCb) {
     var List = (function () {
@@ -401,12 +345,6 @@ var wdCb;
             this._forEach(this.children, func, context);
             return this;
         };
-        //public removeChildAt (index) {
-        //    Log.error(index < 0, "序号必须大于等于0");
-        //
-        //    this.children.splice(index, 1);
-        //}
-        //
         List.prototype.toArray = function () {
             return this.children;
         };
@@ -441,7 +379,7 @@ var wdCb;
                 this._forEach(arr, function (value, index) {
                     if (!!func.call(null, value, index)) {
                         result = index;
-                        return wdCb.$BREAK; //如果包含，则置返回值为true,跳出循环
+                        return wdCb.$BREAK;
                     }
                 });
             }
@@ -452,7 +390,7 @@ var wdCb;
                         || (value.contain && value.contain(val))
                         || (value.indexOf && value.indexOf(val) > -1)) {
                         result = index;
-                        return wdCb.$BREAK; //如果包含，则置返回值为true,跳出循环
+                        return wdCb.$BREAK;
                     }
                 });
             }
@@ -487,7 +425,90 @@ var wdCb;
     wdCb.List = List;
 })(wdCb || (wdCb = {}));
 
-/// <reference path="filePath.d.ts"/>
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var wdCb;
+(function (wdCb) {
+    var Collection = (function (_super) {
+        __extends(Collection, _super);
+        function Collection(children) {
+            if (children === void 0) { children = []; }
+            _super.call(this);
+            this.children = children;
+        }
+        Collection.create = function (children) {
+            if (children === void 0) { children = []; }
+            var obj = new this(children);
+            return obj;
+        };
+        Collection.prototype.copy = function (isDeep) {
+            if (isDeep === void 0) { isDeep = false; }
+            return isDeep ? Collection.create(wdCb.ExtendUtils.extendDeep(this.children))
+                : Collection.create(wdCb.ExtendUtils.extend([], this.children));
+        };
+        Collection.prototype.filter = function (func) {
+            var scope = this.children, result = [];
+            this.forEach(function (value, index) {
+                if (!func.call(scope, value, index)) {
+                    return;
+                }
+                result.push(value);
+            });
+            return Collection.create(result);
+        };
+        Collection.prototype.findOne = function (func) {
+            var scope = this.children, result = null;
+            this.forEach(function (value, index) {
+                if (!func.call(scope, value, index)) {
+                    return;
+                }
+                result = value;
+                return wdCb.$BREAK;
+            });
+            return result;
+        };
+        Collection.prototype.reverse = function () {
+            return Collection.create(this.copyChildren().reverse());
+        };
+        Collection.prototype.removeChild = function (arg) {
+            return Collection.create(this.removeChildHelper(arg));
+        };
+        Collection.prototype.sort = function (func, isSortSelf) {
+            if (isSortSelf === void 0) { isSortSelf = false; }
+            if (isSortSelf) {
+                this.children.sort(func);
+                return this;
+            }
+            return Collection.create(this.copyChildren().sort(func));
+        };
+        Collection.prototype.map = function (func) {
+            var resultArr = [];
+            this.forEach(function (e, index) {
+                var result = func(e, index);
+                if (result !== wdCb.$REMOVE) {
+                    resultArr.push(result);
+                }
+            });
+            return Collection.create(resultArr);
+        };
+        Collection.prototype.removeRepeatItems = function () {
+            var resultList = Collection.create();
+            this.forEach(function (item) {
+                if (resultList.hasChild(item)) {
+                    return;
+                }
+                resultList.addChild(item);
+            });
+            return resultList;
+        };
+        return Collection;
+    })(wdCb.List);
+    wdCb.Collection = Collection;
+})(wdCb || (wdCb = {}));
+
 var wdCb;
 (function (wdCb) {
     var Hash = (function () {
@@ -671,7 +692,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-/// <reference path="Collection"/>
 var wdCb;
 (function (wdCb) {
     var Queue = (function (_super) {
@@ -705,7 +725,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-/// <reference path="Collection"/>
 var wdCb;
 (function (wdCb) {
     var Stack = (function (_super) {
@@ -739,24 +758,12 @@ var wdCb;
     var AjaxUtils = (function () {
         function AjaxUtils() {
         }
-        /*!
-         实现ajax
-
-         ajax({
-         type:"post",//post或者get，非必须
-         url:"test.jsp",//必须的
-         data:"name=dipoo&info=good",//非必须
-         dataType:"json",//text/xml/json，非必须
-         success:function(data){//回调函数，非必须
-         alert(data.name);
-         }
-         });*/
         AjaxUtils.ajax = function (conf) {
-            var type = conf.type; //type参数,可选
-            var url = conf.url; //url参数，必填
-            var data = conf.data; //data参数可选，只有在post请求时需要
-            var dataType = conf.dataType; //datatype参数可选
-            var success = conf.success; //回调函数可选
+            var type = conf.type;
+            var url = conf.url;
+            var data = conf.data;
+            var dataType = conf.dataType;
+            var success = conf.success;
             var error = conf.error;
             var xhr = null;
             var self = this;
@@ -839,7 +846,6 @@ var wdCb;
     wdCb.AjaxUtils = AjaxUtils;
 })(wdCb || (wdCb = {}));
 
-/// <reference path="../filePath.d.ts"/>
 var wdCb;
 (function (wdCb) {
     var ArrayUtils = (function () {
@@ -886,7 +892,6 @@ var wdCb;
     wdCb.ArrayUtils = ArrayUtils;
 })(wdCb || (wdCb = {}));
 
-/// <reference path="../filePath.d.ts"/>
 var wdCb;
 (function (wdCb) {
     var ConvertUtils = (function () {
@@ -896,9 +901,6 @@ var wdCb;
             if (wdCb.JudgeUtils.isNumber(obj)) {
                 return String(obj);
             }
-            //if (JudgeUtils.isjQuery(obj)) {
-            //    return _jqToString(obj);
-            //}
             if (wdCb.JudgeUtils.isFunction(obj)) {
                 return this._convertCodeToString(obj);
             }
@@ -915,17 +917,13 @@ var wdCb;
     wdCb.ConvertUtils = ConvertUtils;
 })(wdCb || (wdCb = {}));
 
-/// <reference path="../filePath.d.ts"/>
 var wdCb;
 (function (wdCb) {
     var EventUtils = (function () {
         function EventUtils() {
         }
         EventUtils.bindEvent = function (context, func) {
-            //var args = Array.prototype.slice.call(arguments, 2),
-            //    self = this;
             return function (event) {
-                //return fun.apply(object, [self.wrapEvent(event)].concat(args)); //对事件对象进行包装
                 return func.call(context, event);
             };
         };
@@ -956,49 +954,14 @@ var wdCb;
     wdCb.EventUtils = EventUtils;
 })(wdCb || (wdCb = {}));
 
-/// <reference path="../filePath.d.ts"/>
 var wdCb;
 (function (wdCb) {
     var ExtendUtils = (function () {
         function ExtendUtils() {
         }
-        /**
-         * 深拷贝
-         *
-         * 示例：
-         * 如果拷贝对象为数组，能够成功拷贝（不拷贝Array原型链上的成员）
-         * expect(extend.extendDeep([1, { x: 1, y: 1 }, "a", { x: 2 }, [2]])).toEqual([1, { x: 1, y: 1 }, "a", { x: 2 }, [2]]);
-         *
-         * 如果拷贝对象为对象，能够成功拷贝（能拷贝原型链上的成员）
-         * var result = null;
-         function A() {
-                };
-         A.prototype.a = 1;
-
-         function B() {
-                };
-         B.prototype = new A();
-         B.prototype.b = { x: 1, y: 1 };
-         B.prototype.c = [{ x: 1 }, [2]];
-
-         var t = new B();
-
-         result = extend.extendDeep(t);
-
-         expect(result).toEqual(
-         {
-             a: 1,
-             b: { x: 1, y: 1 },
-             c: [{ x: 1 }, [2]]
-         });
-         * @param parent
-         * @param child
-         * @returns
-         */
         ExtendUtils.extendDeep = function (parent, child, filter) {
             if (filter === void 0) { filter = function (val, i) { return true; }; }
             var i = null, len = 0, toStr = Object.prototype.toString, sArr = "[object Array]", sOb = "[object Object]", type = "", _child = null;
-            //数组的话，不获得Array原型上的成员。
             if (toStr.call(parent) === sArr) {
                 _child = child || [];
                 for (i = 0, len = parent.length; i < len; i++) {
@@ -1036,9 +999,6 @@ var wdCb;
             }
             return _child;
         };
-        /**
-         * 浅拷贝
-         */
         ExtendUtils.extend = function (destination, source) {
             var property = "";
             for (property in source) {
@@ -1059,18 +1019,14 @@ var wdCb;
     wdCb.ExtendUtils = ExtendUtils;
 })(wdCb || (wdCb = {}));
 
-/// <reference path="../filePath.d.ts"/>
 var wdCb;
 (function (wdCb) {
     var SPLITPATH_REGEX = /^(\/?|)([\s\S]*?)((?:\.{1,2}|[^\/]+?|)(\.[^.\/]*|))(?:[\/]*)$/;
-    //reference from
-    //https://github.com/cookfront/learn-note/blob/master/blog-backup/2014/nodejs-path.md
     var PathUtils = (function () {
         function PathUtils() {
         }
         PathUtils.basename = function (path, ext) {
             var f = this._splitPath(path)[2];
-            // TODO: make this comparison case-insensitive on windows?
             if (ext && f.substr(-1 * ext.length) === ext) {
                 f = f.substr(0, f.length - ext.length);
             }
@@ -1111,11 +1067,9 @@ var wdCb;
         PathUtils.dirname = function (path) {
             var result = this._splitPath(path), root = result[0], dir = result[1];
             if (!root && !dir) {
-                //no dirname whatsoever
                 return '.';
             }
             if (dir) {
-                //it has a dirname, strip trailing slash
                 dir = dir.substr(0, dir.length - 1);
             }
             return root + dir;
@@ -1128,7 +1082,21 @@ var wdCb;
     wdCb.PathUtils = PathUtils;
 })(wdCb || (wdCb = {}));
 
-/// <reference path="../filePath.d.ts"/>
+var wdCb;
+(function (wdCb) {
+    var FunctionUtils = (function () {
+        function FunctionUtils() {
+        }
+        FunctionUtils.bind = function (object, func) {
+            return function () {
+                return func.apply(object, arguments);
+            };
+        };
+        return FunctionUtils;
+    })();
+    wdCb.FunctionUtils = FunctionUtils;
+})(wdCb || (wdCb = {}));
+
 var wdCb;
 (function (wdCb) {
     var DomQuery = (function () {
@@ -1239,101 +1207,4 @@ var wdCb;
         return DomQuery;
     })();
     wdCb.DomQuery = DomQuery;
-})(wdCb || (wdCb = {}));
-
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-/// <reference path="filePath.d.ts"/>
-var wdCb;
-(function (wdCb) {
-    var Collection = (function (_super) {
-        __extends(Collection, _super);
-        function Collection(children) {
-            if (children === void 0) { children = []; }
-            _super.call(this);
-            this.children = children;
-        }
-        Collection.create = function (children) {
-            if (children === void 0) { children = []; }
-            var obj = new this(children);
-            return obj;
-        };
-        Collection.prototype.copy = function (isDeep) {
-            if (isDeep === void 0) { isDeep = false; }
-            return isDeep ? Collection.create(wdCb.ExtendUtils.extendDeep(this.children))
-                : Collection.create(wdCb.ExtendUtils.extend([], this.children));
-        };
-        Collection.prototype.filter = function (func) {
-            var scope = this.children, result = [];
-            this.forEach(function (value, index) {
-                if (!func.call(scope, value, index)) {
-                    return;
-                }
-                result.push(value);
-            });
-            return Collection.create(result);
-        };
-        Collection.prototype.findOne = function (func) {
-            var scope = this.children, result = null;
-            this.forEach(function (value, index) {
-                if (!func.call(scope, value, index)) {
-                    return;
-                }
-                result = value;
-                return wdCb.$BREAK;
-            });
-            return result;
-        };
-        Collection.prototype.reverse = function () {
-            return Collection.create(this.copyChildren().reverse());
-        };
-        Collection.prototype.removeChild = function (arg) {
-            return Collection.create(this.removeChildHelper(arg));
-        };
-        Collection.prototype.sort = function (func) {
-            return Collection.create(this.copyChildren().sort(func));
-        };
-        Collection.prototype.map = function (func) {
-            var resultArr = [];
-            this.forEach(function (e, index) {
-                var result = func(e, index);
-                if (result !== wdCb.$REMOVE) {
-                    resultArr.push(result);
-                }
-                //e && e[handlerName] && e[handlerName].apply(context || e, valueArr);
-            });
-            return Collection.create(resultArr);
-        };
-        Collection.prototype.removeRepeatItems = function () {
-            var resultList = Collection.create();
-            this.forEach(function (item) {
-                if (resultList.hasChild(item)) {
-                    return;
-                }
-                resultList.addChild(item);
-            });
-            return resultList;
-        };
-        return Collection;
-    })(wdCb.List);
-    wdCb.Collection = Collection;
-})(wdCb || (wdCb = {}));
-
-/// <reference path="../filePath.d.ts"/>
-var wdCb;
-(function (wdCb) {
-    var FunctionUtils = (function () {
-        function FunctionUtils() {
-        }
-        FunctionUtils.bind = function (object, func) {
-            return function () {
-                return func.apply(object, arguments);
-            };
-        };
-        return FunctionUtils;
-    })();
-    wdCb.FunctionUtils = FunctionUtils;
 })(wdCb || (wdCb = {}));
