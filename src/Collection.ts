@@ -56,7 +56,13 @@ module wdCb {
             return Collection.create<T>(this.removeChildHelper(arg));
         }
 
-        public sort(func:(a:T, b:T) => any){
+        public sort(func:(a:T, b:T) => any, isSortSelf = false){
+            if(isSortSelf){
+                this.children.sort(func);
+
+                return this;
+            }
+
             return Collection.create<T>(this.copyChildren().sort(func));
         }
 

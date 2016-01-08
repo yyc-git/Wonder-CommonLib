@@ -113,7 +113,17 @@ describe("Collection", function () {
     });
 
     describe("sort", function () {
-        it("return the sorted elements", function () {
+        it("if the second param is true, sort itself", function () {
+            collection.addChild(2);
+            collection.addChild(1);
+
+            collection.sort(function (a, b) {
+                return a - b;
+            }, true);
+
+            expect(collection.getChildren()).toEqual([1, 2]);
+        });
+        it("else, return the sorted elements", function () {
             collection.addChild(2);
             collection.addChild(1);
 
