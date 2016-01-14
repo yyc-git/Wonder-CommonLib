@@ -9,7 +9,25 @@ describe("Queue", function () {
     afterEach(function () {
         sandbox.restore();
     });
-    
+
+    describe("front", function(){
+        it("return front element", function(){
+            queue.push(2);
+            queue.push(1);
+
+            expect(queue.front).toEqual(2);
+        });
+    });
+
+    describe("rear", function(){
+        it("return rear element", function(){
+            queue.push(2);
+            queue.push(1);
+
+            expect(queue.rear).toEqual(1);
+        });
+    });
+
     describe("push", function () {
         it("insert element to head", function () {
             queue.push(2);

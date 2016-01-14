@@ -9,7 +9,16 @@ describe("Stack", function () {
     afterEach(function () {
         sandbox.restore();
     });
-    
+
+    describe("top", function(){
+        it("return top element", function(){
+            stack.push(2);
+            stack.push(1);
+
+            expect(stack.top).toEqual(1);
+        });
+    });
+
     describe("push", function () {
         it("in stack", function () {
             stack.push(2);

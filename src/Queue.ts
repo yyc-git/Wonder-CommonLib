@@ -12,6 +12,14 @@ module wdCb {
             this.children = children;
         }
 
+        get front(){
+            return this.children[this.children.length - 1];
+        }
+
+        get rear(){
+            return this.children[0];
+        }
+
         public push(element:T){
             this.children.unshift(element);
         }

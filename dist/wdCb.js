@@ -706,6 +706,20 @@ var wdCb;
             var obj = new this(children);
             return obj;
         };
+        Object.defineProperty(Queue.prototype, "front", {
+            get: function () {
+                return this.children[this.children.length - 1];
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Queue.prototype, "rear", {
+            get: function () {
+                return this.children[0];
+            },
+            enumerable: true,
+            configurable: true
+        });
         Queue.prototype.push = function (element) {
             this.children.unshift(element);
         };
@@ -739,6 +753,13 @@ var wdCb;
             var obj = new this(children);
             return obj;
         };
+        Object.defineProperty(Stack.prototype, "top", {
+            get: function () {
+                return this.children[this.children.length - 1];
+            },
+            enumerable: true,
+            configurable: true
+        });
         Stack.prototype.push = function (element) {
             this.children.push(element);
         };
