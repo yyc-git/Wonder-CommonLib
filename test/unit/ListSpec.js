@@ -57,6 +57,12 @@ describe("List", function () {
             expect(list.hasChild(fake2)).toBeFalsy();
 
         });
+        it("如果容器没有元素,返回false", function () {
+            var fake = {};
+
+            expect(list.hasChild(fake)).toBeFalsy();
+        });
+
     });
 
     describe("getChildren", function () {

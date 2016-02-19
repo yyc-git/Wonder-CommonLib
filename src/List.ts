@@ -30,6 +30,8 @@ module wdCb {
                     }
                 }
             }
+
+            return false;
         }
 
         public getChildren () {

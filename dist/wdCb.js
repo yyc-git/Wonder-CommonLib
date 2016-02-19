@@ -312,6 +312,7 @@ var wdCb;
                     }
                 }
             }
+            return false;
         };
         List.prototype.getChildren = function () {
             return this.children;
