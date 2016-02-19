@@ -304,10 +304,12 @@ var wdCb;
                 var child = arguments[0];
                 for (var i = 0, len = this.children.length; i < len; i++) {
                     var c = this.children[i];
-                    if (child.uid && c.uid) {
-                        return child.uid == c.uid;
+                    if (child.uid && c.uid && child.uid == c.uid) {
+                        return true;
                     }
-                    return child === c;
+                    else if (child === c) {
+                        return true;
+                    }
                 }
             }
         };

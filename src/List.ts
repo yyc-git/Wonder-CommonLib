@@ -17,16 +17,17 @@ module wdCb {
                 }
             }
             else{
-                let child = <any>arguments[0];
+                let child = arguments[0];
 
-                for(let i = 0, len = this.children.length; i < len; i++){
+                for (let i = 0, len = this.children.length; i < len; i++) {
                     let c:any = this.children[i];
 
-                    if(child.uid && c.uid){
-                        return child.uid == c.uid;
+                    if (child.uid && c.uid && child.uid == c.uid) {
+                        return true;
                     }
-
-                    return child === c;
+                    else if(child === c){
+                        return true;
+                    }
                 }
             }
         }

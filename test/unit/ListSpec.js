@@ -33,13 +33,18 @@ describe("List", function () {
 
         it("判断容器中是否存在该数据", function () {
             var fake = {};
-            fake2 = {
+            var fake2 = {
                 a: 1
             };
+            var fake3 = {
+                b: 1
+            };
             list.addChild(fake);
+            list.addChild(fake3);
 
             expect(list.hasChild(fake)).toBeTruthy();
             expect(list.hasChild(fake2)).toBeFalsy();
+            expect(list.hasChild(fake3)).toBeTruthy();
         });
         it("如果容器元素有uid，则根据uid判断", function () {
             var fake = {uid:1},
