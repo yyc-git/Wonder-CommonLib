@@ -294,20 +294,22 @@ var wdCb;
         List.prototype.hasChild = function (arg) {
             if (wdCb.JudgeUtils.isFunction(arguments[0])) {
                 var func = arguments[0];
-                return this._contain(this.children, function (c, i) {
-                    return func(c, i);
-                });
+                for (var i = 0, len = this.children.length; i < len; i++) {
+                    if (func(this.children[i], i)) {
+                        return true;
+                    }
+                }
             }
-            var child = arguments[0];
-            return this._contain(this.children, function (c, i) {
-                if (c === child
-                    || (c.uid && child.uid && c.uid === child.uid)) {
-                    return true;
+            else {
+                var child = arguments[0];
+                for (var i = 0, len = this.children.length; i < len; i++) {
+                    var c = this.children[i];
+                    if (child.uid && c.uid) {
+                        return child.uid == c.uid;
+                    }
+                    return child === c;
                 }
-                else {
-                    return false;
-                }
-            });
+            }
         };
         List.prototype.getChildren = function () {
             return this.children;
@@ -371,33 +373,6 @@ var wdCb;
                 });
             }
             return result;
-        };
-        List.prototype._indexOf = function (arr, arg) {
-            var result = -1;
-            if (wdCb.JudgeUtils.isFunction(arg)) {
-                var func = arg;
-                this._forEach(arr, function (value, index) {
-                    if (!!func.call(null, value, index)) {
-                        result = index;
-                        return wdCb.$BREAK;
-                    }
-                });
-            }
-            else {
-                var val = arg;
-                this._forEach(arr, function (value, index) {
-                    if (val === value
-                        || (value.contain && value.contain(val))
-                        || (value.indexOf && value.indexOf(val) > -1)) {
-                        result = index;
-                        return wdCb.$BREAK;
-                    }
-                });
-            }
-            return result;
-        };
-        List.prototype._contain = function (arr, arg) {
-            return this._indexOf(arr, arg) > -1;
         };
         List.prototype._forEach = function (arr, func, context) {
             var scope = context || wdCb.root, i = 0, len = arr.length;

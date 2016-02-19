@@ -10,22 +10,25 @@ module wdCb {
             if (JudgeUtils.isFunction(arguments[0])) {
                 let func = <Function>arguments[0];
 
-                return this._contain(this.children, (c, i)  => {
-                    return func(c, i);
-                });
+                for(let i = 0, len = this.children.length; i < len; i++){
+                    if(func(this.children[i], i)){
+                        return true;
+                    }
+                }
             }
+            else{
+                let child = <any>arguments[0];
 
-            let child = <any>arguments[0];
+                for(let i = 0, len = this.children.length; i < len; i++){
+                    let c:any = this.children[i];
 
-            return this._contain(this.children, (c, i) => {
-                if (c === child
-                    || (c.uid && child.uid && c.uid === child.uid)) {
-                    return true;
+                    if(child.uid && c.uid){
+                        return child.uid == c.uid;
+                    }
+
+                    return child === c;
                 }
-                else {
-                    return false;
-                }
-            });
+            }
         }
 
         public getChildren () {
@@ -116,40 +119,6 @@ module wdCb {
             }
 
             return result;
-        }
-
-
-        private _indexOf(arr:any[], arg:any) {
-            var result = -1;
-
-            if (JudgeUtils.isFunction(arg)) {
-                let func = <Function>arg;
-
-                this._forEach(arr, (value, index) => {
-                    if (!!func.call(null, value, index)) {
-                        result = index;
-                        return $BREAK;   //如果包含，则置返回值为true,跳出循环
-                    }
-                });
-            }
-            else {
-                let val = <any>arg;
-
-                this._forEach(arr, (value, index) => {
-                    if (val === value
-                        || (value.contain && value.contain(val))
-                        || (value.indexOf && value.indexOf(val) > -1)) {
-                        result = index;
-                        return $BREAK;   //如果包含，则置返回值为true,跳出循环
-                    }
-                });
-            }
-
-            return result;
-        }
-
-        private _contain(arr:T[], arg:any) {
-            return this._indexOf(arr, arg) > -1;
         }
 
         private _forEach(arr:T[], func:Function, context?:any) {

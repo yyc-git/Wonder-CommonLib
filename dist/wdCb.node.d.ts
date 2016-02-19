@@ -72,8 +72,6 @@ declare module wdCb {
         toArray(): T[];
         protected copyChildren(): T[];
         protected removeChildHelper(arg: any): Array<T>;
-        private _indexOf(arr, arg);
-        private _contain(arr, arg);
         private _forEach(arr, func, context?);
         private _removeChild(arr, func);
     }
