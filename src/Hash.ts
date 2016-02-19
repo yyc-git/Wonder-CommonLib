@@ -153,10 +153,11 @@ module wdCb {
 
                 return result;
             }
+            else{
+                let key = <string>arguments[0];
 
-            let key = <string>arguments[0];
-
-            return !!this._children[key];
+                return this._children[key] !== void 0;
+            }
         }
 
 

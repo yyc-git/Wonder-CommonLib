@@ -621,8 +621,10 @@ var wdCb;
                 });
                 return result;
             }
-            var key = arguments[0];
-            return !!this._children[key];
+            else {
+                var key = arguments[0];
+                return this._children[key] !== void 0;
+            }
         };
         Hash.prototype.forEach = function (func, context) {
             var i = null, children = this._children;

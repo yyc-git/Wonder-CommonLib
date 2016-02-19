@@ -158,6 +158,12 @@ describe("Hash", function () {
             expect(hash.hasChild("a1")).toBeTruthy();
             expect(hash.hasChild("b")).toBeFalsy();
         });
+        it("test value is boolean", function () {
+            hash.addChild("a3", false);
+
+            expect(hash.hasChild("a3")).toBeTruthy();
+        });
+
     });
 
     describe("removeChild", function () {
