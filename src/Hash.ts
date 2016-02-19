@@ -162,10 +162,9 @@ module wdCb {
 
 
         public forEach(func:Function, context?:any){
-            var i = null,
-                children = this._children;
+            var children = this._children;
 
-            for (i in children) {
+            for (let i in children) {
                 if (children.hasOwnProperty(i)) {
                     if (func.call(context, children[i], i) === $BREAK) {
                         break;
@@ -178,15 +177,18 @@ module wdCb {
 
         public filter(func:Function){
             var result = {},
-                scope = this._children;
+                children = this._children,
+                value = null;
 
-            this.forEach((val:any, key:string) => {
-                if(!func.call(scope, val, key)){
-                    return;
+            for (let key in children) {
+                if (children.hasOwnProperty(key)) {
+                    value = children[key];
+
+                    if (func.call(children, value, key)) {
+                        result[key] = value;
+                    }
                 }
-
-                result[key] = val;
-            });
+            }
 
             return Hash.create(result);
         }

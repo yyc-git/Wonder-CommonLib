@@ -18,15 +18,17 @@ module wdCb {
         }
 
         public filter(func:(value:T, index:number) => boolean):Collection<T> {
-            var scope = this.children,
-                result:Array<T> = [];
+            var children = this.children,
+                result = [],
+                value = null;
 
-            this.forEach((value:T, index) => {
-                if (!func.call(scope, value, index)) {
-                    return;
+            for(let i = 0, len = children.length; i < len; i++){
+                value = children[i];
+
+                if (func.call(children, value, i)) {
+                    result.push(value);
                 }
-                result.push(value);
-            });
+            }
 
             return Collection.create<T>(result);
         }

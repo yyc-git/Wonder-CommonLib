@@ -425,13 +425,13 @@ var wdCb;
                 : Collection.create(wdCb.ExtendUtils.extend([], this.children));
         };
         Collection.prototype.filter = function (func) {
-            var scope = this.children, result = [];
-            this.forEach(function (value, index) {
-                if (!func.call(scope, value, index)) {
-                    return;
+            var children = this.children, result = [], value = null;
+            for (var i = 0, len = children.length; i < len; i++) {
+                value = children[i];
+                if (func.call(children, value, i)) {
+                    result.push(value);
                 }
-                result.push(value);
-            });
+            }
             return Collection.create(result);
         };
         Collection.prototype.findOne = function (func) {
@@ -602,8 +602,8 @@ var wdCb;
             }
         };
         Hash.prototype.forEach = function (func, context) {
-            var i = null, children = this._children;
-            for (i in children) {
+            var children = this._children;
+            for (var i in children) {
                 if (children.hasOwnProperty(i)) {
                     if (func.call(context, children[i], i) === wdCb.$BREAK) {
                         break;
@@ -613,13 +613,15 @@ var wdCb;
             return this;
         };
         Hash.prototype.filter = function (func) {
-            var result = {}, scope = this._children;
-            this.forEach(function (val, key) {
-                if (!func.call(scope, val, key)) {
-                    return;
+            var result = {}, children = this._children, value = null;
+            for (var key in children) {
+                if (children.hasOwnProperty(key)) {
+                    value = children[key];
+                    if (func.call(children, value, key)) {
+                        result[key] = value;
+                    }
                 }
-                result[key] = val;
-            });
+            }
             return Hash.create(result);
         };
         Hash.prototype.findOne = function (func) {
