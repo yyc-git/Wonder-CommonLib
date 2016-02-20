@@ -1,40 +1,55 @@
 module wdCb {
     declare var global:any, module:any;
 
+    const MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
+
     export class JudgeUtils {
-        public static isArray(val) {
-            return Object.prototype.toString.call(val) === "[object Array]";
+        public static isArray(arr:Array<any>) {
+            var length = arr && arr.length;
+
+            return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
         }
 
-        public static isFunction(func) {
-            return Object.prototype.toString.call(func) === "[object Function]";
+        public static isArrayExactly(arr:Array<any>) {
+            return Object.prototype.toString.call(arr) === "[object Array]";
         }
 
-        public static isNumber(obj) {
-            return Object.prototype.toString.call(obj) === "[object Number]";
+        public static isNumber(num:number) {
+            return typeof num == "number";
         }
 
-        public static isString(str) {
+        public static isNumberExactly(num:number) {
+            return Object.prototype.toString.call(num) === "[object Number]";
+        }
+
+        public static isString(str:string) {
+            return typeof str == "string";
+        }
+
+        public static isStringExactly(str:string) {
             return Object.prototype.toString.call(str) === "[object String]";
         }
 
-        public static isBoolean(obj) {
-            return Object.prototype.toString.call(obj) === "[object Boolean]";
+        public static isBoolean(bool:boolean) {
+            return bool === true || bool === false || toString.call(bool) === '[boolect Boolean]';
         }
 
-        public static isDom(obj) {
-            return Object.prototype.toString.call(obj).match(/\[object HTML\w+/) !== null;
+        public static isDom(obj:any) {
+            return !!(obj && obj.nodeType === 1);
+        }
+
+
+        public static isObject(obj:any) {
+            var type = typeof obj;
+
+            return type === 'function' || type === 'object' && !!obj;
         }
 
         /**
          * 判断是否为对象字面量（{}）
          */
-        public static isDirectObject(obj) {
-            if (Object.prototype.toString.call(obj) === "[object Object]") {
-                return true;
-            }
-
-            return false;
+        public static isDirectObject(obj:any) {
+            return Object.prototype.toString.call(obj) === "[object Object]";
         }
 
         /**
@@ -61,5 +76,23 @@ module wdCb {
         public static isNodeJs(){
             return ((typeof global != "undefined" && global.module) || (typeof module != "undefined")) && typeof module.exports != "undefined";
         }
+
+        //overwrite it in the end of this file
+        public static isFunction(func:Function):boolean{
+            return true;
+        }
+    }
+
+    // Optimize `isFunction` if appropriate. Work around some typeof bugs in old v8,
+    // IE 11 (#1621), and in Safari 8 (#1929).
+    if (typeof /./ != 'function' && typeof Int8Array != 'object') {
+        JudgeUtils.isFunction = (func:Function) => {
+            return typeof func == 'function';
+        };
+    }
+    else {
+        JudgeUtils.isFunction = (func:Function) => {
+            return Object.prototype.toString.call(func) === "[object Function]";
+        };
     }
 }
