@@ -61,7 +61,8 @@ declare module wdCb {
     class List<T> {
         protected children: Array<T>;
         getCount(): number;
-        hasChild(arg: Function | T): boolean;
+        hasChild(child: any): boolean;
+        hasChildWithFunc(func: Function): boolean;
         getChildren(): T[];
         getChild(index: number): T;
         addChild(child: T): this;
@@ -112,7 +113,8 @@ declare module wdCb {
         appendChild(key: string, value: any): this;
         removeChild(arg: any): Collection<{}>;
         removeAllChildren(): void;
-        hasChild(arg: any): boolean;
+        hasChild(key: string): boolean;
+        hasChildWithFunc(func: Function): boolean;
         forEach(func: Function, context?: any): this;
         filter(func: Function): Hash<{}>;
         findOne(func: Function): any[];

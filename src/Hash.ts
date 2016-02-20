@@ -139,27 +139,22 @@ module wdCb {
             this._children = {};
         }
 
-        public hasChild(arg:any):boolean {
-            if (JudgeUtils.isFunction(arguments[0])) {
-                let func = <Function>arguments[0],
-                    result = false;
-
-                this.forEach((val:any, key:string) => {
-                    if(func(val, key)){
-                        result = true;
-                        return $BREAK;
-                    }
-                });
-
-                return result;
-            }
-            else{
-                let key = <string>arguments[0];
-
-                return this._children[key] !== void 0;
-            }
+        public hasChild(key:string):boolean {
+            return this._children[key] !== undefined;
         }
 
+        public hasChildWithFunc(func:Function):boolean {
+            var result = false;
+
+            this.forEach((val:any, key:string) => {
+                if(func(val, key)){
+                    result = true;
+                    return $BREAK;
+                }
+            });
+
+            return result;
+        }
 
         public forEach(func:Function, context?:any){
             var children = this._children;

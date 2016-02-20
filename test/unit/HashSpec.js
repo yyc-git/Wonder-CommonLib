@@ -143,18 +143,7 @@ describe("Hash", function () {
             hash.addChild("a1", "1");
             hash.addChild("a2", "2");
         });
-        it("if arg is function, use it as iterator to judge", function () {
-            expect(hash.hasChild(function (val, key) {
-                return val === "1";
-            })).toBeTruthy();
-            expect(hash.hasChild(function (val, key) {
-                return key === "a1";
-            })).toBeTruthy();
-            expect(hash.hasChild(function (val, key) {
-                return key === "a3";
-            })).toBeFalsy();
-        });
-        it("else, arg is as the key to judge", function(){
+        it("arg is as the key to judge", function(){
             expect(hash.hasChild("a1")).toBeTruthy();
             expect(hash.hasChild("b")).toBeFalsy();
         });
@@ -164,6 +153,24 @@ describe("Hash", function () {
             expect(hash.hasChild("a3")).toBeTruthy();
         });
 
+    });
+
+    describe("hasChildWithFunc", function(){
+        beforeEach(function(){
+            hash.addChild("a1", "1");
+            hash.addChild("a2", "2");
+        });
+        it("use func as iterator to judge", function () {
+            expect(hash.hasChildWithFunc(function (val, key) {
+                return val === "1";
+            })).toBeTruthy();
+            expect(hash.hasChildWithFunc(function (val, key) {
+                return key === "a1";
+            })).toBeTruthy();
+            expect(hash.hasChildWithFunc(function (val, key) {
+                return key === "a3";
+            })).toBeFalsy();
+        });
     });
 
     describe("removeChild", function () {

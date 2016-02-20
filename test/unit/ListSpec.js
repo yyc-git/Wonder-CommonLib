@@ -19,18 +19,6 @@ describe("List", function () {
     });
 
     describe("hasChild", function () {
-        it("如果参数为func,则使用func进行遍历判断", function () {
-            list.addChild(1);
-            list.addChild("a");
-
-            expect(list.hasChild(function (c) {
-                return c === 1;
-            })).toBeTruthy();
-            expect(list.hasChild(function (c) {
-                return c === "b";
-            })).toBeFalsy();
-        });
-
         it("判断容器中是否存在该数据", function () {
             var fake = {};
             var fake2 = {
@@ -63,6 +51,20 @@ describe("List", function () {
             expect(list.hasChild(fake)).toBeFalsy();
         });
 
+    });
+
+    describe("hasChildWithFunc", function () {
+        it("使用func进行遍历判断", function () {
+            list.addChild(1);
+            list.addChild("a");
+
+            expect(list.hasChildWithFunc(function (c) {
+                return c === 1;
+            })).toBeTruthy();
+            expect(list.hasChildWithFunc(function (c) {
+                return c === "b";
+            })).toBeFalsy();
+        });
     });
 
     describe("getChildren", function () {

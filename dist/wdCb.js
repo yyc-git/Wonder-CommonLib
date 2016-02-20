@@ -291,25 +291,23 @@ var wdCb;
         List.prototype.getCount = function () {
             return this.children.length;
         };
-        List.prototype.hasChild = function (arg) {
-            if (wdCb.JudgeUtils.isFunction(arguments[0])) {
-                var func = arguments[0];
-                for (var i = 0, len = this.children.length; i < len; i++) {
-                    if (func(this.children[i], i)) {
-                        return true;
-                    }
+        List.prototype.hasChild = function (child) {
+            var c = null, children = this.children;
+            for (var i = 0, len = children.length; i < len; i++) {
+                c = children[i];
+                if (child.uid && c.uid && child.uid == c.uid) {
+                    return true;
+                }
+                else if (child === c) {
+                    return true;
                 }
             }
-            else {
-                var child = arguments[0];
-                for (var i = 0, len = this.children.length; i < len; i++) {
-                    var c = this.children[i];
-                    if (child.uid && c.uid && child.uid == c.uid) {
-                        return true;
-                    }
-                    else if (child === c) {
-                        return true;
-                    }
+            return false;
+        };
+        List.prototype.hasChildWithFunc = function (func) {
+            for (var i = 0, len = this.children.length; i < len; i++) {
+                if (func(this.children[i], i)) {
+                    return true;
                 }
             }
             return false;
@@ -588,21 +586,18 @@ var wdCb;
         Hash.prototype.removeAllChildren = function () {
             this._children = {};
         };
-        Hash.prototype.hasChild = function (arg) {
-            if (wdCb.JudgeUtils.isFunction(arguments[0])) {
-                var func = arguments[0], result = false;
-                this.forEach(function (val, key) {
-                    if (func(val, key)) {
-                        result = true;
-                        return wdCb.$BREAK;
-                    }
-                });
-                return result;
-            }
-            else {
-                var key = arguments[0];
-                return this._children[key] !== void 0;
-            }
+        Hash.prototype.hasChild = function (key) {
+            return this._children[key] !== undefined;
+        };
+        Hash.prototype.hasChildWithFunc = function (func) {
+            var result = false;
+            this.forEach(function (val, key) {
+                if (func(val, key)) {
+                    result = true;
+                    return wdCb.$BREAK;
+                }
+            });
+            return result;
         };
         Hash.prototype.forEach = function (func, context) {
             var children = this._children;

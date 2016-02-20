@@ -6,33 +6,34 @@ module wdCb {
             return this.children.length;
         }
 
-        public hasChild(arg:Function|T):boolean {
-            if (JudgeUtils.isFunction(arguments[0])) {
-                let func = <Function>arguments[0];
+        public hasChild(child:any):boolean {
+            var c:any = null,
+                children = this.children;
 
-                for(let i = 0, len = this.children.length; i < len; i++){
-                    if(func(this.children[i], i)){
-                        return true;
-                    }
+            for (let i = 0, len = children.length; i < len; i++) {
+                c = children[i];
+
+                if (child.uid && c.uid && child.uid == c.uid) {
+                    return true;
                 }
-            }
-            else{
-                let child = arguments[0];
-
-                for (let i = 0, len = this.children.length; i < len; i++) {
-                    let c:any = this.children[i];
-
-                    if (child.uid && c.uid && child.uid == c.uid) {
-                        return true;
-                    }
-                    else if(child === c){
-                        return true;
-                    }
+                else if(child === c){
+                    return true;
                 }
             }
 
             return false;
         }
+
+        public hasChildWithFunc(func:Function):boolean {
+            for(let i = 0, len = this.children.length; i < len; i++){
+                if(func(this.children[i], i)){
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
 
         public getChildren () {
             return this.children;
