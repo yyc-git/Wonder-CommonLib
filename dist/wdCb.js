@@ -1,31 +1,40 @@
 var wdCb;
 (function (wdCb) {
+    var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
     var JudgeUtils = (function () {
         function JudgeUtils() {
         }
-        JudgeUtils.isArray = function (val) {
-            return Object.prototype.toString.call(val) === "[object Array]";
+        JudgeUtils.isArray = function (arr) {
+            var length = arr && arr.length;
+            return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
         };
-        JudgeUtils.isFunction = function (func) {
-            return Object.prototype.toString.call(func) === "[object Function]";
+        JudgeUtils.isArrayExactly = function (arr) {
+            return Object.prototype.toString.call(arr) === "[object Array]";
         };
-        JudgeUtils.isNumber = function (obj) {
-            return Object.prototype.toString.call(obj) === "[object Number]";
+        JudgeUtils.isNumber = function (num) {
+            return typeof num == "number";
+        };
+        JudgeUtils.isNumberExactly = function (num) {
+            return Object.prototype.toString.call(num) === "[object Number]";
         };
         JudgeUtils.isString = function (str) {
+            return typeof str == "string";
+        };
+        JudgeUtils.isStringExactly = function (str) {
             return Object.prototype.toString.call(str) === "[object String]";
         };
-        JudgeUtils.isBoolean = function (obj) {
-            return Object.prototype.toString.call(obj) === "[object Boolean]";
+        JudgeUtils.isBoolean = function (bool) {
+            return bool === true || bool === false || toString.call(bool) === '[boolect Boolean]';
         };
         JudgeUtils.isDom = function (obj) {
-            return Object.prototype.toString.call(obj).match(/\[object HTML\w+/) !== null;
+            return !!(obj && obj.nodeType === 1);
+        };
+        JudgeUtils.isObject = function (obj) {
+            var type = typeof obj;
+            return type === 'function' || type === 'object' && !!obj;
         };
         JudgeUtils.isDirectObject = function (obj) {
-            if (Object.prototype.toString.call(obj) === "[object Object]") {
-                return true;
-            }
-            return false;
+            return Object.prototype.toString.call(obj) === "[object Object]";
         };
         JudgeUtils.isHostMethod = function (object, property) {
             var type = typeof object[property];
@@ -36,9 +45,22 @@ var wdCb;
         JudgeUtils.isNodeJs = function () {
             return ((typeof global != "undefined" && global.module) || (typeof module != "undefined")) && typeof module.exports != "undefined";
         };
+        JudgeUtils.isFunction = function (func) {
+            return true;
+        };
         return JudgeUtils;
     })();
     wdCb.JudgeUtils = JudgeUtils;
+    if (typeof /./ != 'function' && typeof Int8Array != 'object') {
+        JudgeUtils.isFunction = function (func) {
+            return typeof func == 'function';
+        };
+    }
+    else {
+        JudgeUtils.isFunction = function (func) {
+            return Object.prototype.toString.call(func) === "[object Function]";
+        };
+    }
 })(wdCb || (wdCb = {}));
 
 var wdCb;
@@ -568,7 +590,7 @@ var wdCb;
             if (wdCb.JudgeUtils.isString(arg)) {
                 var key = arg;
                 result.push(this._children[key]);
-                this._children[key] = undefined;
+                this._children[key] = void 0;
                 delete this._children[key];
             }
             else if (wdCb.JudgeUtils.isFunction(arg)) {
@@ -576,7 +598,7 @@ var wdCb;
                 this.forEach(function (val, key) {
                     if (func(val, key)) {
                         result.push(self_1._children[key]);
-                        self_1._children[key] = undefined;
+                        self_1._children[key] = void 0;
                         delete self_1._children[key];
                     }
                 });
@@ -587,7 +609,7 @@ var wdCb;
             this._children = {};
         };
         Hash.prototype.hasChild = function (key) {
-            return this._children[key] !== undefined;
+            return this._children[key] !== void 0;
         };
         Hash.prototype.hasChildWithFunc = function (func) {
             var result = false;
