@@ -385,4 +385,19 @@ describe("Hash", function () {
             expect(result).toEqual(["b", 2]);
         });
     });
+
+    describe("toArray", function(){
+        it("convert to array", function(){
+            hash.addChild("1", wdCb.Collection.create([1, 2]));
+            hash.addChild("2", true);
+            hash.addChild("3", 3);
+
+            var result = hash.toArray();
+            expect(result).toEqual ([
+                wdCb.Collection.create([1, 2]),
+                true,
+                3
+            ])
+        });
+    });
 });

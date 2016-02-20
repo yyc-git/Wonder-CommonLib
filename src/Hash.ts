@@ -221,7 +221,7 @@ module wdCb {
             return Hash.create(resultMap);
         }
 
-        public toCollection(): Collection<any>{
+        public toCollection():Collection<any>{
             var result = Collection.create<any>();
 
             this.forEach((val:any, key:string) => {
@@ -234,6 +234,16 @@ module wdCb {
                 else{
                     result.addChild(val);
                 }
+            });
+
+            return result;
+        }
+
+        public toArray():Array<any>{
+            var result = [];
+
+            this.forEach((val:any, key:string) => {
+                result.push(val);
             });
 
             return result;

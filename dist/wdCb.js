@@ -681,6 +681,13 @@ var wdCb;
             });
             return result;
         };
+        Hash.prototype.toArray = function () {
+            var result = [];
+            this.forEach(function (val, key) {
+                result.push(val);
+            });
+            return result;
+        };
         return Hash;
     })();
     wdCb.Hash = Hash;

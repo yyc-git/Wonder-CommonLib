@@ -124,6 +124,7 @@ declare module wdCb {
         findOne(func: Function): any[];
         map(func: Function): Hash<{}>;
         toCollection(): Collection<any>;
+        toArray(): Array<any>;
     }
 }
 
