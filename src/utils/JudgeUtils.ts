@@ -4,33 +4,33 @@ module wdCb {
     const MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
 
     export class JudgeUtils {
-        public static isArray(arr:Array<any>) {
+        public static isArray(arr:any) {
             var length = arr && arr.length;
 
             return typeof length == 'number' && length >= 0 && length <= MAX_ARRAY_INDEX;
         }
 
-        public static isArrayExactly(arr:Array<any>) {
+        public static isArrayExactly(arr:any) {
             return Object.prototype.toString.call(arr) === "[object Array]";
         }
 
-        public static isNumber(num:number) {
+        public static isNumber(num:any) {
             return typeof num == "number";
         }
 
-        public static isNumberExactly(num:number) {
+        public static isNumberExactly(num:any) {
             return Object.prototype.toString.call(num) === "[object Number]";
         }
 
-        public static isString(str:string) {
+        public static isString(str:any) {
             return typeof str == "string";
         }
 
-        public static isStringExactly(str:string) {
+        public static isStringExactly(str:any) {
             return Object.prototype.toString.call(str) === "[object String]";
         }
 
-        public static isBoolean(bool:boolean) {
+        public static isBoolean(bool:any) {
             return bool === true || bool === false || toString.call(bool) === '[boolect Boolean]';
         }
 
@@ -65,7 +65,7 @@ module wdCb {
             dom.addEventListener(sEventType, fnHandler, false);
             }
          */
-        public static isHostMethod(object, property) {
+        public static isHostMethod(object:any, property:any) {
             var type = typeof object[property];
 
             return type === "function" ||
@@ -78,7 +78,7 @@ module wdCb {
         }
 
         //overwrite it in the end of this file
-        public static isFunction(func:Function):boolean{
+        public static isFunction(func:any):boolean{
             return true;
         }
     }
@@ -86,12 +86,12 @@ module wdCb {
     // Optimize `isFunction` if appropriate. Work around some typeof bugs in old v8,
     // IE 11 (#1621), and in Safari 8 (#1929).
     if (typeof /./ != 'function' && typeof Int8Array != 'object') {
-        JudgeUtils.isFunction = (func:Function) => {
+        JudgeUtils.isFunction = (func:any) => {
             return typeof func == 'function';
         };
     }
     else {
-        JudgeUtils.isFunction = (func:Function) => {
+        JudgeUtils.isFunction = (func:any) => {
             return Object.prototype.toString.call(func) === "[object Function]";
         };
     }
