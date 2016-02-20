@@ -346,13 +346,13 @@ describe("Hash", function () {
             expect(result).toBeInstanceOf(wdCb.Collection);
             expect(result.getChildren()).toEqual([1, 2, true]);
         });
-        it("if val is Hash, error", function(){
-            hash.addChild("1", wdCb.Hash.create());
-
-            expect(function(){
-                var result = hash.toCollection();
-            }).toThrow();
-        });
+        //it("if val is Hash, error", function(){
+        //    hash.addChild("1", wdCb.Hash.create());
+        //
+        //    expect(function(){
+        //        var result = hash.toCollection();
+        //    }).toThrow();
+        //});
     });
 
     describe("findOne", function () {
@@ -394,7 +394,8 @@ describe("Hash", function () {
 
             var result = hash.toArray();
             expect(result).toEqual ([
-                wdCb.Collection.create([1, 2]),
+                1,
+                2,
                 true,
                 3
             ])

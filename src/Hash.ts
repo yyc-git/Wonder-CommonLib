@@ -228,9 +228,9 @@ module wdCb {
                 if(val instanceof Collection){
                     result.addChildren(val);
                 }
-                else if(val instanceof Hash){
-                    Log.error(true, Log.info.FUNC_NOT_SUPPORT("toCollection", "value is Hash"));
-                }
+                //else if(val instanceof Hash){
+                //    Log.error(true, Log.info.FUNC_NOT_SUPPORT("toCollection", "value is Hash"));
+                //}
                 else{
                     result.addChild(val);
                 }
@@ -243,7 +243,12 @@ module wdCb {
             var result = [];
 
             this.forEach((val:any, key:string) => {
-                result.push(val);
+                if(val instanceof Collection){
+                    result = result.concat(val.getChildren());
+                }
+                else{
+                    result.push(val);
+                }
             });
 
             return result;

@@ -672,9 +672,6 @@ var wdCb;
                 if (val instanceof wdCb.Collection) {
                     result.addChildren(val);
                 }
-                else if (val instanceof Hash) {
-                    wdCb.Log.error(true, wdCb.Log.info.FUNC_NOT_SUPPORT("toCollection", "value is Hash"));
-                }
                 else {
                     result.addChild(val);
                 }
@@ -684,7 +681,12 @@ var wdCb;
         Hash.prototype.toArray = function () {
             var result = [];
             this.forEach(function (val, key) {
-                result.push(val);
+                if (val instanceof wdCb.Collection) {
+                    result = result.concat(val.getChildren());
+                }
+                else {
+                    result.push(val);
+                }
             });
             return result;
         };
