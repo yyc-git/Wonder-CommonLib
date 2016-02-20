@@ -115,7 +115,7 @@ module wdCb {
 
                 result.push(this._children[key]);
 
-                this._children[key] = undefined;
+                this._children[key] = void 0;
                 delete this._children[key];
             }
             else if (JudgeUtils.isFunction(arg)) {
@@ -126,7 +126,7 @@ module wdCb {
                     if(func(val, key)){
                         result.push(self._children[key]);
 
-                        self._children[key] = undefined;
+                        self._children[key] = void 0;
                         delete self._children[key];
                     }
                 });
@@ -140,7 +140,7 @@ module wdCb {
         }
 
         public hasChild(key:string):boolean {
-            return this._children[key] !== undefined;
+            return this._children[key] !== void 0;
         }
 
         public hasChildWithFunc(func:Function):boolean {
