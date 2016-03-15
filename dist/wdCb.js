@@ -442,7 +442,7 @@ var wdCb;
             var obj = new this(children);
             return obj;
         };
-        Collection.prototype.copy = function (isDeep) {
+        Collection.prototype.clone = function (isDeep) {
             if (isDeep === void 0) { isDeep = false; }
             return isDeep ? Collection.create(wdCb.ExtendUtils.extendDeep(this.children))
                 : Collection.create(wdCb.ExtendUtils.extend([], this.children));

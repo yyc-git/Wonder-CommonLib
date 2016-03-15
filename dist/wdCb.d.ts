@@ -86,7 +86,7 @@ declare module wdCb {
     class Collection<T> extends List<T> {
         static create<T>(children?: any[]): Collection<T>;
         constructor(children?: Array<T>);
-        copy(isDeep?: boolean): Collection<T>;
+        clone(isDeep?: boolean): Collection<T>;
         filter(func: (value: T, index: number) => boolean): Collection<T>;
         findOne(func: (value: T, index: number) => boolean): T;
         reverse(): Collection<T>;

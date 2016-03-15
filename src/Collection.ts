@@ -12,7 +12,7 @@ module wdCb {
             this.children = children;
         }
 
-        public copy (isDeep:boolean = false) {
+        public clone (isDeep:boolean = false) {
             return isDeep ? Collection.create<T>(ExtendUtils.extendDeep(this.children))
                 : Collection.create<T>(ExtendUtils.extend([], this.children));
         }
