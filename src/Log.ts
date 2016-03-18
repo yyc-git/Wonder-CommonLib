@@ -95,6 +95,11 @@ module wdCb {
                 args.unshift("not exist");
 
                 return this.assertion.apply(this, args);
+            },
+            FUNC_ONLY: function(...args){
+                args.unshift("only");
+
+                return this.assertion.apply(this, args);
             }
         };
 

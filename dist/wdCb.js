@@ -297,6 +297,14 @@ var wdCb;
                 }
                 args.unshift("not exist");
                 return this.assertion.apply(this, args);
+            },
+            FUNC_ONLY: function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i - 0] = arguments[_i];
+                }
+                args.unshift("only");
+                return this.assertion.apply(this, args);
             }
         };
         return Log;
