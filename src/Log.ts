@@ -100,6 +100,11 @@ module wdCb {
                 args.unshift("only");
 
                 return this.assertion.apply(this, args);
+            },
+            FUNC_CAN_NOT: function(...args){
+                args.unshift("can't");
+
+                return this.assertion.apply(this, args);
             }
         };
 

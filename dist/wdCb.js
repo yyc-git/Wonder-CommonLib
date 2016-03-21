@@ -305,6 +305,14 @@ var wdCb;
                 }
                 args.unshift("only");
                 return this.assertion.apply(this, args);
+            },
+            FUNC_CAN_NOT: function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i - 0] = arguments[_i];
+                }
+                args.unshift("can't");
+                return this.assertion.apply(this, args);
             }
         };
         return Log;

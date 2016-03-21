@@ -53,6 +53,7 @@ declare module wdCb {
             FUNC_UNEXPECT: (...args: any[]) => any;
             FUNC_NOT_EXIST: (...args: any[]) => any;
             FUNC_ONLY: (...args: any[]) => any;
+            FUNC_CAN_NOT: (...args: any[]) => any;
         };
         static log(...messages: any[]): void;
         static assert(cond: any, ...messages: any[]): void;
