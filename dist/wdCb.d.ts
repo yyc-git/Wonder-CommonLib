@@ -96,6 +96,7 @@ declare module wdCb {
         sort(func: (a: T, b: T) => any, isSortSelf?: boolean): Collection<T>;
         map(func: (value: T, index: number) => any): Collection<any>;
         removeRepeatItems(): Collection<T>;
+        hasRepeatItems(): boolean;
     }
 }
 

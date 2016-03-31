@@ -509,14 +509,25 @@ var wdCb;
             return Collection.create(resultArr);
         };
         Collection.prototype.removeRepeatItems = function () {
-            var resultList = Collection.create();
+            var noRepeatList = Collection.create();
             this.forEach(function (item) {
-                if (resultList.hasChild(item)) {
+                if (noRepeatList.hasChild(item)) {
                     return;
                 }
-                resultList.addChild(item);
+                noRepeatList.addChild(item);
             });
-            return resultList;
+            return noRepeatList;
+        };
+        Collection.prototype.hasRepeatItems = function () {
+            var noRepeatList = Collection.create(), hasRepeat = false;
+            this.forEach(function (item) {
+                if (noRepeatList.hasChild(item)) {
+                    hasRepeat = true;
+                    return wdCb.$BREAK;
+                }
+                noRepeatList.addChild(item);
+            });
+            return hasRepeat;
         };
         return Collection;
     })(wdCb.List);

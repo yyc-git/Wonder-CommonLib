@@ -83,17 +83,34 @@ module wdCb {
         }
 
         public removeRepeatItems(){
-            var resultList =  Collection.create<T>();
+            var noRepeatList =  Collection.create<T>();
 
             this.forEach((item:T) => {
-                if (resultList.hasChild(item)) {
+                if (noRepeatList.hasChild(item)) {
                     return;
                 }
 
-                resultList.addChild(item);
+                noRepeatList.addChild(item);
             });
 
-            return resultList;
+            return noRepeatList;
+        }
+
+        public hasRepeatItems(){
+            var noRepeatList =  Collection.create<T>(),
+                hasRepeat:boolean = false;
+
+            this.forEach((item:T) => {
+                if (noRepeatList.hasChild(item)) {
+                    hasRepeat = true;
+
+                    return $BREAK;
+                }
+
+                noRepeatList.addChild(item);
+            });
+
+            return hasRepeat;
         }
     }
 }

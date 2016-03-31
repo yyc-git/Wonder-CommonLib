@@ -201,4 +201,17 @@ describe("Collection", function () {
             expect(collection.getChildren()).toEqual([1, 2, 1, 1]);
         });
     });
+
+    describe("hasRepeatItems", function(){
+        it("if has repeat ones, return true", function () {
+            collection.addChild(1).addChild(2).addChild(1);
+
+            expect(collection.hasRepeatItems()).toBeTruthy();
+        });
+        it("else, return false", function () {
+            collection.addChild(1).addChild(2);
+
+            expect(collection.hasRepeatItems()).toBeFalsy();
+        });
+    });
 });
