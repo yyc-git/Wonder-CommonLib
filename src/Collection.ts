@@ -57,7 +57,7 @@ module wdCb {
             return Collection.create<T>(this.removeChildHelper(arg));
         }
 
-        public sort(func:(a:T, b:T) => any, isSortSelf = false){
+        public sort(func:(a:T, b:T) => any, isSortSelf = false):Collection<T>{
             if(isSortSelf){
                 this.children.sort(func);
 
@@ -65,6 +65,30 @@ module wdCb {
             }
 
             return Collection.create<T>(this.copyChildren().sort(func));
+        }
+
+        public insertSort(compareFunc:(a:T, b:T) => boolean, isSortSelf = false):Collection<T>{
+            var children = null;
+
+            if(isSortSelf){
+                children = this.children;
+            }
+            else{
+                children = ExtendUtils.extend([], this.children);
+            }
+
+            for(let i = 1, len = this.getCount(); i < len; i++){
+                for(let j = i; j > 0 && compareFunc(children[j], children[j - 1]); j--){
+                    this._swap(children, j - 1, j);
+                }
+            }
+
+            if(isSortSelf){
+                return this;
+            }
+            else{
+                return Collection.create<T>(children);
+            }
         }
 
         public map(func:(value:T, index:number) => any){
@@ -111,6 +135,14 @@ module wdCb {
             });
 
             return hasRepeat;
+        }
+
+        private _swap(children:Array<T>, i:number, j:number){
+            var t:T = null;
+
+            t = children[i];
+            children[i] = children[j];
+            children[j] = t;
         }
     }
 }

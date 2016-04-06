@@ -94,9 +94,11 @@ declare module wdCb {
         reverse(): Collection<T>;
         removeChild(arg: any): Collection<T>;
         sort(func: (a: T, b: T) => any, isSortSelf?: boolean): Collection<T>;
+        insertSort(compareFunc: (a: T, b: T) => boolean, isSortSelf?: boolean): Collection<T>;
         map(func: (value: T, index: number) => any): Collection<any>;
         removeRepeatItems(): Collection<T>;
         hasRepeatItems(): boolean;
+        private _swap(children, i, j);
     }
 }
 
