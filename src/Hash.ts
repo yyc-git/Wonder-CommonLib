@@ -253,6 +253,10 @@ module wdCb {
 
             return result;
         }
+
+        public clone(){
+            return Hash.create(this._children);
+        }
     }
 }
 

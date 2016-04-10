@@ -401,4 +401,20 @@ describe("Hash", function () {
             ])
         });
     });
+
+    describe("clone", function(){
+        it("return the shallow clone one", function () {
+            hash.addChild("a", 1);
+            hash.addChild("b", 2);
+
+            var result = hash.clone();
+
+            result.addChild("c", 3);
+
+            expect(hash.getChild("c")).toEqual(3);
+            expect(result.getChild("c")).toEqual(3);
+            expect(result.getChild("a")).toEqual(1);
+            expect(result.getChild("b")).toEqual(2);
+        });
+    })
 });

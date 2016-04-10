@@ -744,6 +744,9 @@ var wdCb;
             });
             return result;
         };
+        Hash.prototype.clone = function () {
+            return Hash.create(this._children);
+        };
         return Hash;
     })();
     wdCb.Hash = Hash;
