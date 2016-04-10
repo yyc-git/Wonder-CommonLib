@@ -254,7 +254,7 @@ module wdCb {
             return result;
         }
 
-        public clone(){
+        public clone():Hash<any>{
             return Hash.create(this._children);
         }
     }

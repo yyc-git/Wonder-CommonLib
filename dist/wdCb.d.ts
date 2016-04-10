@@ -130,7 +130,7 @@ declare module wdCb {
         map(func: Function): Hash<{}>;
         toCollection(): Collection<any>;
         toArray(): Array<any>;
-        clone(): Hash<{}>;
+        clone(): Hash<any>;
     }
 }
 
