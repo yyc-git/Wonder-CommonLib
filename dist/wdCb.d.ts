@@ -113,24 +113,24 @@ declare module wdCb {
             [s: string]: T;
         };
         getCount(): number;
-        getKeys(): Collection<{}>;
-        getValues(): Collection<{}>;
+        getKeys(): Collection<string>;
+        getValues(): Collection<T>;
         getChild(key: string): T;
         setValue(key: string, value: any): this;
         addChild(key: string, value: any): this;
         addChildren(arg: {} | Hash<T>): void;
         appendChild(key: string, value: any): this;
-        removeChild(arg: any): Collection<{}>;
+        removeChild(arg: any): Collection<T>;
         removeAllChildren(): void;
         hasChild(key: string): boolean;
         hasChildWithFunc(func: Function): boolean;
         forEach(func: Function, context?: any): this;
-        filter(func: Function): Hash<{}>;
+        filter(func: Function): Hash<T>;
         findOne(func: Function): any[];
-        map(func: Function): Hash<{}>;
+        map(func: Function): Hash<T>;
         toCollection(): Collection<any>;
-        toArray(): Array<any>;
-        clone(): Hash<any>;
+        toArray(): Array<T>;
+        clone(): Hash<T>;
     }
 }
 

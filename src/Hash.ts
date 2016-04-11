@@ -33,7 +33,7 @@ module wdCb {
         }
 
         public getKeys(){
-            var result = Collection.create(),
+            var result = Collection.create<string>(),
                 children = this._children,
                 key = null;
 
@@ -47,7 +47,7 @@ module wdCb {
         }
 
         public getValues(){
-            var result = Collection.create(),
+            var result = Collection.create<T>(),
                 children = this._children,
                 key = null;
 
@@ -107,7 +107,7 @@ module wdCb {
             return this;
         }
 
-        public removeChild(arg:any){
+        public removeChild(arg:any):Collection<T>{
             var result = [];
 
             if(JudgeUtils.isString(arg)){
@@ -132,7 +132,7 @@ module wdCb {
                 });
             }
 
-            return Collection.create(result);
+            return Collection.create<T>(result);
         }
 
         public removeAllChildren(){
@@ -170,7 +170,7 @@ module wdCb {
             return this;
         }
 
-        public filter(func:Function){
+        public filter(func:Function):Hash<T>{
             var result = {},
                 children = this._children,
                 value = null;
@@ -185,7 +185,7 @@ module wdCb {
                 }
             }
 
-            return Hash.create(result);
+            return Hash.create<T>(result);
         }
 
         public findOne(func:Function){
@@ -205,7 +205,7 @@ module wdCb {
             return result;
         }
 
-        public map(func:Function) {
+        public map(func:Function):Hash<T> {
             var resultMap = {};
 
             this.forEach((val:any, key:string) => {
@@ -218,7 +218,7 @@ module wdCb {
                 }
             });
 
-            return Hash.create(resultMap);
+            return Hash.create<T>(resultMap);
         }
 
         public toCollection():Collection<any>{
@@ -239,7 +239,7 @@ module wdCb {
             return result;
         }
 
-        public toArray():Array<any>{
+        public toArray():Array<T>{
             var result = [];
 
             this.forEach((val:any, key:string) => {
@@ -254,8 +254,8 @@ module wdCb {
             return result;
         }
 
-        public clone():Hash<any>{
-            return Hash.create(this._children);
+        public clone():Hash<T>{
+            return Hash.create<T>(this._children);
         }
     }
 }
