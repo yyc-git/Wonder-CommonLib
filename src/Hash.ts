@@ -255,7 +255,13 @@ module wdCb {
         }
 
         public clone():Hash<T>{
-            return Hash.create<T>(this._children);
+            var result = Hash.create<T>();
+
+            this.forEach((val:any, key:string) => {
+                result.addChild(key, val);
+            });
+
+            return result;
         }
     }
 }

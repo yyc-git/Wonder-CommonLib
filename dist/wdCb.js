@@ -745,7 +745,11 @@ var wdCb;
             return result;
         };
         Hash.prototype.clone = function () {
-            return Hash.create(this._children);
+            var result = Hash.create();
+            this.forEach(function (val, key) {
+                result.addChild(key, val);
+            });
+            return result;
         };
         return Hash;
     })();

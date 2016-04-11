@@ -404,16 +404,19 @@ describe("Hash", function () {
 
     describe("clone", function(){
         it("return the shallow clone one", function () {
-            hash.addChild("a", 1);
+            hash.addChild("a", []);
             hash.addChild("b", 2);
 
             var result = hash.clone();
 
+            result.getChild("a").push(1);
             result.addChild("c", 3);
 
-            expect(hash.getChild("c")).toEqual(3);
+            expect(hash.getChild("a")).toEqual([1]);
+            expect(hash.getChild("c")).not.toBeExist();
+
             expect(result.getChild("c")).toEqual(3);
-            expect(result.getChild("a")).toEqual(1);
+            expect(result.getChild("a")).toEqual([1]);
             expect(result.getChild("b")).toEqual(2);
         });
     })
