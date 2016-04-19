@@ -51,4 +51,34 @@ describe("Stack", function () {
             expect(stack.getChildren()).toEqual([]);
         });
     });
+
+    describe("clone", function () {
+        it("return the shallow clone one", function () {
+            var data1 = 1;
+            var data2 = {a:1};
+            stack.push(data1);
+            stack.push(data2);
+
+            var result = stack.clone();
+            var a = result.children;
+            a[0] = 2;
+            a[1].a = 100;
+
+            expect(result === stack).toBeFalsy();
+            expect(a.length).toEqual(2);
+            expect(data2.a).toEqual(100);
+        });
+        it("return the deep clone one", function () {
+            var cloneElementResult = {};
+            var data1 = 1;
+            var data2 = {clone: sandbox.stub().returns(cloneElementResult)};
+            stack.push(data1);
+            stack.push(data2);
+
+            var result = stack.clone(true);
+            var a = result.children;
+
+            expect(a[1]).toEqual(cloneElementResult);
+        });
+    });
 });

@@ -27,5 +27,13 @@ module wdCb {
         public clear(){
             this.removeAllChildren();
         }
+
+        public clone (isDeep:boolean = false) {
+            if(isDeep){
+                return Stack.create<T>(ExtendUtils.extendDeep(this.children));
+            }
+
+            return Stack.create<T>([].concat(this.children));
+        }
     }
 }

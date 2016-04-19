@@ -154,6 +154,7 @@ declare module wdCb {
         push(element: T): void;
         pop(): T;
         clear(): void;
+        clone(isDeep?: boolean): Stack<T>;
     }
 }
 

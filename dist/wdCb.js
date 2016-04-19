@@ -840,6 +840,13 @@ var wdCb;
         Stack.prototype.clear = function () {
             this.removeAllChildren();
         };
+        Stack.prototype.clone = function (isDeep) {
+            if (isDeep === void 0) { isDeep = false; }
+            if (isDeep) {
+                return Stack.create(wdCb.ExtendUtils.extendDeep(this.children));
+            }
+            return Stack.create([].concat(this.children));
+        };
         return Stack;
     })(wdCb.List);
     wdCb.Stack = Stack;
