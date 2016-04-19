@@ -25,7 +25,10 @@ describe("Collection", function () {
             expect(arr[1].a).toEqual(100);
         });
         it("return the deep clone one", function () {
-            var arr = [1, {a: 1}];
+            var cloneElementResult = {};
+            var arr = [1, {a: 1}, {
+                clone:sandbox.stub().returns(cloneElementResult)
+            }];
             collection.addChildren(arr);
 
             var a = collection.clone(true).getChildren();
@@ -33,7 +36,9 @@ describe("Collection", function () {
             a[1].a = 100;
 
             expect(a === arr).toBeFalsy();
-            expect(a.length).toEqual(2);
+            expect(a.length).toEqual(3);
+            expect(a[2]).toEqual(cloneElementResult);
+
             expect(arr[0]).toEqual(1);
             expect(arr[1].a).toEqual(1);
         });

@@ -13,8 +13,11 @@ module wdCb {
         }
 
         public clone (isDeep:boolean = false) {
-            return isDeep ? Collection.create<T>(ExtendUtils.extendDeep(this.children))
-                : Collection.create<T>(ExtendUtils.extend([], this.children));
+            if(isDeep){
+                return Collection.create<T>(ExtendUtils.extendDeep(this.children));
+            }
+
+            return Collection.create<T>().addChildren(this.children);
         }
 
         public filter(func:(value:T, index:number) => boolean):Collection<T> {

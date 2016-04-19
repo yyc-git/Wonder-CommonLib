@@ -47,16 +47,23 @@ module wdCb {
                 _child = child || [];
 
                 for (i = 0, len = parent.length; i < len; i++) {
-                    if(!filter(parent[i], i)){
+                    let member = parent[i];
+
+                    if(!filter(member, i)){
                         continue;
                     }
 
-                    type = toStr.call(parent[i]);
+                    if(member.clone){
+                        _child[i] = member.clone();
+                        continue;
+                    }
+
+                    type = toStr.call(member);
                     if (type === sArr || type === sOb) {    //如果为数组或object对象
                         _child[i] = type === sArr ? [] : {};
-                        arguments.callee(parent[i], _child[i]);
+                        arguments.callee(member, _child[i]);
                     } else {
-                        _child[i] = parent[i];
+                        _child[i] = member;
                     }
                 }
             }

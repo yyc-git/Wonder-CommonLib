@@ -460,8 +460,10 @@ var wdCb;
         };
         Collection.prototype.clone = function (isDeep) {
             if (isDeep === void 0) { isDeep = false; }
-            return isDeep ? Collection.create(wdCb.ExtendUtils.extendDeep(this.children))
-                : Collection.create(wdCb.ExtendUtils.extend([], this.children));
+            if (isDeep) {
+                return Collection.create(wdCb.ExtendUtils.extendDeep(this.children));
+            }
+            return Collection.create().addChildren(this.children);
         };
         Collection.prototype.filter = function (func) {
             var children = this.children, result = [], value = null;
@@ -1055,16 +1057,21 @@ var wdCb;
             if (toStr.call(parent) === sArr) {
                 _child = child || [];
                 for (i = 0, len = parent.length; i < len; i++) {
-                    if (!filter(parent[i], i)) {
+                    var member = parent[i];
+                    if (!filter(member, i)) {
                         continue;
                     }
-                    type = toStr.call(parent[i]);
+                    if (member.clone) {
+                        _child[i] = member.clone();
+                        continue;
+                    }
+                    type = toStr.call(member);
                     if (type === sArr || type === sOb) {
                         _child[i] = type === sArr ? [] : {};
-                        arguments.callee(parent[i], _child[i]);
+                        arguments.callee(member, _child[i]);
                     }
                     else {
-                        _child[i] = parent[i];
+                        _child[i] = member;
                     }
                 }
             }
