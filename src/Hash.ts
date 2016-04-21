@@ -92,6 +92,8 @@ module wdCb {
                     this.addChild(i, children[i]);
                 }
             }
+
+            return this;
         }
 
         public appendChild(key:string, value:any) {
@@ -254,14 +256,12 @@ module wdCb {
             return result;
         }
 
-        public clone():Hash<T>{
-            var result = Hash.create<T>();
+        public clone(isDeep:boolean = false):Hash<T>{
+            if(isDeep){
+                return Hash.create<T>(ExtendUtils.extendDeep(this._children));
+            }
 
-            this.forEach((val:any, key:string) => {
-                result.addChild(key, val);
-            });
-
-            return result;
+            return Hash.create<T>().addChildren(this._children);
         }
     }
 }

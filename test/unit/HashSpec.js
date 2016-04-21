@@ -403,7 +403,7 @@ describe("Hash", function () {
     });
 
     describe("clone", function(){
-        it("return the shallow clone one", function () {
+        it("test return the shallow clone one", function () {
             hash.addChild("a", []);
             hash.addChild("b", 2);
 
@@ -413,6 +413,22 @@ describe("Hash", function () {
             result.addChild("c", 3);
 
             expect(hash.getChild("a")).toEqual([1]);
+            expect(hash.getChild("c")).not.toBeExist();
+
+            expect(result.getChild("c")).toEqual(3);
+            expect(result.getChild("a")).toEqual([1]);
+            expect(result.getChild("b")).toEqual(2);
+        });
+        it("test return the deep clone one", function () {
+            hash.addChild("a", []);
+            hash.addChild("b", 2);
+
+            var result = hash.clone(true);
+
+            result.getChild("a").push(1);
+            result.addChild("c", 3);
+
+            expect(hash.getChild("a")).toEqual([]);
             expect(hash.getChild("c")).not.toBeExist();
 
             expect(result.getChild("c")).toEqual(3);

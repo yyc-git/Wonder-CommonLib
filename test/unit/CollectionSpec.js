@@ -11,7 +11,7 @@ describe("Collection", function () {
     });
 
     describe("clone", function () {
-        it("return the shallow clone one", function () {
+        it("test return the shallow clone one", function () {
             var arr = [1, {a: 1}];
             collection.addChildren(arr);
 
@@ -24,7 +24,7 @@ describe("Collection", function () {
             expect(arr[0]).toEqual(1);
             expect(arr[1].a).toEqual(100);
         });
-        it("return the deep clone one", function () {
+        it("test return the deep clone one", function () {
             var cloneElementResult = {};
             var arr = [1, {a: 1}, {
                 clone:sandbox.stub().returns(cloneElementResult)

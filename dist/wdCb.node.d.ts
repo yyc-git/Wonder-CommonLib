@@ -118,7 +118,7 @@ declare module wdCb {
         getChild(key: string): T;
         setValue(key: string, value: any): this;
         addChild(key: string, value: any): this;
-        addChildren(arg: {} | Hash<T>): void;
+        addChildren(arg: {} | Hash<T>): this;
         appendChild(key: string, value: any): this;
         removeChild(arg: any): Collection<T>;
         removeAllChildren(): void;
@@ -130,7 +130,7 @@ declare module wdCb {
         map(func: Function): Hash<T>;
         toCollection(): Collection<any>;
         toArray(): Array<T>;
-        clone(): Hash<T>;
+        clone(isDeep?: boolean): Hash<T>;
     }
 }
 

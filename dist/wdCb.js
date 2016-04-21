@@ -630,6 +630,7 @@ var wdCb;
                     this.addChild(i, children[i]);
                 }
             }
+            return this;
         };
         Hash.prototype.appendChild = function (key, value) {
             if (this._children[key] instanceof wdCb.Collection) {
@@ -746,12 +747,12 @@ var wdCb;
             });
             return result;
         };
-        Hash.prototype.clone = function () {
-            var result = Hash.create();
-            this.forEach(function (val, key) {
-                result.addChild(key, val);
-            });
-            return result;
+        Hash.prototype.clone = function (isDeep) {
+            if (isDeep === void 0) { isDeep = false; }
+            if (isDeep) {
+                return Hash.create(wdCb.ExtendUtils.extendDeep(this._children));
+            }
+            return Hash.create().addChildren(this._children);
         };
         return Hash;
     })();
@@ -1085,16 +1086,21 @@ var wdCb;
             else if (toStr.call(parent) === sOb) {
                 _child = child || {};
                 for (i in parent) {
-                    if (!filter(parent[i], i)) {
+                    var member = parent[i];
+                    if (!filter(member, i)) {
                         continue;
                     }
-                    type = toStr.call(parent[i]);
+                    if (member.clone) {
+                        _child[i] = member.clone();
+                        continue;
+                    }
+                    type = toStr.call(member);
                     if (type === sArr || type === sOb) {
                         _child[i] = type === sArr ? [] : {};
-                        arguments.callee(parent[i], _child[i]);
+                        arguments.callee(member, _child[i]);
                     }
                     else {
-                        _child[i] = parent[i];
+                        _child[i] = member;
                     }
                 }
             }
