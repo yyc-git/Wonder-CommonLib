@@ -290,6 +290,14 @@ var wdCb;
                 args.unshift("unexpect");
                 return this.assertion.apply(this, args);
             },
+            FUNC_EXIST: function () {
+                var args = [];
+                for (var _i = 0; _i < arguments.length; _i++) {
+                    args[_i - 0] = arguments[_i];
+                }
+                args.unshift("exist");
+                return this.assertion.apply(this, args);
+            },
             FUNC_NOT_EXIST: function () {
                 var args = [];
                 for (var _i = 0; _i < arguments.length; _i++) {

@@ -51,6 +51,7 @@ declare module wdCb {
             FUNC_UNKNOW: (...args: any[]) => any;
             FUNC_EXPECT: (...args: any[]) => any;
             FUNC_UNEXPECT: (...args: any[]) => any;
+            FUNC_EXIST: (...args: any[]) => any;
             FUNC_NOT_EXIST: (...args: any[]) => any;
             FUNC_ONLY: (...args: any[]) => any;
             FUNC_CAN_NOT: (...args: any[]) => any;

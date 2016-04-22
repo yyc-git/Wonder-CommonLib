@@ -91,6 +91,11 @@ module wdCb {
 
                 return this.assertion.apply(this, args);
             },
+            FUNC_EXIST: function(...args){
+                args.unshift("exist");
+
+                return this.assertion.apply(this, args);
+            },
             FUNC_NOT_EXIST: function(...args){
                 args.unshift("not exist");
 
