@@ -508,27 +508,6 @@ var wdCb;
             }
             return Collection.create(this.copyChildren().sort(func));
         };
-        Collection.prototype.insertSort = function (compareFunc, isSortSelf) {
-            if (isSortSelf === void 0) { isSortSelf = false; }
-            var children = null;
-            if (isSortSelf) {
-                children = this.children;
-            }
-            else {
-                children = wdCb.ExtendUtils.extend([], this.children);
-            }
-            for (var i = 1, len = this.getCount(); i < len; i++) {
-                for (var j = i; j > 0 && compareFunc(children[j], children[j - 1]); j--) {
-                    this._swap(children, j - 1, j);
-                }
-            }
-            if (isSortSelf) {
-                return this;
-            }
-            else {
-                return Collection.create(children);
-            }
-        };
         Collection.prototype.map = function (func) {
             var resultArr = [];
             this.forEach(function (e, index) {
@@ -559,12 +538,6 @@ var wdCb;
                 noRepeatList.addChild(item);
             });
             return hasRepeat;
-        };
-        Collection.prototype._swap = function (children, i, j) {
-            var t = null;
-            t = children[i];
-            children[i] = children[j];
-            children[j] = t;
         };
         return Collection;
     })(wdCb.List);

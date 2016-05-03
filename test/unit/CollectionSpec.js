@@ -141,33 +141,6 @@ describe("Collection", function () {
         });
     });
 
-    describe("insertSort", function () {
-        it("if the second param is true, sort itself", function () {
-            collection.addChild(2);
-            collection.addChild(1);
-            collection.addChild(3);
-
-            collection.insertSort(function (a, b) {
-                return a < b;
-            }, true);
-
-            expect(collection.getChildren()).toEqual([1, 2, 3]);
-        });
-        it("else, return the sorted elements", function () {
-            collection.addChild(2);
-            collection.addChild(1);
-            collection.addChild(3);
-            collection.addChild(1);
-
-            var result = collection.insertSort(function (a, b) {
-                return a < b;
-            }, false);
-
-            expect(result.getChildren()).toEqual([1, 1, 2, 3]);
-            expect(collection.getChildren()).toEqual([2, 1, 3, 1]);
-        });
-    });
-
     describe("map", function () {
         it("handle each value and return handled array", function(){
             collection.addChild(1);
