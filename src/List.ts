@@ -126,7 +126,8 @@ module wdCb {
         }
 
         private _forEach(arr:T[], func:Function, context?:any) {
-            var scope = context || root,
+            //var scope = context || root,
+            var scope = context,
                 i = 0,
                 len = arr.length;
 

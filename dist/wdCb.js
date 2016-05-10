@@ -65,14 +65,12 @@ var wdCb;
 
 var wdCb;
 (function (wdCb) {
-    Object.defineProperty(wdCb, "root", {
-        get: function () {
-            if (wdCb.JudgeUtils.isNodeJs()) {
-                return global;
-            }
-            return window;
-        }
-    });
+    if (wdCb.JudgeUtils.isNodeJs()) {
+        wdCb.root = global;
+    }
+    else {
+        wdCb.root = window;
+    }
 })(wdCb || (wdCb = {}));
 
 var wdCb;
@@ -422,7 +420,7 @@ var wdCb;
             return result;
         };
         List.prototype._forEach = function (arr, func, context) {
-            var scope = context || wdCb.root, i = 0, len = arr.length;
+            var scope = context, i = 0, len = arr.length;
             for (i = 0; i < len; i++) {
                 if (func.call(scope, arr[i], i) === wdCb.$BREAK) {
                     break;
