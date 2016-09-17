@@ -12,12 +12,42 @@ module wdCb {
             this.children = children;
         }
 
-        public clone (isDeep:boolean = false) {
-            if(isDeep){
-                return Collection.create<T>(ExtendUtils.extendDeep(this.children));
+        public clone();
+        public clone(isDeep: boolean);
+        public clone(target: Collection<T>);
+        public clone(target: Collection<T>, isDeep: boolean);
+
+        public clone(...args) {
+            var target: Collection<T> = null,
+                isDeep: boolean = null;
+
+            if (args.length === 0) {
+                isDeep = false;
+                target = Collection.create<T>();
+            }
+            else if (args.length === 1) {
+                if (JudgeUtils.isBoolean(args[0])) {
+                    target = Collection.create<T>();
+                    isDeep = args[0];
+                }
+                else {
+                    target = args[0];
+                    isDeep = false;
+                }
+            }
+            else {
+                target = args[0];
+                isDeep = args[1];
             }
 
-            return Collection.create<T>().addChildren(this.children);
+            if (isDeep === true) {
+                target.setChildren(ExtendUtils.extendDeep(this.children));
+            }
+            else {
+                target.setChildren(ExtendUtils.extend([], this.children));
+            }
+
+            return target;
         }
 
         public filter(func:(value:T, index:number) => boolean):Collection<T> {

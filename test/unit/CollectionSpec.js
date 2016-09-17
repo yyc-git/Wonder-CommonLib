@@ -11,36 +11,112 @@ describe("Collection", function () {
     });
 
     describe("clone", function () {
-        it("test return the shallow clone one", function () {
-            var arr = [1, {a: 1}];
-            collection.addChildren(arr);
+        describe("test return the shallow clone one", function () {
+            function judge(target) {
+                var arr = [1, {a: 1}];
+                collection.addChildren(arr);
 
-            var a = collection.clone().getChildren();
-            a[0] = 2;
-            a[1].a = 100;
+                var result;
+                var a;
 
-            expect(a === arr).toBeFalsy();
-            expect(a.length).toEqual(2);
-            expect(arr[0]).toEqual(1);
-            expect(arr[1].a).toEqual(100);
+                if(target){
+                    result = collection.clone(target);
+                }
+                else{
+                    result = collection.clone();
+                }
+
+                a = result.getChildren();
+
+                a[0] = 2;
+                a[1].a = 100;
+
+                expect(a === arr).toBeFalsy();
+                expect(a.length).toEqual(2);
+                expect(arr[0]).toEqual(1);
+                expect(arr[1].a).toEqual(100);
+
+
+
+                result.addChild(222);
+
+                expect(collection.hasChild(222)).toBeFalsy();
+            }
+
+            it("test", function () {
+                judge();
+            });
+
+            describe("if pass target", function(){
+                beforeEach(function(){
+
+                });
+
+                it("not create again", function () {
+                    var target = wdCb.Collection.create();
+
+                    sandbox.stub(wdCb.Collection, "create");
+
+                    judge(target);
+
+                    expect(wdCb.Collection.create).not.toCalled();
+                });
+                it("should refresh the target's children", function () {
+                    var arr = [1, {a: 1}];
+                    collection.addChildren(arr);
+
+                    var target = wdCb.Collection.create([100]);
+
+                    var result;
+                    var a;
+
+                        result = collection.clone(target);
+
+                    expect(result.getCount()).toEqual(collection.getCount());
+                });
+            });
         });
-        it("test return the deep clone one", function () {
-            var cloneElementResult = {};
-            var arr = [1, {a: 1}, {
-                clone:sandbox.stub().returns(cloneElementResult)
-            }];
-            collection.addChildren(arr);
 
-            var a = collection.clone(true).getChildren();
-            a[0] = 2;
-            a[1].a = 100;
+        describe("test return the deep clone one", function () {
+            function judge(target) {
+                var cloneElementResult = {};
+                var arr = [1, {a: 1}, {
+                    clone:sandbox.stub().returns(cloneElementResult)
+                }];
+                collection.addChildren(arr);
 
-            expect(a === arr).toBeFalsy();
-            expect(a.length).toEqual(3);
-            expect(a[2]).toEqual(cloneElementResult);
+                var a;
 
-            expect(arr[0]).toEqual(1);
-            expect(arr[1].a).toEqual(1);
+                if(target){
+                    a = collection.clone(target, true).getChildren();
+                }
+                else{
+                    a = collection.clone(true).getChildren();
+                }
+
+                a[0] = 2;
+                a[1].a = 100;
+
+                expect(a === arr).toBeFalsy();
+                expect(a.length).toEqual(3);
+                expect(a[2]).toEqual(cloneElementResult);
+
+                expect(arr[0]).toEqual(1);
+                expect(arr[1].a).toEqual(1);
+            }
+
+            it("test", function () {
+                judge();
+            });
+            it("if pass target, not create again", function () {
+                var target = wdCb.Collection.create();
+
+                sandbox.stub(wdCb.Collection, "create");
+
+                judge(target);
+
+                expect(wdCb.Collection.create).not.toCalled();
+            });
         });
     });
 

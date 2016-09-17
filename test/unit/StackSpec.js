@@ -53,32 +53,100 @@ describe("Stack", function () {
     });
 
     describe("clone", function () {
-        it("return the shallow clone one", function () {
-            var data1 = 1;
-            var data2 = {a:1};
-            stack.push(data1);
-            stack.push(data2);
+        describe("test return the shallow clone one", function () {
+            function judge(target) {
+                var data1 = 1;
+                var data2 = {a:1};
+                stack.push(data1);
+                stack.push(data2);
 
-            var result = stack.clone();
-            var a = result.children;
-            a[0] = 2;
-            a[1].a = 100;
+                var result;
 
-            expect(result === stack).toBeFalsy();
-            expect(a.length).toEqual(2);
-            expect(data2.a).toEqual(100);
+                if(target){
+                    result = stack.clone(target);
+                }
+                else{
+                    result = stack.clone();
+                }
+                var a = result.children;
+                a[0] = 2;
+                a[1].a = 100;
+
+                expect(result === stack).toBeFalsy();
+                expect(a.length).toEqual(2);
+                expect(data2.a).toEqual(100);
+
+
+
+
+                result.addChild(222);
+
+                expect(stack.hasChild(222)).toBeFalsy();
+            }
+
+            it("test", function () {
+                judge();
+            });
+
+            describe("if pass target", function(){
+                beforeEach(function(){
+                });
+
+                it("not create again", function () {
+                    var target = wdCb.Stack.create();
+
+                    sandbox.stub(wdCb.Stack, "create");
+
+                    judge(target);
+
+                    expect(wdCb.Stack.create).not.toCalled();
+                });
+                it("should refresh the target's children", function () {
+                    var target = wdCb.Stack.create();
+
+                    target.addChild("c");
+
+                    var result = stack.clone(target);
+
+                    expect(result.getCount()).toEqual(stack.getCount());
+                });
+            });
         });
-        it("return the deep clone one", function () {
-            var cloneElementResult = {};
-            var data1 = 1;
-            var data2 = {clone: sandbox.stub().returns(cloneElementResult)};
-            stack.push(data1);
-            stack.push(data2);
 
-            var result = stack.clone(true);
-            var a = result.children;
+        describe("test return the deep clone one", function () {
+            function judge(target) {
+                var cloneElementResult = {};
+                var data1 = 1;
+                var data2 = {clone: sandbox.stub().returns(cloneElementResult)};
+                stack.push(data1);
+                stack.push(data2);
 
-            expect(a[1]).toEqual(cloneElementResult);
+                var result;
+
+                if(target){
+                    result = stack.clone(target, true);
+                }
+                else{
+                    result = stack.clone(true);
+                }
+
+                var a = result.children;
+
+                expect(a[1]).toEqual(cloneElementResult);
+            }
+
+            it("test", function () {
+                judge();
+            });
+            it("if pass target, not create again", function () {
+                var target = wdCb.Stack.create();
+
+                sandbox.stub(wdCb.Stack, "create");
+
+                judge(target);
+
+                expect(wdCb.Stack.create).not.toCalled();
+            });
         });
     });
 });

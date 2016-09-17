@@ -69,6 +69,13 @@ module wdCb {
             return this;
         }
 
+        //todo test
+        public setChildren(children:Array<T>) {
+            this.children = children;
+
+            return this;
+        }
+
         public unShiftChild(child:T){
             this.children.unshift(child);
         }
@@ -126,7 +133,6 @@ module wdCb {
         }
 
         private _forEach(arr:T[], func:Function, context?:any) {
-            //var scope = context || root,
             var scope = context,
                 i = 0,
                 len = arr.length;
@@ -141,7 +147,6 @@ module wdCb {
 
         private _removeChild(arr:T[], func:Function) {
             var self = this,
-                index = null,
                 removedElementArr = [],
                 remainElementArr = [];
 

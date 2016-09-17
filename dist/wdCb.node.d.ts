@@ -75,6 +75,7 @@ declare module wdCb {
         getChild(index: number): T;
         addChild(child: T): this;
         addChildren(arg: Array<T> | List<T> | any): this;
+        setChildren(children: Array<T>): this;
         unShiftChild(child: T): void;
         removeAllChildren(): this;
         forEach(func: Function, context?: any): this;
@@ -90,7 +91,10 @@ declare module wdCb {
     class Collection<T> extends List<T> {
         static create<T>(children?: any[]): Collection<T>;
         constructor(children?: Array<T>);
-        clone(isDeep?: boolean): Collection<T>;
+        clone(): any;
+        clone(isDeep: boolean): any;
+        clone(target: Collection<T>): any;
+        clone(target: Collection<T>, isDeep: boolean): any;
         filter(func: (value: T, index: number) => boolean): Collection<T>;
         findOne(func: (value: T, index: number) => boolean): T;
         reverse(): Collection<T>;
@@ -120,6 +124,9 @@ declare module wdCb {
         addChild(key: string, value: any): this;
         addChildren(arg: {} | Hash<T>): this;
         appendChild(key: string, value: any): this;
+        setChildren(children: {
+            [s: string]: T;
+        }): void;
         removeChild(arg: any): Collection<T>;
         removeAllChildren(): void;
         hasChild(key: string): boolean;
@@ -130,7 +137,10 @@ declare module wdCb {
         map(func: Function): Hash<T>;
         toCollection(): Collection<any>;
         toArray(): Array<T>;
-        clone(isDeep?: boolean): Hash<T>;
+        clone(): any;
+        clone(isDeep: boolean): any;
+        clone(target: Hash<T>): any;
+        clone(target: Hash<T>, isDeep: boolean): any;
     }
 }
 
@@ -154,7 +164,18 @@ declare module wdCb {
         push(element: T): void;
         pop(): T;
         clear(): void;
-        clone(isDeep?: boolean): Stack<T>;
+        clone(): any;
+        clone(isDeep: boolean): any;
+        clone(target: Stack<T>): any;
+        clone(target: Stack<T>, isDeep: boolean): any;
+        filter(func: (value: T, index: number) => boolean): Collection<T>;
+        findOne(func: (value: T, index: number) => boolean): T;
+        reverse(): Collection<T>;
+        removeChild(arg: any): Collection<T>;
+        sort(func: (a: T, b: T) => any, isSortSelf?: boolean): Collection<T>;
+        map(func: (value: T, index: number) => any): Collection<any>;
+        removeRepeatItems(): Collection<T>;
+        hasRepeatItems(): boolean;
     }
 }
 

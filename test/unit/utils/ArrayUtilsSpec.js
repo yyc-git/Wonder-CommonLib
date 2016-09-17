@@ -47,5 +47,12 @@ describe("ArrayUtils", function () {
                 [1, 2, {a:1}]
             );
         });
+        it("test all repeated items", function () {
+            var arr = [1, 1, 1];
+
+            expect(Utils.removeRepeatItems(arr)).toEqual(
+                [1]
+            );
+        });
     });
 });

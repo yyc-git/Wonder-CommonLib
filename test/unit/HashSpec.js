@@ -402,38 +402,99 @@ describe("Hash", function () {
         });
     });
 
-    describe("clone", function(){
-        it("test return the shallow clone one", function () {
-            hash.addChild("a", []);
-            hash.addChild("b", 2);
+    describe("clone", function () {
+        describe("test return the shallow clone one", function () {
+            function judge(target) {
+                hash.addChild("a", []);
+                hash.addChild("b", 2);
 
-            var result = hash.clone();
+                var result;
 
-            result.getChild("a").push(1);
-            result.addChild("c", 3);
+                if(target){
+                    result = hash.clone(target);
+                }
+                else{
+                    result = hash.clone();
+                }
 
-            expect(hash.getChild("a")).toEqual([1]);
-            expect(hash.getChild("c")).not.toBeExist();
+                result.getChild("a").push(1);
+                result.addChild("c", 3);
 
-            expect(result.getChild("c")).toEqual(3);
-            expect(result.getChild("a")).toEqual([1]);
-            expect(result.getChild("b")).toEqual(2);
+                expect(hash.getChild("a")).toEqual([1]);
+                expect(hash.getChild("c")).not.toBeExist();
+
+                expect(result.getChild("c")).toEqual(3);
+                expect(result.getChild("a")).toEqual([1]);
+                expect(result.getChild("b")).toEqual(2);
+            }
+
+            it("test", function () {
+                judge();
+            });
+
+            describe("if pass target", function(){
+                beforeEach(function(){
+                });
+
+                it("not create again", function () {
+                    var target = wdCb.Hash.create();
+
+                    sandbox.stub(wdCb.Hash, "create");
+
+                    judge(target);
+
+                    expect(wdCb.Hash.create).not.toCalled();
+                });
+                it("should refresh the target's children", function () {
+                    var target = wdCb.Hash.create();
+
+                    target.addChild("c", 100);
+
+                    var result = hash.clone(target);
+
+                    expect(result.getCount()).toEqual(hash.getCount());
+                });
+            });
         });
-        it("test return the deep clone one", function () {
-            hash.addChild("a", []);
-            hash.addChild("b", 2);
 
-            var result = hash.clone(true);
+        describe("test return the deep clone one", function () {
+            function judge(target) {
+                hash.addChild("a", []);
+                hash.addChild("b", 2);
 
-            result.getChild("a").push(1);
-            result.addChild("c", 3);
+                var result;
 
-            expect(hash.getChild("a")).toEqual([]);
-            expect(hash.getChild("c")).not.toBeExist();
+                if(target){
+                    result = hash.clone(target, true);
+                }
+                else{
+                    result = hash.clone(true);
+                }
 
-            expect(result.getChild("c")).toEqual(3);
-            expect(result.getChild("a")).toEqual([1]);
-            expect(result.getChild("b")).toEqual(2);
+                result.getChild("a").push(1);
+                result.addChild("c", 3);
+
+                expect(hash.getChild("a")).toEqual([]);
+                expect(hash.getChild("c")).not.toBeExist();
+
+                expect(result.getChild("c")).toEqual(3);
+                expect(result.getChild("a")).toEqual([1]);
+                expect(result.getChild("b")).toEqual(2);
+
+            }
+
+            it("test", function () {
+                judge();
+            });
+            it("if pass target, not create again", function () {
+                var target = wdCb.Hash.create();
+
+                sandbox.stub(wdCb.Hash, "create");
+
+                judge(target);
+
+                expect(wdCb.Hash.create).not.toCalled();
+            });
         });
-    })
+    });
 });

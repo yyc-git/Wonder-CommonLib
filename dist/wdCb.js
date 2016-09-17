@@ -381,6 +381,10 @@ var wdCb;
             }
             return this;
         };
+        List.prototype.setChildren = function (children) {
+            this.children = children;
+            return this;
+        };
         List.prototype.unShiftChild = function (child) {
             this.children.unshift(child);
         };
@@ -428,7 +432,7 @@ var wdCb;
             }
         };
         List.prototype._removeChild = function (arr, func) {
-            var self = this, index = null, removedElementArr = [], remainElementArr = [];
+            var self = this, removedElementArr = [], remainElementArr = [];
             this._forEach(arr, function (e, index) {
                 if (!!func.call(self, e)) {
                     removedElementArr.push(e);
@@ -464,12 +468,37 @@ var wdCb;
             var obj = new this(children);
             return obj;
         };
-        Collection.prototype.clone = function (isDeep) {
-            if (isDeep === void 0) { isDeep = false; }
-            if (isDeep) {
-                return Collection.create(wdCb.ExtendUtils.extendDeep(this.children));
+        Collection.prototype.clone = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i - 0] = arguments[_i];
             }
-            return Collection.create().addChildren(this.children);
+            var target = null, isDeep = null;
+            if (args.length === 0) {
+                isDeep = false;
+                target = Collection.create();
+            }
+            else if (args.length === 1) {
+                if (wdCb.JudgeUtils.isBoolean(args[0])) {
+                    target = Collection.create();
+                    isDeep = args[0];
+                }
+                else {
+                    target = args[0];
+                    isDeep = false;
+                }
+            }
+            else {
+                target = args[0];
+                isDeep = args[1];
+            }
+            if (isDeep === true) {
+                target.setChildren(wdCb.ExtendUtils.extendDeep(this.children));
+            }
+            else {
+                target.setChildren(wdCb.ExtendUtils.extend([], this.children));
+            }
+            return target;
         };
         Collection.prototype.filter = function (func) {
             var children = this.children, result = [], value = null;
@@ -621,6 +650,9 @@ var wdCb;
             }
             return this;
         };
+        Hash.prototype.setChildren = function (children) {
+            this._children = children;
+        };
         Hash.prototype.removeChild = function (arg) {
             var result = [];
             if (wdCb.JudgeUtils.isString(arg)) {
@@ -726,12 +758,37 @@ var wdCb;
             });
             return result;
         };
-        Hash.prototype.clone = function (isDeep) {
-            if (isDeep === void 0) { isDeep = false; }
-            if (isDeep) {
-                return Hash.create(wdCb.ExtendUtils.extendDeep(this._children));
+        Hash.prototype.clone = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i - 0] = arguments[_i];
             }
-            return Hash.create().addChildren(this._children);
+            var target = null, isDeep = null;
+            if (args.length === 0) {
+                isDeep = false;
+                target = Hash.create();
+            }
+            else if (args.length === 1) {
+                if (wdCb.JudgeUtils.isBoolean(args[0])) {
+                    target = Hash.create();
+                    isDeep = args[0];
+                }
+                else {
+                    target = args[0];
+                    isDeep = false;
+                }
+            }
+            else {
+                target = args[0];
+                isDeep = args[1];
+            }
+            if (isDeep === true) {
+                target.setChildren(wdCb.ExtendUtils.extendDeep(this._children));
+            }
+            else {
+                target.setChildren(wdCb.ExtendUtils.extend({}, this._children));
+            }
+            return target;
         };
         return Hash;
     })();
@@ -820,12 +877,103 @@ var wdCb;
         Stack.prototype.clear = function () {
             this.removeAllChildren();
         };
-        Stack.prototype.clone = function (isDeep) {
-            if (isDeep === void 0) { isDeep = false; }
-            if (isDeep) {
-                return Stack.create(wdCb.ExtendUtils.extendDeep(this.children));
+        Stack.prototype.clone = function () {
+            var args = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                args[_i - 0] = arguments[_i];
             }
-            return Stack.create([].concat(this.children));
+            var target = null, isDeep = null;
+            if (args.length === 0) {
+                isDeep = false;
+                target = Stack.create();
+            }
+            else if (args.length === 1) {
+                if (wdCb.JudgeUtils.isBoolean(args[0])) {
+                    target = Stack.create();
+                    isDeep = args[0];
+                }
+                else {
+                    target = args[0];
+                    isDeep = false;
+                }
+            }
+            else {
+                target = args[0];
+                isDeep = args[1];
+            }
+            if (isDeep === true) {
+                target.setChildren(wdCb.ExtendUtils.extendDeep(this.children));
+            }
+            else {
+                target.setChildren(wdCb.ExtendUtils.extend([], this.children));
+            }
+            return target;
+        };
+        Stack.prototype.filter = function (func) {
+            var children = this.children, result = [], value = null;
+            for (var i = 0, len = children.length; i < len; i++) {
+                value = children[i];
+                if (func.call(children, value, i)) {
+                    result.push(value);
+                }
+            }
+            return wdCb.Collection.create(result);
+        };
+        Stack.prototype.findOne = function (func) {
+            var scope = this.children, result = null;
+            this.forEach(function (value, index) {
+                if (!func.call(scope, value, index)) {
+                    return;
+                }
+                result = value;
+                return wdCb.$BREAK;
+            });
+            return result;
+        };
+        Stack.prototype.reverse = function () {
+            return wdCb.Collection.create(this.copyChildren().reverse());
+        };
+        Stack.prototype.removeChild = function (arg) {
+            return wdCb.Collection.create(this.removeChildHelper(arg));
+        };
+        Stack.prototype.sort = function (func, isSortSelf) {
+            if (isSortSelf === void 0) { isSortSelf = false; }
+            if (isSortSelf) {
+                this.children.sort(func);
+                return this;
+            }
+            return wdCb.Collection.create(this.copyChildren().sort(func));
+        };
+        Stack.prototype.map = function (func) {
+            var resultArr = [];
+            this.forEach(function (e, index) {
+                var result = func(e, index);
+                if (result !== wdCb.$REMOVE) {
+                    resultArr.push(result);
+                }
+            });
+            return wdCb.Collection.create(resultArr);
+        };
+        Stack.prototype.removeRepeatItems = function () {
+            var noRepeatList = wdCb.Collection.create();
+            this.forEach(function (item) {
+                if (noRepeatList.hasChild(item)) {
+                    return;
+                }
+                noRepeatList.addChild(item);
+            });
+            return noRepeatList;
+        };
+        Stack.prototype.hasRepeatItems = function () {
+            var noRepeatList = wdCb.Collection.create(), hasRepeat = false;
+            this.forEach(function (item) {
+                if (noRepeatList.hasChild(item)) {
+                    hasRepeat = true;
+                    return wdCb.$BREAK;
+                }
+                noRepeatList.addChild(item);
+            });
+            return hasRepeat;
         };
         return Stack;
     })(wdCb.List);

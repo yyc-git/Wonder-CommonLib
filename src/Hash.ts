@@ -109,6 +109,10 @@ module wdCb {
             return this;
         }
 
+        public setChildren(children:{ [s:string]:T }){
+            this._children = children;
+        }
+
         public removeChild(arg:any):Collection<T>{
             var result = [];
 
@@ -256,12 +260,42 @@ module wdCb {
             return result;
         }
 
-        public clone(isDeep:boolean = false):Hash<T>{
-            if(isDeep){
-                return Hash.create<T>(ExtendUtils.extendDeep(this._children));
+        public clone();
+        public clone(isDeep: boolean);
+        public clone(target: Hash<T>);
+        public clone(target: Hash<T>, isDeep: boolean);
+
+        public clone(...args) {
+            var target: Hash<T> = null,
+                isDeep: boolean = null;
+
+            if (args.length === 0) {
+                isDeep = false;
+                target = Hash.create<T>();
+            }
+            else if (args.length === 1) {
+                if (JudgeUtils.isBoolean(args[0])) {
+                    target = Hash.create<T>();
+                    isDeep = args[0];
+                }
+                else {
+                    target = args[0];
+                    isDeep = false;
+                }
+            }
+            else {
+                target = args[0];
+                isDeep = args[1];
             }
 
-            return Hash.create<T>().addChildren(this._children);
+            if (isDeep === true) {
+                target.setChildren(ExtendUtils.extendDeep(this._children));
+            }
+            else {
+                target.setChildren(ExtendUtils.extend({}, this._children));
+            }
+
+            return target;
         }
     }
 }
