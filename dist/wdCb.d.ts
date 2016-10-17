@@ -35,8 +35,6 @@ declare module wdCb {
     class Log {
         static info: {
             INVALID_PARAM: string;
-            ABSTRACT_ATTRIBUTE: string;
-            ABSTRACT_METHOD: string;
             helperFunc: (...args: any[]) => string;
             assertion: (...args: any[]) => any;
             FUNC_INVALID: (...args: any[]) => any;
@@ -102,7 +100,7 @@ declare module wdCb {
         sort(func: (a: T, b: T) => any, isSortSelf?: boolean): Collection<T>;
         map(func: (value: T, index: number) => any): Collection<any>;
         removeRepeatItems(): Collection<T>;
-        hasRepeatItems(): boolean;
+        hasRepeatItems(): false;
     }
 }
 
@@ -148,8 +146,8 @@ declare module wdCb {
     class Queue<T> extends List<T> {
         static create<T>(children?: any[]): Queue<T>;
         constructor(children?: Array<T>);
-        front: T;
-        rear: T;
+        readonly front: T;
+        readonly rear: T;
         push(element: T): void;
         pop(): T;
         clear(): void;
@@ -160,7 +158,7 @@ declare module wdCb {
     class Stack<T> extends List<T> {
         static create<T>(children?: any[]): Stack<T>;
         constructor(children?: Array<T>);
-        top: T;
+        readonly top: T;
         push(element: T): void;
         pop(): T;
         clear(): void;
@@ -175,7 +173,7 @@ declare module wdCb {
         sort(func: (a: T, b: T) => any, isSortSelf?: boolean): Collection<T>;
         map(func: (value: T, index: number) => any): Collection<any>;
         removeRepeatItems(): Collection<T>;
-        hasRepeatItems(): boolean;
+        hasRepeatItems(): false;
     }
 }
 

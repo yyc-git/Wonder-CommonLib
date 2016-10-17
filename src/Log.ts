@@ -2,8 +2,6 @@ module wdCb {
     export class Log {
         public static info = {
             INVALID_PARAM: "invalid parameter",
-            ABSTRACT_ATTRIBUTE: "abstract attribute need override",
-            ABSTRACT_METHOD: "abstract method need override",
 
             helperFunc: function(...args){
                 var result = "";

@@ -49,7 +49,7 @@ var wdCb;
             return true;
         };
         return JudgeUtils;
-    })();
+    }());
     wdCb.JudgeUtils = JudgeUtils;
     if (typeof /./ != 'function' && typeof Int8Array != 'object') {
         JudgeUtils.isFunction = function (func) {
@@ -156,8 +156,6 @@ var wdCb;
         };
         Log.info = {
             INVALID_PARAM: "invalid parameter",
-            ABSTRACT_ATTRIBUTE: "abstract attribute need override",
-            ABSTRACT_METHOD: "abstract method need override",
             helperFunc: function () {
                 var args = [];
                 for (var _i = 0; _i < arguments.length; _i++) {
@@ -322,7 +320,7 @@ var wdCb;
             }
         };
         return Log;
-    })();
+    }());
     wdCb.Log = Log;
 })(wdCb || (wdCb = {}));
 
@@ -445,7 +443,7 @@ var wdCb;
             return removedElementArr;
         };
         return List;
-    })();
+    }());
     wdCb.List = List;
 })(wdCb || (wdCb = {}));
 
@@ -567,7 +565,7 @@ var wdCb;
             return hasRepeat;
         };
         return Collection;
-    })(wdCb.List);
+    }(wdCb.List));
     wdCb.Collection = Collection;
 })(wdCb || (wdCb = {}));
 
@@ -662,9 +660,9 @@ var wdCb;
                 delete this._children[key];
             }
             else if (wdCb.JudgeUtils.isFunction(arg)) {
-                var func = arg, self_1 = this;
+                var func_1 = arg, self_1 = this;
                 this.forEach(function (val, key) {
-                    if (func(val, key)) {
+                    if (func_1(val, key)) {
                         result.push(self_1._children[key]);
                         self_1._children[key] = void 0;
                         delete self_1._children[key];
@@ -791,7 +789,7 @@ var wdCb;
             return target;
         };
         return Hash;
-    })();
+    }());
     wdCb.Hash = Hash;
 })(wdCb || (wdCb = {}));
 
@@ -838,7 +836,7 @@ var wdCb;
             this.removeAllChildren();
         };
         return Queue;
-    })(wdCb.List);
+    }(wdCb.List));
     wdCb.Queue = Queue;
 })(wdCb || (wdCb = {}));
 
@@ -976,7 +974,7 @@ var wdCb;
             return hasRepeat;
         };
         return Stack;
-    })(wdCb.List);
+    }(wdCb.List));
     wdCb.Stack = Stack;
 })(wdCb || (wdCb = {}));
 
@@ -1069,7 +1067,7 @@ var wdCb;
             return dataType === "arraybuffer";
         };
         return AjaxUtils;
-    })();
+    }());
     wdCb.AjaxUtils = AjaxUtils;
 })(wdCb || (wdCb = {}));
 
@@ -1115,7 +1113,7 @@ var wdCb;
         };
         ;
         return ArrayUtils;
-    })();
+    }());
     wdCb.ArrayUtils = ArrayUtils;
 })(wdCb || (wdCb = {}));
 
@@ -1140,7 +1138,7 @@ var wdCb;
             return fn.toString().split('\n').slice(1, -1).join('\n') + '\n';
         };
         return ConvertUtils;
-    })();
+    }());
     wdCb.ConvertUtils = ConvertUtils;
 })(wdCb || (wdCb = {}));
 
@@ -1177,7 +1175,7 @@ var wdCb;
             }
         };
         return EventUtils;
-    })();
+    }());
     wdCb.EventUtils = EventUtils;
 })(wdCb || (wdCb = {}));
 
@@ -1252,7 +1250,7 @@ var wdCb;
             return destination;
         };
         return ExtendUtils;
-    })();
+    }());
     wdCb.ExtendUtils = ExtendUtils;
 })(wdCb || (wdCb = {}));
 
@@ -1315,7 +1313,7 @@ var wdCb;
             return SPLITPATH_REGEX.exec(fileName).slice(1);
         };
         return PathUtils;
-    })();
+    }());
     wdCb.PathUtils = PathUtils;
 })(wdCb || (wdCb = {}));
 
@@ -1330,7 +1328,7 @@ var wdCb;
             };
         };
         return FunctionUtils;
-    })();
+    }());
     wdCb.FunctionUtils = FunctionUtils;
 })(wdCb || (wdCb = {}));
 
@@ -1442,6 +1440,6 @@ var wdCb;
             return document.createElement(eleStr);
         };
         return DomQuery;
-    })();
+    }());
     wdCb.DomQuery = DomQuery;
 })(wdCb || (wdCb = {}));
