@@ -1,6 +1,6 @@
 {
   "name": "wdcb",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "main": "dist/wdCb.node.js",
   "keywords": [
     "common lib",
