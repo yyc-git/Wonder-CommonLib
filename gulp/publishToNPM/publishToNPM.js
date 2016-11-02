@@ -7,21 +7,51 @@ var path = require("path");
 var addModuleExports = require("./addModuleExports");
 var config = require("../common/config");
 
-var tsFilePaths = config.tsFilePaths;
+// var tsFilePaths = config.tsFilePaths;
+
+var tsconfigFile = config.tsconfigFile;
+
+
 var distPath = config.distPath;
 
 gulp.task('publishToNPM', function() {
-    var tsResult = gulp.src(tsFilePaths)
+    // var tsResult = gulp.src(tsFilePaths)
+    //     .pipe(gulpSourcemaps.init())
+    //     .pipe(gulpTs({
+    //         declarationFiles: false,
+    //         target: 'ES5',
+    //         //module: "commonjs",
+    //         //moduleResolution: "node",
+    //         experimentalDecorators: true,
+    //         noEmitOnError: false,
+    //         typescript: require('typescript')
+    //     }));
+
+
+
+    var tsProject = gulpTs.createProject(path.join(process.cwd(), tsconfigFile), {
+        declarationFiles: false,
+        target: 'ES5',
+        //module: "commonjs",
+        //moduleResolution: "node",
+        experimentalDecorators: true,
+        noEmitOnError: false,
+        // out: "wdCb.debug.js",
+        typescript: require('typescript')
+    });
+
+    var tsResult = tsProject.src()
         .pipe(gulpSourcemaps.init())
-        .pipe(gulpTs({
-            declarationFiles: false,
-            target: 'ES5',
-            //module: "commonjs",
-            //moduleResolution: "node",
-            experimentalDecorators: true,
-            noEmitOnError: false,
-            typescript: require('typescript')
-        }));
+        .pipe(tsProject());
+
+    //
+    // return merge([
+    //     tsResult.js
+    //         .pipe(gulpSourcemaps.write())
+    //         .pipe(gulp.dest("dist/"))
+    // ])
+    //
+    //
 
 
     return  merge([

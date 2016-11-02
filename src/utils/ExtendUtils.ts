@@ -61,7 +61,7 @@ module wdCb {
                     type = toStr.call(member);
                     if (type === sArr || type === sOb) {    //如果为数组或object对象
                         _child[i] = type === sArr ? [] : {};
-                        arguments.callee(member, _child[i]);
+                        ExtendUtils.extendDeep(member, _child[i]);
                     } else {
                         _child[i] = member;
                     }
@@ -87,7 +87,7 @@ module wdCb {
                     type = toStr.call(member);
                     if (type === sArr || type === sOb) {    //如果为数组或object对象
                         _child[i] = type === sArr ? [] : {};
-                        arguments.callee(member, _child[i]);
+                        ExtendUtils.extendDeep(member, _child[i]);
                     } else {
                         _child[i] = member;
                     }
