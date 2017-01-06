@@ -5,7 +5,7 @@
   "keywords": [
     "common lib",
     "Wonder-CommonLib",
-    "Wonder"
+    "wdCb"
   ],
   "devDependencies": {
     "del": "^1.2.0",
