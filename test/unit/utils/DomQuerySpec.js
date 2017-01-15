@@ -100,6 +100,68 @@ describe("DomQuery", function () {
                 });
             });
         })
+
+        describe("text", function(){
+            var query;
+
+            beforeEach(function(){
+                query = Query.create("#DomQueryTest");
+            });
+
+            describe("test text(str)", function(){
+                it("if textContent attr of dom exist, set it", function () {
+                    var dom = {
+                        textContent:""
+                    };
+                    sandbox.stub(query, "get").returns(dom);
+
+                    var str = "aaa"
+                    query.text(str);
+
+                    expect(dom.textContent).toEqual(str);
+                });
+                it("else, set innerText of dom", function () {
+                    var dom = {
+                        innerText:""
+                    };
+                    sandbox.stub(query, "get").returns(dom);
+
+                    var str = "aaa"
+                    query.text(str);
+
+                    expect(dom.innerText).toEqual(str);
+                });
+            });
+
+            describe("test text()", function(){
+                beforeEach(function(){
+
+                });
+
+                it("if textContent attr of dom exist, return it", function () {
+                    var dom = {
+                        textContent:""
+                    };
+                    sandbox.stub(query, "get").returns(dom);
+
+                    var str = "aaa"
+                    query.text(str);
+
+                    expect(query.text()).toEqual(str);
+                });
+                it("else, return innerText of dom", function () {
+                    var dom = {
+                        innerText:""
+                    };
+                    sandbox.stub(query, "get").returns(dom);
+
+                    var str = "aaa"
+                    query.text(str);
+
+                    expect(query.text()).toEqual(str);
+                });
+            });
+        });
     });
 });
 

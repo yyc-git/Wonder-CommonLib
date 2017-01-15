@@ -101,6 +101,22 @@ module wdCb {
             }
         }
 
+        public text(str?:string){
+            var dom = this.get(0);
+
+            if(str !== void 0){
+                if(dom.textContent !== void 0){
+                    dom.textContent = str;
+                }
+                else{
+                    dom.innerText = str;
+                }
+            }
+            else{
+                return dom.textContent !== void 0 ? dom.textContent : dom.innerText;
+            }
+        }
+
         private _isDomEleStr(eleStr:string){
             return eleStr.match(/<(\w+)[^>]*><\/\1>/) !== null;
         }
@@ -126,4 +142,3 @@ module wdCb {
         }
     }
 }
-

@@ -248,6 +248,7 @@ declare module wdCb {
         css(property: string, value: string): void;
         attr(name: string): any;
         attr(name: string, value: string): any;
+        text(str?: string): string;
         private _isDomEleStr(eleStr);
         private _buildDom(eleStr);
         private _buildDom(dom);
