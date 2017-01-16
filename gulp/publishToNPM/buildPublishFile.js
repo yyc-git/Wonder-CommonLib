@@ -1,6 +1,5 @@
 var fs = require("fs-extra");
 var path = require("path");
-var combineInnerLib = require("../common/combineInnerLib");
 var addModuleNameConverter = require("./addModuleNameConverter");
 var config = require("../common/config");
 
