@@ -1,7 +1,7 @@
 {
   "name": "wdcb",
   "version": "0.1.6",
-  "main": "dist/wdCb.node.js",
+  "main": "dist/wdCb.js",
   "keywords": [
     "common lib",
     "Wonder-CommonLib",
@@ -11,6 +11,7 @@
     "del": "^1.2.0",
     "fs-extra": "^0.26.2",
     "gulp": "^3.8.11",
+    "gulp-browserify": "^0.5.1",
     "gulp-concat": "^2.6.0",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-sync": "^0.1.4",

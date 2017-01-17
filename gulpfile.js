@@ -8,15 +8,21 @@ var merge = require("merge2");
 var path = require("path");
 var through = require("through-gulp");
 var fs = require("fs");
-var buildPublishFile = require("./gulp/publishToNPM/buildPublishFile");
+var convertToNodejs = require("./gulp/publishToNPM/convertToNodejs");
+
+
+var addModuleExports = require("./lib/inner/Wonder-Package/build/gulp_task/package/addModuleExports").addModuleExports;
+var browserify = require("./lib/inner/Wonder-Package/build/gulp_task/package/browserify").browserify;
+
+
 var config = require("./gulp/common/config");
 
-require("./gulp/publishToNPM/publishToNPM");
 
 var tsFilePaths = config.tsFilePaths;
 var distPath = config.distPath;
 var definitionsPath = config.definitionsPath;
 var tsconfigFile = config.tsconfigFile;
+var filePath = path.join(distPath, "wdCb.js");
 
 
 gulp.task('clean', function() {
@@ -67,61 +73,18 @@ gulp.task("compileTsDebug", function() {
 });
 
 
-
-
-
-//gulp.task('compileTs', function() {
-//    var tsResult = gulp.src(tsFilePaths)
-//        //.pipe(gulpSourcemaps.init())
-//        .pipe(gulpTs({
-//            declarationFiles: true,
-//            target: 'ES5',
-//            sortOutput:true,
-//            typescript: require('typescript')
-//        }));
-//
-//
-//    return  merge([
-//        tsResult.dts
-//            .pipe(gulpConcat('wdCb.d.ts'))
-//            .pipe(gulp.dest('dist')),
-//        tsResult.js
-//            .pipe(gulpConcat('wdCb.js'))
-//            //.pipe(gulpSourcemaps.write('./'))
-//            //.pipe(gulpSourcemaps.write())
-//            .pipe(gulp.dest('dist/'))
-//    ])
-//});
-//
-//
-//gulp.task('compileTsDebug', function() {
-//    var tsResult = gulp.src(tsFilePaths)
-//        .pipe(gulpSourcemaps.init())
-//        .pipe(gulpTs({
-//            declarationFiles: true,
-//            target: 'ES5',
-//            sortOutput:true,
-//            //noExternalResolve: true,
-//            noEmitOnError: true,
-//            typescript: require('typescript')
-//        }));
-//
-//
-//    return tsResult.js
-//            .pipe(gulpConcat('wdCb.debug.js'))
-//            .pipe(gulpSourcemaps.write())
-//            .pipe(gulp.dest('dist/'));
-//});
-
-
-
-gulp.task("buildPublishFile", function(done){
-    buildPublishFile();
+gulp.task("addModuleExports", function(done){
+    addModuleExports(filePath, "wdCb");
 
     done();
 });
 
-gulp.task("build", gulpSync.sync(["clean", "compileTs", "compileTsDebug", "publishToNPM", "buildPublishFile"]));
+gulp.task("browserify", function() {
+    return browserify(filePath, distPath);
+});
+
+
+gulp.task("build", gulpSync.sync(["clean", "compileTs", "compileTsDebug", "addModuleExports", "browserify"]));
 
 
 
