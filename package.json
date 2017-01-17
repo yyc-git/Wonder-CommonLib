@@ -1,7 +1,7 @@
 {
   "name": "wdcb",
-  "version": "0.1.7",
-  "main": "dist/wdCb.js",
+  "version": "0.1.8",
+  "main": "dist/wdCb.node.js",
   "keywords": [
     "common lib",
     "Wonder-CommonLib",

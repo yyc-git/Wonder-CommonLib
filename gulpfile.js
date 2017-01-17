@@ -7,7 +7,7 @@ var gulpSync = require("gulp-sync")(gulp);
 var merge = require("merge2");
 var path = require("path");
 var through = require("through-gulp");
-var fs = require("fs");
+var fs = require("fs-extra");
 
 
 var addModuleExports = require("./lib/inner/Wonder-Package/build/gulp_task/package/addModuleExports").addModuleExports;
@@ -79,11 +79,18 @@ gulp.task("addModuleExports", function(done){
 });
 
 gulp.task("browserify", function() {
-    return browserify(filePath, distPath);
+    return browserify(filePath, distPath, "wdCb");
+});
+
+gulp.task("addNodejsVersion", function(done){
+    fs.copySync(filePath, path.join(distPath, "wdCb.node.js"));
+
+    done();
 });
 
 
-gulp.task("build", gulpSync.sync(["clean", "compileTs", "compileTsDebug", "addModuleExports", "browserify"]));
+
+gulp.task("build", gulpSync.sync(["clean", "compileTs", "compileTsDebug", "addModuleExports", "addNodejsVersion", "browserify"]));
 
 
 
