@@ -8,7 +8,6 @@ var merge = require("merge2");
 var path = require("path");
 var through = require("through-gulp");
 var fs = require("fs");
-var convertToNodejs = require("./gulp/publishToNPM/convertToNodejs");
 
 
 var addModuleExports = require("./lib/inner/Wonder-Package/build/gulp_task/package/addModuleExports").addModuleExports;
