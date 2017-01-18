@@ -1,12 +1,11 @@
 .idea/
 .DS_Store
-node_modules/
+lib/
 bower_components/
-test/bower_components/
-src/**/*.js
-src/**/*.js.map
-src/*.js
-src/*.js.map
+test/
+src/
+gulp/
+reference/
 mine/
 dist/*
 !dist/wdCb.node.*

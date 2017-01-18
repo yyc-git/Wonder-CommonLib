@@ -12,6 +12,7 @@ var fs = require("fs-extra");
 
 var addModuleExports = require("./lib/inner/Wonder-Package/build/gulp_task/package/addModuleExports").addModuleExports;
 var browserify = require("./lib/inner/Wonder-Package/build/gulp_task/package/browserify").browserify;
+var addModuleNameConverter = require("./lib/inner/Wonder-Package/build/gulp_task/package/addModuleNameConverter").addModuleNameConverter;
 
 
 var config = require("./gulp/common/config");
@@ -22,6 +23,7 @@ var distPath = config.distPath;
 var definitionsPath = config.definitionsPath;
 var tsconfigFile = config.tsconfigFile;
 var filePath = path.join(distPath, "wdCb.js");
+var dtsFilePath = path.join(distPath, "wdCb.d.ts");
 
 
 gulp.task('clean', function() {
@@ -84,6 +86,12 @@ gulp.task("browserify", function() {
 
 gulp.task("addNodejsVersion", function(done){
     fs.copySync(filePath, path.join(distPath, "wdCb.node.js"));
+
+    var nodeDtsFilePath = path.join(distPath, "wdCb.node.d.ts");
+
+    fs.copySync(dtsFilePath, nodeDtsFilePath);
+
+    addModuleNameConverter(nodeDtsFilePath, "wdCb", "wdcb");
 
     done();
 });
