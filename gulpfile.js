@@ -91,7 +91,7 @@ gulp.task("addNodejsVersion", function(done){
 
     fs.copySync(dtsFilePath, nodeDtsFilePath);
 
-    addModuleNameConverter(nodeDtsFilePath, "wdCb", "wdcb");
+    addModuleNameConverter(nodeDtsFilePath, "wdCb", "wonder-commonlib");
 
     done();
 });

@@ -256,6 +256,6 @@ declare module wdCb {
     }
 }
 
-declare module "wdcb" {
+declare module "wonder-commonlib" {
 export = wdCb;
 }
