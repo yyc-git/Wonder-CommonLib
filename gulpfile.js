@@ -10,9 +10,11 @@ var through = require("through-gulp");
 var fs = require("fs-extra");
 
 
-var addModuleExports = require("./lib/inner/Wonder-Package/build/gulp_task/package/addModuleExports").addModuleExports;
-var browserify = require("./lib/inner/Wonder-Package/build/gulp_task/package/browserify").browserify;
-var addModuleNameConverter = require("./lib/inner/Wonder-Package/build/gulp_task/package/addModuleNameConverter").addModuleNameConverter;
+var wonderPackage = require("wonder-package");
+
+var addModuleExports = wonderPackage.addModuleExports;
+var browserify = wonderPackage.browserify;
+var addModuleNameConverter = wonderPackage.addModuleNameConverter;
 
 
 var config = require("./gulp/common/config");
@@ -20,7 +22,6 @@ var config = require("./gulp/common/config");
 
 var tsFilePaths = config.tsFilePaths;
 var distPath = config.distPath;
-var definitionsPath = config.definitionsPath;
 var tsconfigFile = config.tsconfigFile;
 var filePath = path.join(distPath, "wdCb.js");
 var dtsFilePath = path.join(distPath, "wdCb.d.ts");
