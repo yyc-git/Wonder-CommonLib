@@ -1,6 +1,6 @@
 {
   "name": "wonder-commonlib",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "dist/wdCb.node.js",
   "keywords": [
     "common lib",
@@ -25,5 +25,8 @@
     "through-gulp": "^0.3.8",
     "typescript": "^2.0.3",
     "wonder-package": "^0.1.4"
+  },
+  "dependencies": {
+    "@types/node": "^7.0.5"
   }
 }

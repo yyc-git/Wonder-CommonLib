@@ -1458,6 +1458,6 @@ var wdCb;
     wdCb.DomQuery = DomQuery;
 })(wdCb || (wdCb = {}));
 
-if (((typeof window != "undefined" && window.module) || (typeof module != "undefined")) && typeof module.exports != "undefined") {
+if ((typeof module != "undefined") && typeof module.exports != "undefined") {
     module.exports = wdCb;
 };

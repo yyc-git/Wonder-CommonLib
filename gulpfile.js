@@ -14,7 +14,6 @@ var wonderPackage = require("wonder-package");
 
 var addModuleExports = wonderPackage.addModuleExports;
 var browserify = wonderPackage.browserify;
-var addModuleNameConverter = wonderPackage.addModuleNameConverter;
 
 
 var config = require("./gulp/common/config");
@@ -87,12 +86,6 @@ gulp.task("browserify", function() {
 
 gulp.task("addNodejsVersion", function(done){
     fs.copySync(filePath, path.join(distPath, "wdCb.node.js"));
-
-    var nodeDtsFilePath = path.join(distPath, "wdCb.node.d.ts");
-
-    fs.copySync(dtsFilePath, nodeDtsFilePath);
-
-    addModuleNameConverter(nodeDtsFilePath, "wdCb", "wonder-commonlib");
 
     done();
 });

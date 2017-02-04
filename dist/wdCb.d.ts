@@ -16,7 +16,8 @@ declare module wdCb {
     }
 }
 
-declare var global: any, window: Window;
+/// <reference types="node" />
+declare var global: NodeJS.Global, window: Window;
 declare module wdCb {
     var root: any;
 }
