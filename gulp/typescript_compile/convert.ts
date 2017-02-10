@@ -78,126 +78,6 @@ class ArrayUtils {
 }
 
 
-function generateDocumentation(rootDir, sourceFileGlobArr, destDir, options: ts.CompilerOptions): void {
-    // import * as glob from "glob";
-    var glob = require("glob");
-
-    for (let filePath of sourceFileGlobArr) {
-        let globCwd = "/",
-            fileAbsolutePaths = glob.sync(path.join(rootDir, filePath), {
-                cwd: globCwd
-            });
-
-        _getAllSourceFiles(fileAbsolutePaths);
-
-
-        for (let filePath in sourceFileMap) {
-            if (sourceFileMap.hasOwnProperty(filePath)) {
-                let sourceFile = sourceFileMap[filePath];
-
-                let textLineArr = sourceFile.text.split('\n');
-
-                let moduleBlockContent = null;
-
-                let findLastBraceIndex = (textLineArr) => {
-                    for (let i = textLineArr.length - 1; i >= 0; i--) {
-                        if (textLineArr[i] === "}") {
-                            return i;
-                        }
-                    }
-
-                    throw new Error(`} not exist in ${filePath}`);
-                };
-
-
-                let findModuleDeclarationIndex = (textLineArr) => {
-                    for (let i = textLineArr.length - 1; i >= 0; i--) {
-                        if (/\s*module\s[\w\d]+\s*\{/.test(textLineArr[i])) {
-                            return i;
-                        }
-                    }
-
-                    throw new Error(`module declaration not exist in ${filePath}`);
-                };
-
-                let moduleDeclarationIndex = findModuleDeclarationIndex(textLineArr);
-
-                if (moduleDeclarationIndex > 0) {
-                    moduleBlockContent = textLineArr.slice(0).slice(0, moduleDeclarationIndex).join('\n');
-                }
-                else {
-                    moduleBlockContent = "";
-                }
-
-                moduleBlockContent += textLineArr.slice(moduleDeclarationIndex + 1, findLastBraceIndex(textLineArr)).join('\n');
-
-
-                let fileData: IFileData = <IFileData>{};
-
-
-                fileData["moduleBlockContent"] = moduleBlockContent;
-
-                let exportData: Array<string> = [];
-
-
-                ts.forEachChild(sourceFile, (node: ts.Node) => {
-                    _visitExportData(node, exportData, filePath)
-                });
-
-                fileData["exportData"] = {
-                    nameArr: ArrayUtils.removeRepeatItems(exportData)
-                };
-
-                fileDataMap[filePath] = fileData;
-            }
-        }
-
-        for (let filePath in sourceFileMap) {
-            if (sourceFileMap.hasOwnProperty(filePath)) {
-                let sourceFile = sourceFileMap[filePath];
-
-                let importData = {};
-
-                ts.forEachChild(sourceFile, (node: ts.Node) => {
-                    _visitImportData(node, importData, filePath);
-                });
-
-                for (let filePath in importData) {
-                    if (importData.hasOwnProperty(filePath)) {
-                        let nameArr = importData[filePath];
-
-                        importData[filePath] = ArrayUtils.removeRepeatItems(nameArr);
-                    }
-                }
-
-
-                let fileData = fileDataMap[filePath];
-
-                fileData["importData"] = importData;
-            }
-        }
-
-        _writeES2015Files(rootDir, destDir);
-
-        _generateIndexFile(fileDataMap, rootDir, destDir);
-
-        if (hasConfilctImportData) {
-            console.log("hasConfilctImportData! the data is:");
-            console.log(JSON.stringify(confilctImportDataMap));
-        }
-    }
-
-
-    // console.log(JSON.stringify(fileDataMap));
-
-
-    console.log("finish");
-
-    return;
-
-}
-
-
 function _getAllSourceFiles(fileAbsolutePaths) {
     fileAbsolutePaths.forEach((filePath: string) => {
         let sourceFile = ts.createSourceFile(filePath, fs.readFileSync(filePath).toString(), ts.ScriptTarget.ES5);
@@ -394,35 +274,121 @@ function _isExported(node: ts.Node): boolean {
 }
 
 
-//todo move to wonder-package
-function parseOption(name) {
-    var value = null,
-        i = process.argv.indexOf(name);
+export function generateDocumentation(rootDir, sourceFileGlobArr, destDir, options: ts.CompilerOptions): void {
+    // import * as glob from "glob";
+    var glob = require("glob");
 
-    if (i > -1) {
-        value = process.argv[i + 1];
+    for (let filePath of sourceFileGlobArr) {
+        let globCwd = "/",
+            fileAbsolutePaths = glob.sync(path.join(rootDir, filePath), {
+                cwd: globCwd
+            });
+
+        _getAllSourceFiles(fileAbsolutePaths);
+
+
+        for (let filePath in sourceFileMap) {
+            if (sourceFileMap.hasOwnProperty(filePath)) {
+                let sourceFile = sourceFileMap[filePath];
+
+                let textLineArr = sourceFile.text.split('\n');
+
+                let moduleBlockContent = null;
+
+                let findLastBraceIndex = (textLineArr) => {
+                    for (let i = textLineArr.length - 1; i >= 0; i--) {
+                        if (textLineArr[i] === "}") {
+                            return i;
+                        }
+                    }
+
+                    throw new Error(`} not exist in ${filePath}`);
+                };
+
+
+                let findModuleDeclarationIndex = (textLineArr) => {
+                    for (let i = textLineArr.length - 1; i >= 0; i--) {
+                        if (/\s*module\s[\w\d]+\s*\{/.test(textLineArr[i])) {
+                            return i;
+                        }
+                    }
+
+                    throw new Error(`module declaration not exist in ${filePath}`);
+                };
+
+                let moduleDeclarationIndex = findModuleDeclarationIndex(textLineArr);
+
+                if (moduleDeclarationIndex > 0) {
+                    moduleBlockContent = textLineArr.slice(0).slice(0, moduleDeclarationIndex).join('\n');
+                }
+                else {
+                    moduleBlockContent = "";
+                }
+
+                moduleBlockContent += textLineArr.slice(moduleDeclarationIndex + 1, findLastBraceIndex(textLineArr)).join('\n');
+
+
+                let fileData: IFileData = <IFileData>{};
+
+
+                fileData["moduleBlockContent"] = moduleBlockContent;
+
+                let exportData: Array<string> = [];
+
+
+                ts.forEachChild(sourceFile, (node: ts.Node) => {
+                    _visitExportData(node, exportData, filePath)
+                });
+
+                fileData["exportData"] = {
+                    nameArr: ArrayUtils.removeRepeatItems(exportData)
+                };
+
+                fileDataMap[filePath] = fileData;
+            }
+        }
+
+        for (let filePath in sourceFileMap) {
+            if (sourceFileMap.hasOwnProperty(filePath)) {
+                let sourceFile = sourceFileMap[filePath];
+
+                let importData = {};
+
+                ts.forEachChild(sourceFile, (node: ts.Node) => {
+                    _visitImportData(node, importData, filePath);
+                });
+
+                for (let filePath in importData) {
+                    if (importData.hasOwnProperty(filePath)) {
+                        let nameArr = importData[filePath];
+
+                        importData[filePath] = ArrayUtils.removeRepeatItems(nameArr);
+                    }
+                }
+
+
+                let fileData = fileDataMap[filePath];
+
+                fileData["importData"] = importData;
+            }
+        }
+
+        _writeES2015Files(rootDir, destDir);
+
+        _generateIndexFile(fileDataMap, rootDir, destDir);
+
+        if (hasConfilctImportData) {
+            console.log("hasConfilctImportData! the data is:");
+            console.log(JSON.stringify(confilctImportDataMap));
+        }
     }
 
-    return value;
+
+    // console.log(JSON.stringify(fileDataMap));
+
+
+    console.log("finish");
+
+    return;
+
 }
-
-// function isDefinOption(name) {
-//     return process.argv.indexOf(name) > -1;
-// }
-//
-// module.exports = {
-//     parseOption: parseOption,
-//     isDefinOption: isDefinOption
-// }
-
-
-var rootDir = parseOption("--rootDir"),
-    sourceFileGlobArr = parseOption("--sourceFileGlob").split(','),
-    destDir = parseOption("--destDir") || "./dest/";
-
-fs.removeSync(destDir);
-
-generateDocumentation(rootDir, sourceFileGlobArr, destDir, {
-    target: ts.ScriptTarget.ES5,
-    module: ts.ModuleKind.System
-});

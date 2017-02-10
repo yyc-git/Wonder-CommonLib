@@ -1,15 +1,8 @@
 "use strict";
 var ts = require("typescript");
-// import * as fs from "fs";
 var path = require("path");
 //todo refactor
 var fs = require("fs-extra");
-;
-;
-;
-;
-;
-;
 var fileDataMap = {};
 var exportDataMap = {};
 var sourceFileMap = {};
@@ -40,6 +33,157 @@ var ArrayUtils = (function () {
     ;
     return ArrayUtils;
 }());
+function _getAllSourceFiles(fileAbsolutePaths) {
+    fileAbsolutePaths.forEach(function (filePath) {
+        var sourceFile = ts.createSourceFile(filePath, fs.readFileSync(filePath).toString(), ts.ScriptTarget.ES5);
+        sourceFileMap[filePath] = sourceFile;
+    });
+}
+function _visitExportData(node, exportData, filePath) {
+    if (node.kind === ts.SyntaxKind.ModuleDeclaration) {
+        var module_1 = node;
+        if (_isModuleBlock(module_1.body)) {
+            var block = module_1.body;
+            for (var _i = 0, _a = block.statements; _i < _a.length; _i++) {
+                var statement = _a[_i];
+                if (!_isExported(statement)) {
+                    continue;
+                }
+                switch (statement.kind) {
+                    case ts.SyntaxKind.ClassDeclaration:
+                    case ts.SyntaxKind.InterfaceDeclaration:
+                    case ts.SyntaxKind.EnumDeclaration:
+                    case ts.SyntaxKind.FunctionDeclaration:
+                        var name_1 = _getName(statement);
+                        exportData.push(name_1);
+                        _append(exportDataMap, name_1, filePath);
+                        break;
+                    case ts.SyntaxKind.VariableStatement:
+                        for (var _b = 0, _c = statement.declarationList.declarations; _b < _c.length; _b++) {
+                            var n = _c[_b];
+                            var name_2 = _getName(n);
+                            exportData.push(name_2);
+                            _append(exportDataMap, name_2, filePath);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+}
+function _isModuleBlock(body) {
+    return body.kind === ts.SyntaxKind.ModuleBlock;
+}
+function _append(obj, key, value) {
+    if (_isArray(obj[key])) {
+        obj[key].push(value);
+    }
+    else {
+        obj[key] = [value];
+    }
+}
+function _isArray(arr) {
+    return Object.prototype.toString.call(arr) === "[object Array]";
+}
+function _getName(node) {
+    if (!node.name) {
+        return null;
+    }
+    return node.name.text;
+}
+function _visitImportData(node, importData, filePath) {
+    if (node.kind === ts.SyntaxKind.ModuleDeclaration) {
+        var module_2 = node;
+        if (_isModuleBlock(module_2.body)) {
+            var block = module_2.body;
+            ts.forEachChild(block, function (node) {
+                _visit(node, importData, filePath);
+            });
+        }
+    }
+}
+function _visit(node, importData, filePath) {
+    if (!!node.text) {
+        var name_3 = node.text, data = exportDataMap[name_3];
+        if (_isArray(data)) {
+            if (data.length > 1) {
+                _recordConflictImport(name_3, data, filePath);
+            }
+            else {
+                var importedFilePath = data[0];
+                if (importedFilePath !== filePath) {
+                    _append(importData, _getRelativePath(filePath, importedFilePath), name_3);
+                }
+            }
+        }
+    }
+    ts.forEachChild(node, function (node) {
+        _visit(node, importData, filePath);
+    });
+}
+function _getRelativePath(from, to, isDir) {
+    if (isDir === void 0) { isDir = false; }
+    var relativePath = path.relative(isDir ? from : path.dirname(from), to);
+    if (relativePath[0] !== ".") {
+        relativePath = "./" + relativePath;
+    }
+    return relativePath;
+}
+function _recordConflictImport(name, data, filePath) {
+    hasConfilctImportData = true;
+    _append(confilctImportDataMap[filePath], name, data);
+}
+function _writeES2015Files(rootDir, destDir) {
+    for (var filePath in fileDataMap) {
+        if (fileDataMap.hasOwnProperty(filePath)) {
+            var fileData = fileDataMap[filePath];
+            var destFilePath = _getDestFilePath(destDir, rootDir, filePath);
+            var fileContent = fileData.moduleBlockContent;
+            fileContent = _addImport(fileData.importData, fileContent);
+            fs.mkdirsSync(path.dirname(destFilePath));
+            fs.writeFileSync(destFilePath, fileContent);
+        }
+    }
+}
+function _getDestFilePath(destDir, rootDir, filePath) {
+    return path.join(destDir, _getRelativePath(rootDir, filePath, true));
+}
+function _generateIndexFile(fileDataMap, rootDir, destDir) {
+    var indexFilePath = path.join(destDir, "index.ts");
+    if (fs.existsSync(indexFilePath)) {
+        throw new Error("already exist index file:" + indexFilePath + ", can't generate it!");
+    }
+    var content = "";
+    for (var filePath in fileDataMap) {
+        if (fileDataMap.hasOwnProperty(filePath)) {
+            var fileData = fileDataMap[filePath], nameArr = fileData.exportData.nameArr;
+            if (nameArr.length === 0) {
+                continue;
+            }
+            content += "export {" + nameArr + "} from \"" + _getRelativePath(rootDir, filePath, true) + "\";\n";
+        }
+    }
+    fs.writeFileSync(indexFilePath, content);
+}
+function _addImport(importData, fileContent) {
+    var importContent = "";
+    for (var filePath in importData) {
+        if (importData.hasOwnProperty(filePath)) {
+            var nameArr = importData[filePath];
+            importContent += "import {" + nameArr.join(',') + "} from \"" + filePath.replace(".ts", "") + "\";\n";
+        }
+    }
+    if (importContent.length > 0) {
+        return importContent + "\n" + fileContent;
+    }
+    return fileContent;
+}
+function _isExported(node) {
+    return (node.flags === ts.NodeFlags.Export)
+        || (node.parent && node.parent.kind === ts.SyntaxKind.SourceFile);
+}
 function generateDocumentation(rootDir, sourceFileGlobArr, destDir, options) {
     // import * as glob from "glob";
     var glob = require("glob");
@@ -124,181 +268,4 @@ function generateDocumentation(rootDir, sourceFileGlobArr, destDir, options) {
     console.log("finish");
     return;
 }
-function _getAllSourceFiles(fileAbsolutePaths) {
-    fileAbsolutePaths.forEach(function (filePath) {
-        var sourceFile = ts.createSourceFile(filePath, fs.readFileSync(filePath).toString(), ts.ScriptTarget.ES5);
-        sourceFileMap[filePath] = sourceFile;
-    });
-}
-function _visitExportData(node, exportData, filePath) {
-    if (node.kind === ts.SyntaxKind.ModuleDeclaration) {
-        var module_1 = node;
-        if (_isModuleBlock(module_1.body)) {
-            var block = module_1.body;
-            for (var _i = 0, _a = block.statements; _i < _a.length; _i++) {
-                var statement = _a[_i];
-                if (!_isExported(statement)) {
-                    continue;
-                }
-                switch (statement.kind) {
-                    case ts.SyntaxKind.ClassDeclaration:
-                    case ts.SyntaxKind.InterfaceDeclaration:
-                    case ts.SyntaxKind.EnumDeclaration:
-                    case ts.SyntaxKind.FunctionDeclaration:
-                        var name_1 = _getName(statement);
-                        exportData.push(name_1);
-                        _append(exportDataMap, name_1, filePath);
-                        break;
-                    case ts.SyntaxKind.VariableStatement:
-                        for (var _b = 0, _c = statement.declarationList.declarations; _b < _c.length; _b++) {
-                            var n = _c[_b];
-                            var name_2 = _getName(n);
-                            exportData.push(name_2);
-                            _append(exportDataMap, name_2, filePath);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-    }
-    // if (node.kind === ts.SyntaxKind.ModuleBlock) {
-    // node.statements
-    // }
-}
-function _isModuleBlock(body) {
-    return body.kind === ts.SyntaxKind.ModuleBlock;
-}
-function _append(obj, key, value) {
-    if (_isArray(obj[key])) {
-        obj[key].push(value);
-    }
-    else {
-        obj[key] = [value];
-    }
-}
-function _isArray(arr) {
-    return Object.prototype.toString.call(arr) === "[object Array]";
-}
-function _getName(node) {
-    if (!node.name) {
-        return null;
-    }
-    return node.name.text;
-}
-function _visitImportData(node, importData, filePath) {
-    if (node.kind === ts.SyntaxKind.ModuleDeclaration) {
-        var module_2 = node;
-        if (_isModuleBlock(module_2.body)) {
-            var block = module_2.body;
-            ts.forEachChild(block, function (node) {
-                _visit(node, importData, filePath);
-            });
-        }
-    }
-}
-function _visit(node, importData, filePath) {
-    if (!!node.text) {
-        var name_3 = node.text, data = exportDataMap[name_3];
-        if (_isArray(data)) {
-            if (data.length > 1) {
-                _recordConflictImport(name_3, data, filePath);
-            }
-            else {
-                var importedFilePath = data[0];
-                if (importedFilePath !== filePath) {
-                    _append(importData, _getRelativePath(filePath, importedFilePath), name_3);
-                }
-            }
-        }
-    }
-    ts.forEachChild(node, function (node) {
-        _visit(node, importData, filePath);
-    });
-}
-function _getRelativePath(from, to, isDir) {
-    if (isDir === void 0) { isDir = false; }
-    var relativePath = path.relative(isDir ? from : path.dirname(from), to);
-    if (relativePath[0] !== ".") {
-        relativePath = "./" + relativePath;
-    }
-    return relativePath;
-}
-function _recordConflictImport(name, data, filePath) {
-    hasConfilctImportData = true;
-    _append(confilctImportDataMap[filePath], name, data);
-}
-function _writeES2015Files(rootDir, destDir) {
-    for (var filePath in fileDataMap) {
-        if (fileDataMap.hasOwnProperty(filePath)) {
-            var fileData = fileDataMap[filePath];
-            var destFilePath = _getDestFilePath(destDir, rootDir, filePath);
-            // let importData = _mergeImportsWhichComeFromTheSameFile(fileData.importData);
-            var fileContent = fileData.moduleBlockContent;
-            fileContent = _addImport(fileData.importData, fileContent);
-            fs.mkdirsSync(path.dirname(destFilePath));
-            fs.writeFileSync(destFilePath, fileContent);
-        }
-    }
-}
-function _getDestFilePath(destDir, rootDir, filePath) {
-    return path.join(destDir, _getRelativePath(rootDir, filePath, true));
-}
-function _generateIndexFile(fileDataMap, rootDir, destDir) {
-    var indexFilePath = path.join(destDir, "index.ts");
-    if (fs.existsSync(indexFilePath)) {
-        throw new Error("already exist index file:" + indexFilePath + ", can't generate it!");
-    }
-    var content = "";
-    for (var filePath in fileDataMap) {
-        if (fileDataMap.hasOwnProperty(filePath)) {
-            var fileData = fileDataMap[filePath], nameArr = fileData.exportData.nameArr;
-            if (nameArr.length === 0) {
-                continue;
-            }
-            content += "export {" + nameArr + "} from \"" + _getRelativePath(rootDir, filePath, true) + "\";\n";
-        }
-    }
-    fs.writeFileSync(indexFilePath, content);
-}
-function _addImport(importData, fileContent) {
-    var importContent = "";
-    for (var filePath in importData) {
-        if (importData.hasOwnProperty(filePath)) {
-            var nameArr = importData[filePath];
-            importContent += "import {" + nameArr.join(',') + "} from \"" + filePath.replace(".ts", "") + "\";\n";
-        }
-    }
-    if (importContent.length > 0) {
-        return importContent + "\n" + fileContent;
-    }
-    return fileContent;
-}
-function _isExported(node) {
-    // return (node.flags & (<any>ts.NodeFlags).Export) !== 0 || (node.parent && node.parent.kind === ts.SyntaxKind.SourceFile);
-    return (node.flags === ts.NodeFlags.Export)
-        || (node.parent && node.parent.kind === ts.SyntaxKind.SourceFile);
-}
-//todo move to wonder-package
-function parseOption(name) {
-    var value = null, i = process.argv.indexOf(name);
-    if (i > -1) {
-        value = process.argv[i + 1];
-    }
-    return value;
-}
-// function isDefinOption(name) {
-//     return process.argv.indexOf(name) > -1;
-// }
-//
-// module.exports = {
-//     parseOption: parseOption,
-//     isDefinOption: isDefinOption
-// }
-var rootDir = parseOption("--rootDir"), sourceFileGlobArr = parseOption("--sourceFileGlob").split(','), destDir = parseOption("--destDir") || "./dest/";
-fs.removeSync(destDir);
-generateDocumentation(rootDir, sourceFileGlobArr, destDir, {
-    target: ts.ScriptTarget.ES5,
-    module: ts.ModuleKind.System
-});
+exports.generateDocumentation = generateDocumentation;
