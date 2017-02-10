@@ -242,7 +242,7 @@ function _generateIndexFile(fileDataMap: IFileDataMap, rootDir, destDir) {
                 continue;
             }
 
-            content += `export {${nameArr}} from "${_getRelativePath(rootDir, filePath, true)}";\n`;
+            content += `export {${nameArr}} from "${_getRelativePath(rootDir, filePath, true).replace(".ts", "")}";\n`;
         }
     }
 

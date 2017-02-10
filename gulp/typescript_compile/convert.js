@@ -162,7 +162,7 @@ function _generateIndexFile(fileDataMap, rootDir, destDir) {
             if (nameArr.length === 0) {
                 continue;
             }
-            content += "export {" + nameArr + "} from \"" + _getRelativePath(rootDir, filePath, true) + "\";\n";
+            content += "export {" + nameArr + "} from \"" + _getRelativePath(rootDir, filePath, true).replace(".ts", "") + "\";\n";
         }
     }
     fs.writeFileSync(indexFilePath, content);
