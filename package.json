@@ -4,8 +4,7 @@
   "main": "dist/wdCb.node.js",
   "keywords": [
     "common lib",
-    "Wonder-CommonLib",
-    "wdCb"
+    "Wonder-CommonLib"
   ],
   "devDependencies": {
     "del": "^1.2.0",
@@ -22,8 +21,9 @@
     "karma-ie-launcher": "^0.1.5",
     "karma-jasmine": "^0.2.2",
     "merge2": "^0.3.5",
+    "rollup-plugin-typescript": "^0.8.1",
     "through-gulp": "^0.3.8",
-    "typescript": "^2.0.3",
+    "typescript": "^2.1.6",
     "wonder-package": "^0.1.4"
   },
   "dependencies": {

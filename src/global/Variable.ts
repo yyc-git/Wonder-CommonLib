@@ -1,14 +1,11 @@
-declare var global:NodeJS.Global,window:Window;
+import { JudgeUtils } from "../utils/JudgeUtils";
 
-module wdCb{
-    export var root:any;
+declare var global: NodeJS.Global, window: Window;
+export var root: any;
 
-    if(JudgeUtils.isNodeJs() && typeof global != "undefined"){
-        root = global;
-    }
-    else{
-        root = window;
-    }
+if (JudgeUtils.isNodeJs() && typeof global != "undefined") {
+    root = global;
 }
-
-
+else {
+    root = window;
+}

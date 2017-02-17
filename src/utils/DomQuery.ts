@@ -1,144 +1,144 @@
-module wdCb {
-    declare var document:any;
+import { JudgeUtils } from "./JudgeUtils";
 
-    export class DomQuery {
-        public static create(eleStr:string);
-        public static create(dom:HTMLElement);
+declare var document: any;
 
-        public static create(...args) {
-            var obj = new this(args[0]);
+export class DomQuery {
+    public static create(eleStr: string);
+    public static create(dom: HTMLElement);
 
-            return obj;
+    public static create(...args) {
+        var obj = new this(args[0]);
+
+        return obj;
+    }
+
+    private _doms: Array<HTMLElement> = null;
+
+    constructor(eleStr: string);
+    constructor(dom: HTMLElement);
+
+    constructor(...args) {
+        if (JudgeUtils.isDom(args[0])) {
+            this._doms = [args[0]];
+        }
+        else if (this._isDomEleStr(args[0])) {
+            this._doms = [this._buildDom(args[0])];
+        }
+        else {
+            this._doms = document.querySelectorAll(args[0]);
         }
 
-        private _doms:Array<HTMLElement> = null;
+        return this;
+    }
 
-        constructor(eleStr:string);
-        constructor(dom:HTMLElement);
+    public get(index) {
+        return this._doms[index];
+    }
 
-        constructor(...args) {
-            if (JudgeUtils.isDom(args[0])) {
-                this._doms = [args[0]];
+
+    public prepend(eleStr: string);
+    public prepend(dom: HTMLElement);
+
+    public prepend(...args) {
+        var targetDom: HTMLElement = null;
+
+        targetDom = this._buildDom(args[0]);
+
+        for (let dom of this._doms) {
+            if (dom.nodeType === 1) {
+                dom.insertBefore(targetDom, dom.firstChild);
             }
-            else if(this._isDomEleStr(args[0])){
-                this._doms = [this._buildDom(args[0])];
+        }
+
+        return this;
+    }
+
+    public prependTo(eleStr: string) {
+        var targetDom: DomQuery = null;
+
+        targetDom = DomQuery.create(eleStr);
+
+        for (let dom of this._doms) {
+            if (dom.nodeType === 1) {
+                targetDom.prepend(dom);
+            }
+        }
+
+        return this;
+    }
+
+    public remove() {
+        for (let dom of this._doms) {
+            if (dom && dom.parentNode && dom.tagName != 'BODY') {
+                dom.parentNode.removeChild(dom);
+            }
+        }
+
+        return this;
+    }
+
+    public css(property: string, value: string) {
+        for (let dom of this._doms) {
+            dom.style[property] = value;
+        }
+    }
+
+    public attr(name: string);
+    public attr(name: string, value: string);
+
+    public attr(...args) {
+        if (args.length === 1) {
+            let name = args[0];
+
+            return this.get(0).getAttribute(name);
+        }
+        else {
+            let name = args[0],
+                value = args[1];
+
+            for (let dom of this._doms) {
+                dom.setAttribute(name, value);
+            }
+        }
+    }
+
+    public text(str?: string) {
+        var dom = this.get(0);
+
+        if (str !== void 0) {
+            if (dom.textContent !== void 0) {
+                dom.textContent = str;
             }
             else {
-                this._doms = document.querySelectorAll(args[0]);
-            }
-
-            return this;
-        }
-
-        public get(index) {
-            return this._doms[index];
-        }
-
-
-        public prepend(eleStr:string);
-        public prepend(dom:HTMLElement);
-
-        public prepend(...args) {
-            var targetDom:HTMLElement = null;
-
-            targetDom = this._buildDom(args[0]);
-
-            for (let dom of this._doms) {
-                if (dom.nodeType === 1) {
-                    dom.insertBefore(targetDom, dom.firstChild);
-                }
-            }
-
-            return this;
-        }
-
-        public prependTo(eleStr:string) {
-            var targetDom:DomQuery = null;
-
-            targetDom = DomQuery.create(eleStr);
-
-            for (let dom of this._doms) {
-                if (dom.nodeType === 1) {
-                    targetDom.prepend(dom);
-                }
-            }
-
-            return this;
-        }
-
-        public remove() {
-            for (let dom of this._doms) {
-                if (dom && dom.parentNode && dom.tagName != 'BODY') {
-                    dom.parentNode.removeChild(dom);
-                }
-            }
-
-            return this;
-        }
-
-        public css(property:string, value:string){
-            for (let dom of this._doms) {
-                dom.style[property] = value;
+                dom.innerText = str;
             }
         }
+        else {
+            return dom.textContent !== void 0 ? dom.textContent : dom.innerText;
+        }
+    }
 
-        public attr(name:string);
-        public attr(name:string, value:string);
+    private _isDomEleStr(eleStr: string) {
+        return eleStr.match(/<(\w+)[^>]*><\/\1>/) !== null;
+    }
 
-        public attr(...args){
-            if(args.length === 1){
-                let name = args[0];
+    private _buildDom(eleStr: string): HTMLElement;
+    private _buildDom(dom: HTMLHtmlElement): HTMLElement;
 
-                return this.get(0).getAttribute(name);
-            }
-            else{
-                let name = args[0],
-                    value = args[1];
+    private _buildDom(...args): HTMLElement {
+        if (JudgeUtils.isString(args[0])) {
+            let div = this._createElement("div"),
+                eleStr: string = args[0];
 
-                for (let dom of this._doms) {
-                    dom.setAttribute(name, value);
-                }
-            }
+            div.innerHTML = eleStr;
+
+            return div.firstChild;
         }
 
-        public text(str?:string){
-            var dom = this.get(0);
+        return args[0];
+    }
 
-            if(str !== void 0){
-                if(dom.textContent !== void 0){
-                    dom.textContent = str;
-                }
-                else{
-                    dom.innerText = str;
-                }
-            }
-            else{
-                return dom.textContent !== void 0 ? dom.textContent : dom.innerText;
-            }
-        }
-
-        private _isDomEleStr(eleStr:string){
-            return eleStr.match(/<(\w+)[^>]*><\/\1>/) !== null;
-        }
-
-        private _buildDom(eleStr:string):HTMLElement;
-        private _buildDom(dom:HTMLHtmlElement):HTMLElement;
-
-        private _buildDom(...args):HTMLElement {
-            if(JudgeUtils.isString(args[0])){
-                let div = this._createElement("div"),
-                    eleStr:string = args[0];
-
-                div.innerHTML = eleStr;
-
-                return div.firstChild;
-            }
-
-            return args[0];
-        }
-
-        private _createElement(eleStr){
-            return document.createElement(eleStr);
-        }
+    private _createElement(eleStr) {
+        return document.createElement(eleStr);
     }
 }

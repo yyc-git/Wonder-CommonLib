@@ -20,8 +20,6 @@ var config = require("./gulp/common/config");
 
 
 
-require("./gulp/typescript_compile/convertToES2015");
-
 
 var tsFilePaths = config.tsFilePaths;
 var distPath = config.distPath;

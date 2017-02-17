@@ -1,35 +1,35 @@
-module wdCb {
-    export class Queue<T> extends List<T>{
-        public static create<T>(children = []){
-            var obj = new this(<Array<T>>children);
+import { List } from "./List";
 
-            return obj;
-        }
+export class Queue<T> extends List<T>{
+    public static create<T>(children = []) {
+        var obj = new this(<Array<T>>children);
 
-        constructor(children:Array<T> = []){
-            super();
+        return obj;
+    }
 
-            this.children = children;
-        }
+    constructor(children: Array<T> = []) {
+        super();
 
-        get front(){
-            return this.children[this.children.length - 1];
-        }
+        this.children = children;
+    }
 
-        get rear(){
-            return this.children[0];
-        }
+    get front() {
+        return this.children[this.children.length - 1];
+    }
 
-        public push(element:T){
-            this.children.unshift(element);
-        }
+    get rear() {
+        return this.children[0];
+    }
 
-        public pop(){
-            return this.children.pop();
-        }
+    public push(element: T) {
+        this.children.unshift(element);
+    }
 
-        public clear(){
-            this.removeAllChildren();
-        }
+    public pop() {
+        return this.children.pop();
+    }
+
+    public clear() {
+        this.removeAllChildren();
     }
 }

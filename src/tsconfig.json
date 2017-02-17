@@ -1,31 +1,15 @@
 {
 	"compilerOptions": {
 		"target": "es5",
+		"module": "es2015",
 		"noImplicitAny": false,
-		"sourceMap": false,
+		"sourceMap": true,
 		"declaration": false,
 		"noEmitOnError": true,
 		"removeComments": true,
 		"experimentalDecorators": true
 	},
 	"files": [
-		"utils/JudgeUtils.ts",
-		"global/Variable.ts",
-		"global/extend.ts",
-		"global/Const.ts",
-		"Log.ts",
-		"List.ts",
-		"Collection.ts",
-		"Hash.ts",
-		"Queue.ts",
-		"Stack.ts",
-		"utils/AjaxUtils.ts",
-		"utils/ArrayUtils.ts",
-		"utils/ConvertUtils.ts",
-		"utils/EventUtils.ts",
-		"utils/ExtendUtils.ts",
-		"utils/PathUtils.ts",
-		"utils/FunctionUtils.ts",
-		"utils/DomQuery.ts"
+		"./index.ts"
 	]
 }
