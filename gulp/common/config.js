@@ -1,5 +1,6 @@
 var path = require("path");
 
+module.exports.indexFileDir = 'src/',
 module.exports.tsFilePaths = [
     'src/*.ts',
     'src/**/*.ts'

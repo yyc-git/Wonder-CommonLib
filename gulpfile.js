@@ -26,6 +26,7 @@ var distPath = config.distPath;
 var tsconfigFile = config.tsconfigFile;
 var filePath = path.join(distPath, "wdCb.js");
 var dtsFilePath = path.join(distPath, "wdCb.d.ts");
+var indexFileDir = config.indexFileDir;
 
 
 gulp.task('clean', function() {
@@ -48,9 +49,9 @@ gulp.task("compileTs", function() {
 
 
     return merge([
-        tsResult.dts
-            .pipe(gulpConcat("wdCb.d.ts"))
-            .pipe(gulp.dest("dist")),
+        // tsResult.dts
+        //     .pipe(gulpConcat("wdCb.d.ts"))
+        //     .pipe(gulp.dest("dist")),
         tsResult.js
             .pipe(gulpConcat("wdCb.js"))
             .pipe(gulp.dest("dist/"))
@@ -94,7 +95,34 @@ gulp.task("addNodejsVersion", function(done){
 
 
 
-gulp.task("build", gulpSync.sync(["clean", "compileTs", "compileTsDebug", "addModuleExports", "addNodejsVersion", "browserify"]));
+
+//todo move to wonder-package
+var dts = require("dts-bundle");
+
+gulp.task("generateDTS", function(done) {
+    var indexDTSPath = path.join(indexFileDir, "index.d.ts");
+
+    dts.bundle({
+        name: "wonder-commonlib",
+        outputAsModuleFolder: false,
+        main: indexDTSPath,
+        out: path.join(distPath, "wdCb.d.ts")
+    });
+
+    dts.bundle({
+        name: "wonder-commonlib",
+        outputAsModuleFolder: true,
+        main: indexDTSPath,
+        out: path.join(distPath, "wdCb.module.d.ts")
+    });
+
+    done();
+});
+
+
+
+
+gulp.task("build", gulpSync.sync(["clean", "generateDTS", "compileTs", "compileTsDebug", "addModuleExports", "addNodejsVersion", "browserify"]));
 
 
 

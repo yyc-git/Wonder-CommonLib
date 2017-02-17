@@ -1,13 +1,16 @@
 {
   "name": "wonder-commonlib",
-  "version": "0.1.1",
-  "main": "dist/wdCb.node.js",
+  "version": "0.1.2",
+  "main": "dist/wdCb.js",
+  "module": "src/index",
+  "jsnext:main": "src/index",
   "keywords": [
     "common lib",
     "Wonder-CommonLib"
   ],
   "devDependencies": {
     "del": "^1.2.0",
+    "dts-bundle": "^0.7.2",
     "fs-extra": "^0.26.2",
     "gulp": "^3.8.11",
     "gulp-browserify": "^0.5.1",
