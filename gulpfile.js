@@ -15,6 +15,8 @@ var wonderPackage = require("wonder-package");
 var addModuleExports = wonderPackage.addModuleExports;
 var browserify = wonderPackage.browserify;
 
+var bundleDTS = wonderPackage.bundleDTS;
+
 
 var config = require("./gulp/common/config");
 
@@ -96,26 +98,11 @@ gulp.task("addNodejsVersion", function(done){
 
 
 
-//todo move to wonder-package
-var dts = require("dts-bundle");
-
 gulp.task("generateDTS", function(done) {
     var indexDTSPath = path.join(indexFileDir, "index.d.ts"),
         name = "wonder-commonlib/src";
 
-    dts.bundle({
-        name: name,
-        outputAsModuleFolder: false,
-        main: indexDTSPath,
-        out: path.join(distPath, "wdCb.d.ts")
-    });
-
-    dts.bundle({
-        name: name,
-        outputAsModuleFolder: true,
-        main: indexDTSPath,
-        out: path.join(distPath, "wdCb.noDelcareModule.d.ts")
-    });
+    bundleDTS.generateDTS(indexDTSPath, name, path.join(distPath, "wdCb.d.ts"), path.join(distPath, "wdCb.noDelcareModule.d.ts"));
 
     done();
 });

@@ -10,7 +10,6 @@
   ],
   "devDependencies": {
     "del": "^1.2.0",
-    "dts-bundle": "^0.7.2",
     "fs-extra": "^0.26.2",
     "gulp": "^3.8.11",
     "gulp-browserify": "^0.5.1",
@@ -27,7 +26,7 @@
     "rollup-plugin-typescript": "^0.8.1",
     "through-gulp": "^0.3.8",
     "typescript": "^2.1.6",
-    "wonder-package": "^0.1.4"
+    "wonder-package": "^0.1.11"
   },
   "dependencies": {
     "@types/node": "^7.0.5"
