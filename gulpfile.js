@@ -100,20 +100,21 @@ gulp.task("addNodejsVersion", function(done){
 var dts = require("dts-bundle");
 
 gulp.task("generateDTS", function(done) {
-    var indexDTSPath = path.join(indexFileDir, "index.d.ts");
+    var indexDTSPath = path.join(indexFileDir, "index.d.ts"),
+        name = "wonder-commonlib/src";
 
     dts.bundle({
-        name: "wonder-commonlib",
+        name: name,
         outputAsModuleFolder: false,
         main: indexDTSPath,
         out: path.join(distPath, "wdCb.d.ts")
     });
 
     dts.bundle({
-        name: "wonder-commonlib",
+        name: name,
         outputAsModuleFolder: true,
         main: indexDTSPath,
-        out: path.join(distPath, "wdCb.module.d.ts")
+        out: path.join(distPath, "wdCb.noDelcareModule.d.ts")
     });
 
     done();
