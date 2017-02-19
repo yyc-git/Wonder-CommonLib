@@ -8,9 +8,6 @@
     "common lib",
     "Wonder-CommonLib"
   ],
-  "scripts": {
-    "postinstall": "npm install -g tsc && npm install -g rollup && npm install -g typescript-formatter"
-  },
   "devDependencies": {
     "del": "^1.2.0",
     "fs-extra": "^0.26.2",
@@ -25,10 +22,9 @@
     "rollup-plugin-typescript": "^0.8.1",
     "through-gulp": "^0.3.8",
     "typescript": "^2.1.6",
-    "wonder-package": "^0.1.11"
+    "wonder-package": "^0.1.13"
   },
   "dependencies": {
     "@types/node": "^7.0.5"
   }
 }
-

@@ -7,6 +7,9 @@ var path = require("path");
 var wonderPackage = require("wonder-package");
 
 var bundleDTS = wonderPackage.bundleDTS;
+var compileTs = wonderPackage.compileTs;
+var package = wonderPackage.package;
+var format = wonderPackage.format;
 
 
 var config = require("./gulp/common/config");
@@ -27,23 +30,8 @@ gulp.task('clean', function() {
 });
 
 
-//todo move to wonder-package
-
 gulp.task("compileTsES2015", function(done) {
-    var exec = require("child_process").exec;
-    var fs = require("fs-extra");
-
-    exec("tsc -p " + path.join(process.cwd(), tsconfigFile), function (err, stdout, stderr) {
-        if(err){
-            console.error(stdout)
-
-            done();
-
-            return;
-        }
-
-        done();
-    });
+    compileTs.compileTsES2015(path.join(process.cwd(), tsconfigFile), done);
 });
 
 gulp.task("generateDTS", function(done) {
@@ -55,38 +43,13 @@ gulp.task("generateDTS", function(done) {
     done();
 });
 
-
-
 gulp.task("rollup", function(done) {
-    var exec = require("child_process").exec;
-
-    exec("rollup -c " + path.join(process.cwd(), "./rollup.config.js"), function (err, stdout, stderr) {
-        if(err){
-            console.error(stderr);
-
-            done();
-
-            return;
-        }
-
-        done();
-    });
+    package.rollup(path.join(process.cwd(), "./rollup.config.js"), done);
 });
-
 
 gulp.task("formatTs", function(done) {
-    var exec = require("child_process").exec;
-
-    exec("tsfmt -r " + tsFilePaths.join(" "), function (err, stdout, stderr) {
-        if(err){
-            throw err;
-        }
-
-        done();
-    });
+    format.formatTs(tsFilePaths, done);
 });
-
-
 
 
 
