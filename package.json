@@ -9,7 +9,7 @@
     "Wonder-CommonLib"
   ],
   "scripts": {
-    "postinstall": "npm install -g tsc && npm install -g rollup"
+    "postinstall": "npm install -g tsc && npm install -g rollup && npm install -g typescript-formatter"
   },
   "devDependencies": {
     "del": "^1.2.0",

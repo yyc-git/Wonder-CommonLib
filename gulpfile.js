@@ -74,9 +74,27 @@ gulp.task("rollup", function(done) {
 });
 
 
+gulp.task("formatTs", function(done) {
+    var exec = require("child_process").exec;
+
+    exec("tsfmt -r " + tsFilePaths.join(" "), function (err, stdout, stderr) {
+        if(err){
+            throw err;
+        }
+
+        done();
+    });
+});
 
 
-gulp.task("build", gulpSync.sync(["clean", "compileTsES2015", "generateDTS", "generateDTS", "rollup"]));
+
+
+
+
+
+
+
+gulp.task("build", gulpSync.sync(["clean", "compileTsES2015", "generateDTS", "generateDTS", "rollup", "formatTs"]));
 
 
 
