@@ -1,13 +1,7 @@
-import typescript from "rollup-plugin-typescript";
-
 export default {
-	entry: "./src/index.ts",
+	entry: "./dist/es2015/index.js",
 	indent: "\t",
 	plugins: [
-        typescript({
-        	tsconfig:false,
-			typescript:require('typescript')
-		})
 	],
 	sourceMap: true,
 	targets: [

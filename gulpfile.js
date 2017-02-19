@@ -1,19 +1,10 @@
 var gulp = require("gulp");
-var gulpTs = require("gulp-typescript");
-var gulpSourcemaps = require("gulp-sourcemaps");
-var gulpConcat = require("gulp-concat");
 var del = require("del");
 var gulpSync = require("gulp-sync")(gulp);
-var merge = require("merge2");
 var path = require("path");
-var through = require("through-gulp");
-var fs = require("fs-extra");
 
 
 var wonderPackage = require("wonder-package");
-
-var addModuleExports = wonderPackage.addModuleExports;
-var browserify = wonderPackage.browserify;
 
 var bundleDTS = wonderPackage.bundleDTS;
 
@@ -26,8 +17,6 @@ var config = require("./gulp/common/config");
 var tsFilePaths = config.tsFilePaths;
 var distPath = config.distPath;
 var tsconfigFile = config.tsconfigFile;
-var filePath = path.join(distPath, "wdCb.js");
-var dtsFilePath = path.join(distPath, "wdCb.d.ts");
 var indexFileDir = config.indexFileDir;
 
 
@@ -38,65 +27,24 @@ gulp.task('clean', function() {
 });
 
 
+//todo move to wonder-package
 
-gulp.task("compileTs", function() {
-    var tsProject = gulpTs.createProject(path.join(process.cwd(), tsconfigFile), {
-        declaration: true,
-        noEmitOnError: false,
-        typescript: require('typescript')
+gulp.task("compileTsES2015", function(done) {
+    var exec = require("child_process").exec;
+    var fs = require("fs-extra");
+
+    exec("tsc -p " + path.join(process.cwd(), tsconfigFile), function (err, stdout, stderr) {
+        if(err){
+            console.error(stdout)
+
+            done();
+
+            return;
+        }
+
+        done();
     });
-
-    var tsResult = tsProject.src()
-        .pipe(tsProject());
-
-
-    return merge([
-        // tsResult.dts
-        //     .pipe(gulpConcat("wdCb.d.ts"))
-        //     .pipe(gulp.dest("dist")),
-        tsResult.js
-            .pipe(gulpConcat("wdCb.js"))
-            .pipe(gulp.dest("dist/"))
-    ])
 });
-
-gulp.task("compileTsDebug", function() {
-    var tsProject = gulpTs.createProject(path.join(process.cwd(), tsconfigFile), {
-        out: "wdCb.debug.js",
-        typescript: require('typescript')
-    });
-
-    var tsResult = tsProject.src()
-        .pipe(gulpSourcemaps.init())
-        .pipe(tsProject());
-
-
-    return merge([
-        tsResult.js
-            .pipe(gulpSourcemaps.write())
-            .pipe(gulp.dest("dist/"))
-    ])
-});
-
-
-gulp.task("addModuleExports", function(done){
-    addModuleExports(filePath, "wdCb");
-
-    done();
-});
-
-gulp.task("browserify", function() {
-    return browserify(filePath, distPath, "wdCb");
-});
-
-gulp.task("addNodejsVersion", function(done){
-    fs.copySync(filePath, path.join(distPath, "wdCb.node.js"));
-
-    done();
-});
-
-
-
 
 gulp.task("generateDTS", function(done) {
     var indexDTSPath = path.join(indexFileDir, "index.d.ts"),
@@ -109,13 +57,31 @@ gulp.task("generateDTS", function(done) {
 
 
 
+gulp.task("rollup", function(done) {
+    var exec = require("child_process").exec;
 
-gulp.task("build", gulpSync.sync(["clean", "generateDTS", "compileTs", "compileTsDebug", "addModuleExports", "addNodejsVersion", "browserify"]));
+    exec("rollup -c " + path.join(process.cwd(), "./rollup.config.js"), function (err, stdout, stderr) {
+        if(err){
+            console.error(stderr);
+
+            done();
+
+            return;
+        }
+
+        done();
+    });
+});
+
+
+
+
+gulp.task("build", gulpSync.sync(["clean", "compileTsES2015", "generateDTS", "generateDTS", "rollup"]));
 
 
 
 gulp.task("watch", function(){
-    gulp.watch(tsFilePaths, ["compileTsDebug"]);
+    gulp.watch(tsFilePaths, gulpSync.sync(["compileTsES2015", "rollup"]));
 });
 
 

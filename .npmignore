@@ -1,8 +1,8 @@
 .idea/
 .DS_Store
-lib/
 bower_components/
 test/
 gulp/
 reference/
 mine/
+src/

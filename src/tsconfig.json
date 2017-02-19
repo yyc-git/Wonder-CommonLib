@@ -4,6 +4,7 @@
 		"module": "es2015",
 		"noImplicitAny": false,
 		"sourceMap": true,
+		"outDir": "../dist/es2015",
 		"declaration": true,
 		"noEmitOnError": true,
 		"removeComments": true,
