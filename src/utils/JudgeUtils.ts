@@ -67,8 +67,8 @@ export class JudgeUtils {
         var type = typeof object[property];
 
         return type === "function" ||
-            (type === "object" && !!object[property]) ||
-            type === "unknown";
+            (type === "object" && !!object[property]);
+        // || type == "unknown";
     }
 
     public static isNodeJs() {
