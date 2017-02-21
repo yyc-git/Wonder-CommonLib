@@ -31,12 +31,16 @@ gulp.task('clean', function() {
 
 
 gulp.task("compileTsES2015", function(done) {
-    compileTs.compileTsES2015(path.join(process.cwd(), tsconfigFile), done);
+    compileTs.compileTsES2015(path.join(process.cwd(), tsconfigFile), {
+        sourceDir: "./src",
+        cwd:"./",
+        targetDir:"./dist/es2015/"
+    }, done);
 });
 
 gulp.task("generateDTS", function(done) {
     var indexDTSPath = path.join(indexFileDir, "index.d.ts"),
-        name = "wonder-commonlib/src";
+        name = "wonder-commonlib/dist/es2015";
 
     bundleDTS.generateDTS(indexDTSPath, name, path.join(distPath, "wdCb.d.ts"), path.join(distPath, "wdCb.noDelcareModule.d.ts"));
 
