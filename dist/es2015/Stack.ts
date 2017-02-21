@@ -1,9 +1,10 @@
 import { List } from "./List";
 import { JudgeUtils } from "./utils/JudgeUtils";
 import { ExtendUtils } from "./utils/ExtendUtils";
+import { Collection } from "./Collection";
 import { $BREAK, $REMOVE } from "./global/Const";
 
-export class Collection<T> extends List<T>{
+export class Stack<T> extends List<T>{
     public static create<T>(children = []) {
         var obj = new this(<Array<T>>children);
 
@@ -16,22 +17,38 @@ export class Collection<T> extends List<T>{
         this.children = children;
     }
 
+    get top() {
+        return this.children[this.children.length - 1];
+    }
+
+    public push(element: T) {
+        this.children.push(element);
+    }
+
+    public pop() {
+        return this.children.pop();
+    }
+
+    public clear() {
+        this.removeAllChildren();
+    }
+
     public clone();
     public clone(isDeep: boolean);
-    public clone(target: Collection<T>);
-    public clone(target: Collection<T>, isDeep: boolean);
+    public clone(target: Stack<T>);
+    public clone(target: Stack<T>, isDeep: boolean);
 
     public clone(...args) {
-        var target: Collection<T> = null,
+        var target: Stack<T> = null,
             isDeep: boolean = null;
 
         if (args.length === 0) {
             isDeep = false;
-            target = Collection.create<T>();
+            target = Stack.create<T>();
         }
         else if (args.length === 1) {
             if (JudgeUtils.isBoolean(args[0])) {
-                target = Collection.create<T>();
+                target = Stack.create<T>();
                 isDeep = args[0];
             }
             else {
