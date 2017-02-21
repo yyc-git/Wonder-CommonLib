@@ -37,8 +37,7 @@ var JudgeUtils = (function () {
     JudgeUtils.isHostMethod = function (object, property) {
         var type = typeof object[property];
         return type === "function" ||
-            (type === "object" && !!object[property]) ||
-            type === "unknown";
+            (type === "object" && !!object[property]);
     };
     JudgeUtils.isNodeJs = function () {
         return ((typeof global != "undefined" && global.module) || (typeof module != "undefined")) && typeof module.exports != "undefined";
