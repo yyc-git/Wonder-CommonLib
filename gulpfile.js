@@ -52,7 +52,7 @@ gulp.task("rollup", function(done) {
 });
 
 gulp.task("formatTs", function(done) {
-    format.formatTs(tsFilePaths, done);
+    format.formatTs(tsFilePaths, "/", done);
 });
 
 
