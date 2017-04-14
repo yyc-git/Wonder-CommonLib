@@ -379,13 +379,6 @@
 	    return Collection;
 	}(List));
 
-	if (JudgeUtils.isNodeJs() && typeof global != "undefined") {
-	    exports.root = global;
-	}
-	else {
-	    exports.root = window;
-	}
-
 	var Log = (function () {
 	    function Log() {
 	    }
@@ -607,6 +600,19 @@
 	        return this.assertion.apply(this, args);
 	    }
 	};
+
+	if (JudgeUtils.isNodeJs() && typeof global != "undefined") {
+	    exports.root = global;
+	}
+	else if (typeof window != "undefined") {
+	    exports.root = window;
+	}
+	else if (typeof self != "undefined") {
+	    exports.root = self;
+	}
+	else {
+	    Log.error("no avaliable root!");
+	}
 
 	var Hash = (function () {
 	    function Hash(children) {

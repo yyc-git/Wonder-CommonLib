@@ -373,14 +373,6 @@ var Collection = (function (_super) {
     return Collection;
 }(List));
 
-var root;
-if (JudgeUtils.isNodeJs() && typeof global != "undefined") {
-    root = global;
-}
-else {
-    root = window;
-}
-
 var Log = (function () {
     function Log() {
     }
@@ -602,6 +594,20 @@ Log.info = {
         return this.assertion.apply(this, args);
     }
 };
+
+var root;
+if (JudgeUtils.isNodeJs() && typeof global != "undefined") {
+    root = global;
+}
+else if (typeof window != "undefined") {
+    root = window;
+}
+else if (typeof self != "undefined") {
+    root = self;
+}
+else {
+    Log.error("no avaliable root!");
+}
 
 var Hash = (function () {
     function Hash(children) {
