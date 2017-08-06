@@ -89,7 +89,8 @@ export class ExtendUtils {
                 if (type === sArr || type === sOb) {    //如果为数组或object对象
                     _child[i] = type === sArr ? [] : {};
                     ExtendUtils.extendDeep(member, _child[i]);
-                } else {
+                }
+                else {
                     _child[i] = member;
                 }
             }
@@ -99,6 +100,7 @@ export class ExtendUtils {
         }
 
         return _child;
+
     }
 
     /**
@@ -108,9 +110,24 @@ export class ExtendUtils {
         var property = "";
 
         for (property in source) {
-            destination[property] = source[property];
+            if(source.hasOwnProperty(property)) {
+                destination[property] = source[property];
+            }
         }
+
         return destination;
+    }
+
+    public static assign(source: any, target: any) {
+        for (let property in source) {
+            if(source.hasOwnProperty(property)) {
+                if (target[property] === void 0 || target[property] === null) {
+                    target[property] = source[property];
+                }
+            }
+        }
+
+        return target;
     }
 
     public static copyPublicAttri(source: any) {

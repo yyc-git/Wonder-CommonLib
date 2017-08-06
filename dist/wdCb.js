@@ -1,7 +1,7 @@
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	(factory((global.wdCb = global.wdCb || {})));
+	(factory((global.wdCb = {})));
 }(this, (function (exports) { 'use strict';
 
 	function __extends(d, b) {
@@ -250,9 +250,21 @@
 	    ExtendUtils.extend = function (destination, source) {
 	        var property = "";
 	        for (property in source) {
-	            destination[property] = source[property];
+	            if (source.hasOwnProperty(property)) {
+	                destination[property] = source[property];
+	            }
 	        }
 	        return destination;
+	    };
+	    ExtendUtils.assign = function (source, target) {
+	        for (var property in source) {
+	            if (source.hasOwnProperty(property)) {
+	                if (target[property] === void 0 || target[property] === null) {
+	                    target[property] = source[property];
+	                }
+	            }
+	        }
+	        return target;
 	    };
 	    ExtendUtils.copyPublicAttri = function (source) {
 	        var property = null, destination = {};
@@ -433,173 +445,173 @@
 	        }
 	        return false;
 	    };
+	    Log.info = {
+	        INVALID_PARAM: "invalid parameter",
+	        helperFunc: function () {
+	            var args = [];
+	            for (var _i = 0; _i < arguments.length; _i++) {
+	                args[_i] = arguments[_i];
+	            }
+	            var result = "";
+	            args.forEach(function (val) {
+	                result += String(val) + " ";
+	            });
+	            return result.slice(0, -1);
+	        },
+	        assertion: function () {
+	            var args = [];
+	            for (var _i = 0; _i < arguments.length; _i++) {
+	                args[_i] = arguments[_i];
+	            }
+	            if (args.length === 2) {
+	                return this.helperFunc(args[0], args[1]);
+	            }
+	            else if (args.length === 3) {
+	                return this.helperFunc(args[1], args[0], args[2]);
+	            }
+	            else {
+	                throw new Error("args.length must <= 3");
+	            }
+	        },
+	        FUNC_INVALID: function () {
+	            var args = [];
+	            for (var _i = 0; _i < arguments.length; _i++) {
+	                args[_i] = arguments[_i];
+	            }
+	            args.unshift("invalid");
+	            return this.assertion.apply(this, args);
+	        },
+	        FUNC_MUST: function () {
+	            var args = [];
+	            for (var _i = 0; _i < arguments.length; _i++) {
+	                args[_i] = arguments[_i];
+	            }
+	            args.unshift("must");
+	            return this.assertion.apply(this, args);
+	        },
+	        FUNC_MUST_BE: function () {
+	            var args = [];
+	            for (var _i = 0; _i < arguments.length; _i++) {
+	                args[_i] = arguments[_i];
+	            }
+	            args.unshift("must be");
+	            return this.assertion.apply(this, args);
+	        },
+	        FUNC_MUST_NOT_BE: function () {
+	            var args = [];
+	            for (var _i = 0; _i < arguments.length; _i++) {
+	                args[_i] = arguments[_i];
+	            }
+	            args.unshift("must not be");
+	            return this.assertion.apply(this, args);
+	        },
+	        FUNC_SHOULD: function () {
+	            var args = [];
+	            for (var _i = 0; _i < arguments.length; _i++) {
+	                args[_i] = arguments[_i];
+	            }
+	            args.unshift("should");
+	            return this.assertion.apply(this, args);
+	        },
+	        FUNC_SHOULD_NOT: function () {
+	            var args = [];
+	            for (var _i = 0; _i < arguments.length; _i++) {
+	                args[_i] = arguments[_i];
+	            }
+	            args.unshift("should not");
+	            return this.assertion.apply(this, args);
+	        },
+	        FUNC_SUPPORT: function () {
+	            var args = [];
+	            for (var _i = 0; _i < arguments.length; _i++) {
+	                args[_i] = arguments[_i];
+	            }
+	            args.unshift("support");
+	            return this.assertion.apply(this, args);
+	        },
+	        FUNC_NOT_SUPPORT: function () {
+	            var args = [];
+	            for (var _i = 0; _i < arguments.length; _i++) {
+	                args[_i] = arguments[_i];
+	            }
+	            args.unshift("not support");
+	            return this.assertion.apply(this, args);
+	        },
+	        FUNC_MUST_DEFINE: function () {
+	            var args = [];
+	            for (var _i = 0; _i < arguments.length; _i++) {
+	                args[_i] = arguments[_i];
+	            }
+	            args.unshift("must define");
+	            return this.assertion.apply(this, args);
+	        },
+	        FUNC_MUST_NOT_DEFINE: function () {
+	            var args = [];
+	            for (var _i = 0; _i < arguments.length; _i++) {
+	                args[_i] = arguments[_i];
+	            }
+	            args.unshift("must not define");
+	            return this.assertion.apply(this, args);
+	        },
+	        FUNC_UNKNOW: function () {
+	            var args = [];
+	            for (var _i = 0; _i < arguments.length; _i++) {
+	                args[_i] = arguments[_i];
+	            }
+	            args.unshift("unknow");
+	            return this.assertion.apply(this, args);
+	        },
+	        FUNC_EXPECT: function () {
+	            var args = [];
+	            for (var _i = 0; _i < arguments.length; _i++) {
+	                args[_i] = arguments[_i];
+	            }
+	            args.unshift("expect");
+	            return this.assertion.apply(this, args);
+	        },
+	        FUNC_UNEXPECT: function () {
+	            var args = [];
+	            for (var _i = 0; _i < arguments.length; _i++) {
+	                args[_i] = arguments[_i];
+	            }
+	            args.unshift("unexpect");
+	            return this.assertion.apply(this, args);
+	        },
+	        FUNC_EXIST: function () {
+	            var args = [];
+	            for (var _i = 0; _i < arguments.length; _i++) {
+	                args[_i] = arguments[_i];
+	            }
+	            args.unshift("exist");
+	            return this.assertion.apply(this, args);
+	        },
+	        FUNC_NOT_EXIST: function () {
+	            var args = [];
+	            for (var _i = 0; _i < arguments.length; _i++) {
+	                args[_i] = arguments[_i];
+	            }
+	            args.unshift("not exist");
+	            return this.assertion.apply(this, args);
+	        },
+	        FUNC_ONLY: function () {
+	            var args = [];
+	            for (var _i = 0; _i < arguments.length; _i++) {
+	                args[_i] = arguments[_i];
+	            }
+	            args.unshift("only");
+	            return this.assertion.apply(this, args);
+	        },
+	        FUNC_CAN_NOT: function () {
+	            var args = [];
+	            for (var _i = 0; _i < arguments.length; _i++) {
+	                args[_i] = arguments[_i];
+	            }
+	            args.unshift("can't");
+	            return this.assertion.apply(this, args);
+	        }
+	    };
 	    return Log;
 	}());
-	Log.info = {
-	    INVALID_PARAM: "invalid parameter",
-	    helperFunc: function () {
-	        var args = [];
-	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i] = arguments[_i];
-	        }
-	        var result = "";
-	        args.forEach(function (val) {
-	            result += String(val) + " ";
-	        });
-	        return result.slice(0, -1);
-	    },
-	    assertion: function () {
-	        var args = [];
-	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i] = arguments[_i];
-	        }
-	        if (args.length === 2) {
-	            return this.helperFunc(args[0], args[1]);
-	        }
-	        else if (args.length === 3) {
-	            return this.helperFunc(args[1], args[0], args[2]);
-	        }
-	        else {
-	            throw new Error("args.length must <= 3");
-	        }
-	    },
-	    FUNC_INVALID: function () {
-	        var args = [];
-	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i] = arguments[_i];
-	        }
-	        args.unshift("invalid");
-	        return this.assertion.apply(this, args);
-	    },
-	    FUNC_MUST: function () {
-	        var args = [];
-	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i] = arguments[_i];
-	        }
-	        args.unshift("must");
-	        return this.assertion.apply(this, args);
-	    },
-	    FUNC_MUST_BE: function () {
-	        var args = [];
-	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i] = arguments[_i];
-	        }
-	        args.unshift("must be");
-	        return this.assertion.apply(this, args);
-	    },
-	    FUNC_MUST_NOT_BE: function () {
-	        var args = [];
-	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i] = arguments[_i];
-	        }
-	        args.unshift("must not be");
-	        return this.assertion.apply(this, args);
-	    },
-	    FUNC_SHOULD: function () {
-	        var args = [];
-	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i] = arguments[_i];
-	        }
-	        args.unshift("should");
-	        return this.assertion.apply(this, args);
-	    },
-	    FUNC_SHOULD_NOT: function () {
-	        var args = [];
-	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i] = arguments[_i];
-	        }
-	        args.unshift("should not");
-	        return this.assertion.apply(this, args);
-	    },
-	    FUNC_SUPPORT: function () {
-	        var args = [];
-	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i] = arguments[_i];
-	        }
-	        args.unshift("support");
-	        return this.assertion.apply(this, args);
-	    },
-	    FUNC_NOT_SUPPORT: function () {
-	        var args = [];
-	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i] = arguments[_i];
-	        }
-	        args.unshift("not support");
-	        return this.assertion.apply(this, args);
-	    },
-	    FUNC_MUST_DEFINE: function () {
-	        var args = [];
-	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i] = arguments[_i];
-	        }
-	        args.unshift("must define");
-	        return this.assertion.apply(this, args);
-	    },
-	    FUNC_MUST_NOT_DEFINE: function () {
-	        var args = [];
-	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i] = arguments[_i];
-	        }
-	        args.unshift("must not define");
-	        return this.assertion.apply(this, args);
-	    },
-	    FUNC_UNKNOW: function () {
-	        var args = [];
-	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i] = arguments[_i];
-	        }
-	        args.unshift("unknow");
-	        return this.assertion.apply(this, args);
-	    },
-	    FUNC_EXPECT: function () {
-	        var args = [];
-	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i] = arguments[_i];
-	        }
-	        args.unshift("expect");
-	        return this.assertion.apply(this, args);
-	    },
-	    FUNC_UNEXPECT: function () {
-	        var args = [];
-	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i] = arguments[_i];
-	        }
-	        args.unshift("unexpect");
-	        return this.assertion.apply(this, args);
-	    },
-	    FUNC_EXIST: function () {
-	        var args = [];
-	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i] = arguments[_i];
-	        }
-	        args.unshift("exist");
-	        return this.assertion.apply(this, args);
-	    },
-	    FUNC_NOT_EXIST: function () {
-	        var args = [];
-	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i] = arguments[_i];
-	        }
-	        args.unshift("not exist");
-	        return this.assertion.apply(this, args);
-	    },
-	    FUNC_ONLY: function () {
-	        var args = [];
-	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i] = arguments[_i];
-	        }
-	        args.unshift("only");
-	        return this.assertion.apply(this, args);
-	    },
-	    FUNC_CAN_NOT: function () {
-	        var args = [];
-	        for (var _i = 0; _i < arguments.length; _i++) {
-	            args[_i] = arguments[_i];
-	        }
-	        args.unshift("can't");
-	        return this.assertion.apply(this, args);
-	    }
-	};
 
 	if (JudgeUtils.isNodeJs() && typeof global != "undefined") {
 	    exports.root = global;

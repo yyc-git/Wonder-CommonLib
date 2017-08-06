@@ -10,8 +10,8 @@ describe("ExtendUtils", function () {
         sandbox.restore();
     });
 
-    describe("extendUtils extendDeep", function () {
-        describe("test object add or update", function(){
+    describe("extendDeep", function () {
+        describe("test object", function(){
             var parent = null;
 
             beforeEach(function() {
@@ -24,8 +24,10 @@ describe("ExtendUtils", function () {
                 }
             });
 
-            it("you can add attribute to child,the parent should not change", function () {
-                var result = Utils.extendDeep(parent, {id: 123});
+            it("can add attribute to child", function () {
+                var result = Utils.extendDeep(parent, {
+                    id: 123
+                });
 
                 expect(result).toEqual({
                     children: {
@@ -34,25 +36,42 @@ describe("ExtendUtils", function () {
                     addr: "chengdu",
                     id: 123
                 });
-
             });
-
-            it("you can update attribute to child,the parent should not change",function(){
-                var result = Utils.extendDeep(parent, {
-                    addr: "yunnan"
+            it("parent should not change",function () {
+                Utils.extendDeep(parent, {
+                    id: 123
                 });
 
-                expect(result).toEqual({
+                expect(parent).toEqual({
                     children: {
-                        name: "arvin", age: 24
+                        name: "arvin",
+                        age: 24
                     },
-                    addr: "yunnan"
+                    addr: "chengdu"
+                });
+            });
+
+            describe("test when child attribute exist in parent,", function(){
+                it("child attribute will be covered", function(){
+                    var result = Utils.extendDeep(parent, {
+                        addr: "yunnan",
+                        children:{
+                            name:[1,2,3]
+                        }
+                    });
+
+                    expect(result).toEqual({
+                        children: {
+                            name: "arvin",
+                            age: 24
+                        },
+                        addr: "chengdu"
+                    });
                 });
             });
         });
 
-        describe("test array add or update", function(){
-
+        describe("test array", function(){
             var parent = null;
 
             beforeEach(function(){
@@ -66,8 +85,7 @@ describe("ExtendUtils", function () {
                ]
             });
 
-            it("you can clone to new Array", function(){
-
+            it("can clone to new Array", function(){
                 var result = Utils.extendDeep(parent);
 
                 expect(result).toEqual([
@@ -77,9 +95,47 @@ describe("ExtendUtils", function () {
                         name:"jack",
                         age:24
                     }
-                ])
+                ]);
+                expect(result !== parent).toBeTruthy();
             });
         });
     });
 
+    describe("assign", function(){
+        var source = null;
+
+        beforeEach(function(){
+            source = {
+                name:"arvin",
+                state:true,
+                age:24
+            }
+        });
+
+        describe("clone source assign to target", function(){
+            it("test add attribute to target",function () {
+                var result = Utils.assign(source,{
+                    child:"gameObject"
+                })
+
+                expect(result).toEqual({
+                    name:"arvin",
+                    state:true,
+                    age:24,
+                    child:"gameObject"
+                })
+            })
+            it("test when target has the attribute,remain it",function () {
+                var result = Utils.assign(source,{
+                    name:"gameObject"
+                });
+
+                expect(result).toEqual({
+                    name:"gameObject",
+                    state:true,
+                    age:24
+                })
+            })
+        });
+    });
 });

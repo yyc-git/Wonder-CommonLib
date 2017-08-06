@@ -55,9 +55,21 @@ var ExtendUtils = (function () {
     ExtendUtils.extend = function (destination, source) {
         var property = "";
         for (property in source) {
-            destination[property] = source[property];
+            if (source.hasOwnProperty(property)) {
+                destination[property] = source[property];
+            }
         }
         return destination;
+    };
+    ExtendUtils.assign = function (source, target) {
+        for (var property in source) {
+            if (source.hasOwnProperty(property)) {
+                if (target[property] === void 0 || target[property] === null) {
+                    target[property] = source[property];
+                }
+            }
+        }
+        return target;
     };
     ExtendUtils.copyPublicAttri = function (source) {
         var property = null, destination = {};
