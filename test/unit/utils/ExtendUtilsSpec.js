@@ -60,6 +60,7 @@ describe("ExtendUtils", function () {
                         }
                     });
 
+
                     expect(result).toEqual({
                         children: {
                             name: "arvin",
