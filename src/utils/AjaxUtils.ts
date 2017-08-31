@@ -1,4 +1,5 @@
-declare var document: any;
+declare var document: any,
+    ActiveXObject: any;
 
 export class AjaxUtils {
     /*!
