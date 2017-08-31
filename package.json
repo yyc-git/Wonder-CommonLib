@@ -1,9 +1,10 @@
 {
   "name": "wonder-commonlib",
-  "version": "0.1.10",
+  "version": "0.1.12",
   "main": "dist/wdCb.js",
   "module": "dist/wdCb.module.js",
   "jsnext:main": "dist/wdCb.module.js",
+  "types": "dist/wdCb.es2015.d.ts",
   "keywords": [
     "common lib",
     "Wonder-CommonLib"
