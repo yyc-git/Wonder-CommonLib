@@ -1,0 +1,15 @@
+{
+    "name": "wonder-commonlib",
+    "sources": [
+      {
+        "dir": "src",
+        "subdirs": true
+      }
+    ],
+    "bs-dev-dependencies": [
+      "wonder-bs-jest",
+      "wonder-bs-sinon"
+    ],
+    "refmt": 3,
+    "namespace": true
+  }
