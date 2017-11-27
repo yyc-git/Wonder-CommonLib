@@ -1,6 +1,6 @@
 {
   "name": "wonder-commonlib",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "authors": "DreamForest",
   "license": "MIT",
   "keywords": [
@@ -21,8 +21,8 @@
     "bs-platform": "2.0.0",
     "jest": "^21.2.1",
     "jest-cli": "^21.2.1",
-    "wonder-bs-jest": "^0.2.0",
-    "wonder-bs-sinon": "^0.1.0"
+    "wonder-bs-jest": "latest",
+    "wonder-bs-sinon": "latest"
   },
   "dependencies": {}
 }
