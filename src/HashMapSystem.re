@@ -17,4 +17,4 @@ let fromList = Js.Dict.fromList;
 
 let deleteVal = (key: string, map) => set(key, Js.Undefined.empty, map);
 
-let has = (key: string, map) => map |> HashMapSystem.get(key) |> Js.Option.isSome;
+let has = (key: string, map) => map |> get(key) |> Js.Option.isSome;
