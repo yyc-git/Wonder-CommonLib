@@ -14,3 +14,7 @@ let unsafeGet = (key: string, map) => Js.Dict.unsafeGet(map, key);
 let length = (map) => Js.Array.length(Js.Dict.entries(map));
 
 let fromList = Js.Dict.fromList;
+
+let deleteVal = (key: string, map) => set(key, Js.Undefined.empty, map);
+
+let has = (key: string, map) => map |> HashMapSystem.get(key) |> Js.Option.isSome;
