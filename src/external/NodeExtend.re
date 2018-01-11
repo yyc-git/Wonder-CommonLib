@@ -64,7 +64,7 @@ let writeFile = (filePath: string, fileContent: string) => {
   dirname |> Fs.existsSync ?
     Fs.writeFileAsUtf8Sync(filePath, fileContent) :
     {
-      mkdirSync(dirname);
+      mkAlldirsSync(dirname);
       Fs.writeFileAsUtf8Sync(filePath, fileContent)
     }
 };
