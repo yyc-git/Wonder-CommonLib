@@ -40,14 +40,14 @@ let flatten = (arr: array('item)) =>
 /* let copy = Js.Array.copy; */
 let removeDuplicateItems = (arr) => {
   let resultArr = [||];
-  let map = HashMapSystem.createEmpty();
+  let map = HashMapService.createEmpty();
   for (i in 0 to Js.Array.length(arr) - 1) {
     let item = Array.unsafe_get(arr, i);
     let key = Js.Int.toString(item);
-    switch (HashMapSystem.get(key, map)) {
+    switch (HashMapService.get(key, map)) {
     | None =>
       Js.Array.push(item, resultArr) |> ignore;
-      HashMapSystem.set(key, item, map) |> ignore
+      HashMapService.set(key, item, map) |> ignore
     | Some(_) => ()
     }
   };
