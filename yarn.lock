@@ -688,9 +688,9 @@ browser-resolve@^1.11.2:
   dependencies:
     resolve "1.1.7"
 
-bs-platform@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/bs-platform/-/bs-platform-2.0.0.tgz#17ee607fa829f67b8b920438ebca5ec1deab3276"
+bs-platform@3.1.4:
+  version "3.1.4"
+  resolved "http://registry.npm.taobao.org/bs-platform/download/bs-platform-3.1.4.tgz#fe8495443b35aff73dfb61cba1e6d7b88311910b"
 
 bser@^2.0.0:
   version "2.0.0"
@@ -2925,18 +2925,113 @@ window-size@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/window-size/-/window-size-0.1.0.tgz#5438cd2ea93b202efa3a19fe8887aee7c94f9c9d"
 
-wonder-bs-jest@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/wonder-bs-jest/-/wonder-bs-jest-0.2.0.tgz#2708968021918fa0e03b51af006ddd30dcbde06a"
+wonder-bs-jest@latest:
+  version "0.2.17"
+  resolved "http://registry.npm.taobao.org/wonder-bs-jest/download/wonder-bs-jest-0.2.17.tgz#ebbcd37487d8ce0c5d863a501859b8c14db44d88"
   dependencies:
-    jest "^21.2.1"
+    wonder-jest latest
 
-wonder-bs-sinon@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/wonder-bs-sinon/-/wonder-bs-sinon-0.1.0.tgz#0d7a676019ed06045786d1c583ba258342e9c996"
+wonder-bs-sinon@latest:
+  version "0.1.6"
+  resolved "http://registry.npm.taobao.org/wonder-bs-sinon/download/wonder-bs-sinon-0.1.6.tgz#2535e4423a6755ce4ecc03249741afaca5df1e10"
   dependencies:
     sinon "^4.1.2"
-    wonder-bs-jest "^0.2.0"
+    wonder-bs-jest latest
+
+wonder-jest-cli@latest:
+  version "0.0.6"
+  resolved "http://registry.npm.taobao.org/wonder-jest-cli/download/wonder-jest-cli-0.0.6.tgz#b08b63a34ce82e59715d1332473f9e6167063faf"
+  dependencies:
+    ansi-escapes "^3.0.0"
+    chalk "^2.0.1"
+    glob "^7.1.2"
+    graceful-fs "^4.1.11"
+    is-ci "^1.0.10"
+    istanbul-api "^1.1.1"
+    istanbul-lib-coverage "^1.0.1"
+    istanbul-lib-instrument "^1.4.2"
+    istanbul-lib-source-maps "^1.1.0"
+    jest-changed-files "^21.2.0"
+    jest-environment-jsdom "^21.2.1"
+    jest-haste-map "^21.2.0"
+    jest-message-util "^21.2.1"
+    jest-regex-util "^21.2.0"
+    jest-resolve-dependencies "^21.2.0"
+    jest-runtime "^21.2.1"
+    jest-util "^21.2.1"
+    micromatch "^2.3.11"
+    node-notifier "^5.0.2"
+    pify "^3.0.0"
+    slash "^1.0.0"
+    string-length "^2.0.0"
+    strip-ansi "^4.0.0"
+    which "^1.2.12"
+    wonder-jest-config latest
+    wonder-jest-runner latest
+    wonder-jest-snapshot latest
+    worker-farm "^1.3.1"
+    yargs "^9.0.0"
+
+wonder-jest-config@latest:
+  version "0.0.2"
+  resolved "http://registry.npm.taobao.org/wonder-jest-config/download/wonder-jest-config-0.0.2.tgz#6f438a351a2298dc33d30e0a6e49b122ed04362b"
+  dependencies:
+    chalk "^2.0.1"
+    glob "^7.1.1"
+    jest-environment-jsdom "^21.2.1"
+    jest-environment-node "^21.2.1"
+    jest-get-type "^21.2.0"
+    jest-regex-util "^21.2.0"
+    jest-resolve "^21.2.0"
+    jest-util "^21.2.1"
+    jest-validate "^21.2.1"
+    pretty-format "^21.2.1"
+    wonder-jest-jasmine2 latest
+
+wonder-jest-jasmine2@latest:
+  version "0.0.3"
+  resolved "http://registry.npm.taobao.org/wonder-jest-jasmine2/download/wonder-jest-jasmine2-0.0.3.tgz#2f53bb4299678163b4b886673ef3387881d76876"
+  dependencies:
+    chalk "^2.0.1"
+    expect "^21.2.1"
+    graceful-fs "^4.1.11"
+    jest-diff "^21.2.1"
+    jest-matcher-utils "^21.2.1"
+    jest-message-util "^21.2.1"
+    p-cancelable "^0.3.0"
+    wonder-jest-snapshot latest
+
+wonder-jest-runner@latest:
+  version "0.0.6"
+  resolved "http://registry.npm.taobao.org/wonder-jest-runner/download/wonder-jest-runner-0.0.6.tgz#709ece1e8b126856bd617026daad4f0cdfc93e38"
+  dependencies:
+    jest-docblock "^21.2.0"
+    jest-haste-map "^21.2.0"
+    jest-message-util "^21.2.1"
+    jest-runtime "^21.2.1"
+    jest-util "^21.2.1"
+    pify "^3.0.0"
+    throat "^4.0.0"
+    wonder-jest-config latest
+    wonder-jest-jasmine2 latest
+    worker-farm "^1.3.1"
+
+wonder-jest-snapshot@latest:
+  version "0.0.1"
+  resolved "http://registry.npm.taobao.org/wonder-jest-snapshot/download/wonder-jest-snapshot-0.0.1.tgz#859d1fbdc1cb6ba61a61bbd7a0a0d17404a4a6f6"
+  dependencies:
+    chalk "^2.0.1"
+    jest-diff "^21.2.1"
+    jest-matcher-utils "^21.2.1"
+    mkdirp "^0.5.1"
+    natural-compare "^1.4.0"
+    pretty-format "^21.2.1"
+
+wonder-jest@latest:
+  version "0.0.4"
+  resolved "http://registry.npm.taobao.org/wonder-jest/download/wonder-jest-0.0.4.tgz#39a4808cd72acf981d2577d2a15214e8e240bec0"
+  dependencies:
+    wonder-jest-cli latest
 
 wordwrap@0.0.2:
   version "0.0.2"

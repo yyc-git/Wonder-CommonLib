@@ -15,11 +15,11 @@ let mkAlldirsSync = (targetDir: string) => {
            curDir :
            {
              mkdirSync(curDir);
-             curDir
-           }
+             curDir;
+           };
        },
-       Path.isAbsolute(targetDir) ? sep : ""
-     )
+       Path.isAbsolute(targetDir) ? sep : "",
+     );
 };
 
 let rmdirFilesSync = [%bs.raw
@@ -65,6 +65,6 @@ let writeFile = (filePath: string, fileContent: string) => {
     Fs.writeFileAsUtf8Sync(filePath, fileContent) :
     {
       mkAlldirsSync(dirname);
-      Fs.writeFileAsUtf8Sync(filePath, fileContent)
-    }
+      Fs.writeFileAsUtf8Sync(filePath, fileContent);
+    };
 };
