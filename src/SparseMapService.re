@@ -6,11 +6,10 @@ let unsafeGet = (key: int, map) => Array.unsafe_get(map, key);
 
 let get = (key: int, map) => {
   let value = unsafeGet(key, map);
-  value === Obj.magic(Js.Nullable.null) ? None : Some(value);
+  NullService.isEmpty(value) ? None : Some(value);
 };
 
-let has = (key: int, map) =>
-  unsafeGet(key, map) != Obj.magic(Js.Nullable.null);
+let has = (key: int, map) => ! NullService.isEmpty(unsafeGet(key, map));
 
 let set = (key: int, value, map) => {
   Array.unsafe_set(map, key, value);
@@ -18,6 +17,6 @@ let set = (key: int, value, map) => {
 };
 
 let deleteVal = (key: int, map) => {
-  Array.unsafe_set(map, key, Js.Undefined.empty);
+  Array.unsafe_set(map, key, Js.Nullable.undefined);
   map;
 };
