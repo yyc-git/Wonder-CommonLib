@@ -1,12 +1,13 @@
 type t('a) = Js.Array.t('a);
 
-[@bs.send.pipe : array('a)] external unsafePop : 'a = "pop";
+[@bs.send.pipe: array('a)] external unsafePop : 'a = "pop";
 
 [@bs.get_index] external unsafeGet : (t('a), int) => 'b = "";
 
 [@bs.set_index] external unsafeSet : (t('a), int, 'b) => unit = "";
 
-[@bs.send.pipe : array('a)] external unsafeFind : ('a => [@bs.uncurry] bool) => 'a = "find";
+[@bs.send.pipe: array('a)]
+external unsafeFind : ('a => [@bs.uncurry] bool) => 'a = "find";
 
 let createEmpty = () => [||];
 
@@ -22,8 +23,8 @@ let createEmpty = () => [||];
 
    let push = Js.Array.push; */
 /* let pushMany = Js.Array.pushMany; */
-[@bs.splice] [@bs.send.pipe : Js.Array.t('a) as 'this] external pushMany : array('a) => int =
-  "push";
+[@bs.splice] [@bs.send.pipe: Js.Array.t('a) as 'this]
+external pushMany : array('a) => int = "push";
 
 /* let pop = Js.Array.pop;
 
@@ -38,77 +39,71 @@ let flatten = (arr: array('item)) =>
   arr |> Js.Array.reduce((a, b) => Js.Array.concat(b, a), createEmpty());
 
 /* let copy = Js.Array.copy; */
-let removeDuplicateItems = (arr) => {
+let removeDuplicateItems = arr => {
   let resultArr = [||];
-  let map = HashMapService.createEmpty();
+  let map = MutableHashMapService.createEmpty();
   for (i in 0 to Js.Array.length(arr) - 1) {
     let item = Array.unsafe_get(arr, i);
     let key = Js.Int.toString(item);
-    switch (HashMapService.get(key, map)) {
+    switch (MutableHashMapService.get(key, map)) {
     | None =>
       Js.Array.push(item, resultArr) |> ignore;
-      HashMapService.set(key, item, map) |> ignore
+      MutableHashMapService.set(key, item, map) |> ignore;
     | Some(_) => ()
-    }
+    };
   };
-  resultArr
+  resultArr;
 };
 
 let get = (index: int, arr) =>
   if (index >= Js.Array.length(arr)) {
-    None
+    None;
   } else {
-    Some(Array.unsafe_get(arr, index))
+    Some(Array.unsafe_get(arr, index));
   };
 
 let isEqual = (index: int, target, arr) =>
   if (index >= Js.Array.length(arr)) {
-    false
+    false;
   } else {
-    Array.unsafe_get(arr, index) == target
+    Array.unsafe_get(arr, index) == target;
   };
 
 let isNotEqual = (index: int, target, arr) =>
   if (index >= Js.Array.length(arr)) {
-    true
+    true;
   } else {
-    Array.unsafe_get(arr, index) != target
+    Array.unsafe_get(arr, index) != target;
   };
 
 let forEach = (func, arr) => {
   for (i in 0 to Js.Array.length(arr) - 1) {
-    [@bs] func(Array.unsafe_get(arr, i)) |> ignore
+    func(. Array.unsafe_get(arr, i)) |> ignore;
   };
-  ()
+  ();
 };
 
 let forEachi = (func, arr) => {
   for (i in 0 to Js.Array.length(arr) - 1) {
-    [@bs] func(Array.unsafe_get(arr, i), i) |> ignore
+    func(. Array.unsafe_get(arr, i), i) |> ignore;
   };
-  ()
+  ();
 };
 
 let range = (a: int, b: int) => {
   let result = createEmpty();
   for (i in a to b) {
-    Js.Array.push(i, result) |> ignore
+    Js.Array.push(i, result) |> ignore;
   };
-  result
+  result;
 };
 
-let reduceOneParam = (func, param, arr) => {
-  let mutableParam = ref(param);
-  for (i in 0 to Js.Array.length(arr) - 1) {
-    mutableParam := [@bs] func(mutableParam^, Array.unsafe_get(arr, i))
-  };
-  mutableParam^
-};
+let reduceOneParam = ArrayUtils.reduceOneParam;
 
 let reduceOneParami = (func, param, arr) => {
   let mutableParam = ref(param);
   for (i in 0 to Js.Array.length(arr) - 1) {
-    mutableParam := [@bs] func(mutableParam^, Array.unsafe_get(arr, i), i)
+    mutableParam := func(. mutableParam^, Array.unsafe_get(arr, i), i);
   };
-  mutableParam^
+  mutableParam^;
 };
