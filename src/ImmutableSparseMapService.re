@@ -11,19 +11,19 @@ let get = SparseMapService.get;
 let has = SparseMapService.has;
 
 let set = (key: int, value, map) => {
-  Array.unsafe_set(
-    map |> copy,
-    key,
-    value |> SparseMapType.notNullableToNullable,
-  );
+  let newMap = map |> copy;
 
-  map;
+  Array.unsafe_set(newMap, key, value |> SparseMapType.notNullableToNullable);
+
+  newMap;
 };
 
 let deleteVal = (key: int, map) => {
-  Array.unsafe_set(map |> copy, key, Js.Nullable.undefined);
+  let newMap = map |> copy;
 
-  map;
+  Array.unsafe_set(newMap, key, Js.Nullable.undefined);
+
+  newMap;
 };
 
 let isDeleted = SparseMapService.isDeleted;
