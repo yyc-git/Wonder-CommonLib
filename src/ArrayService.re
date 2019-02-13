@@ -56,7 +56,7 @@ let removeDuplicateItems = arr => {
 };
 
 let get = (index: int, arr) =>
-  if (index >= Js.Array.length(arr)) {
+  if (index >= Js.Array.length(arr) || index < 0) {
     None;
   } else {
     Some(Array.unsafe_get(arr, index));
