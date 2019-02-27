@@ -1,10 +1,10 @@
 ####{BSB GENERATED: NO EDIT
 B lib/bs
 FLG -open WonderCommonlib
-FLG -ppx /Users/y/Github/Wonder-CommonLib/node_modules/bs-platform/bin/bsppx.exe
+FLG -ppx /Users/y/Github/Wonder-CommonLib/node_modules/bs-platform/lib/bsppx.exe
 S /Users/y/Github/Wonder-CommonLib/node_modules/bs-platform/lib/ocaml
 B /Users/y/Github/Wonder-CommonLib/node_modules/bs-platform/lib/ocaml
-FLG -nostdlib -no-alias-deps -color always
+FLG -nostdlib -color always
 FLG -w -30-40+6+7+27+32..39+44+45+101
 S /Users/y/Github/Wonder-CommonLib/node_modules/wonder-bs-jest/lib/ocaml
 B /Users/y/Github/Wonder-CommonLib/node_modules/wonder-bs-jest/lib/ocaml
@@ -12,4 +12,8 @@ S /Users/y/Github/Wonder-CommonLib/node_modules/wonder-bs-sinon/lib/ocaml
 B /Users/y/Github/Wonder-CommonLib/node_modules/wonder-bs-sinon/lib/ocaml
 S src
 B lib/bs/src
+S src/utils
+B lib/bs/src/utils
+S src/external
+B lib/bs/src/external
 ####BSB GENERATED: NO EDIT}
