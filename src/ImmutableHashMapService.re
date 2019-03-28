@@ -30,3 +30,7 @@ let getValidEntries = HashMapService.getValidEntries;
 let getValidValues = HashMapService.getValidValues;
 
 let copy = HashMapService.copy;
+
+let map = HashMapService.map;
+
+let mapValid = HashMapService.mapValid;

@@ -1,8 +1,8 @@
-let createEmpty = () : array(Js.Nullable.t('a)) => [||];
+let createEmpty = (): array(Js.Nullable.t('a)) => [||];
 
 let copy = Js.Array.copy;
 
-let unsafeGet = (key: int, map: array(Js.Nullable.t('a))) : 'a =>
+let unsafeGet = (key: int, map: array(Js.Nullable.t('a))): 'a =>
   Array.unsafe_get(map, key) |> SparseMapType.nullableToNotNullable;
 
 /* Js.Nullable.iter(Array.unsafe_get(map, key), (. value) => value); */
@@ -13,7 +13,7 @@ let get = (key: int, map) => {
   NullService.isEmpty(value) ? None : Some(value);
 };
 
-let has = (key: int, map) => ! NullService.isEmpty(unsafeGet(key, map));
+let has = (key: int, map) => !NullService.isEmpty(unsafeGet(key, map));
 /* get(key, map) |> Js.Option.isSome; */
 
 /* ! NullService.isEmpty(unsafeGet(key, map)); */
@@ -29,19 +29,19 @@ let filter = Js.Array.filter;
 
 let filterValid = map =>
   map
-  |> Js.Array.filter(value => value === Js.Nullable.undefined)
+  |> Js.Array.filter(value => NullService.isInMap(value))
   |> SparseMapType.arrayNullableToArrayNotNullable;
 
 let getValidValues = map =>
   map
-  |> Js.Array.filter(value => value !== Js.Nullable.undefined)
+  |> Js.Array.filter(value => NullService.isInMap(value))
   |> SparseMapType.arrayNullableToArrayNotNullable;
 
 let getValidKeys = map =>
   map
   |> ArrayService.reduceOneParami(
        (. arr, value, key) =>
-         if (value === Js.Nullable.undefined) {
+         if (NullService.isNotInMap(value)) {
            arr;
          } else {
            arr |> Js.Array.push(key) |> ignore;
@@ -61,7 +61,7 @@ let map =
 let mapValid = (func, map) =>
   map
   |> Js.Array.map(value =>
-       if (value === Js.Nullable.undefined) {
+       if (NullService.isNotInMap(value)) {
          Js.Nullable.undefined;
        } else {
          func(. value |> SparseMapType.nullableToNotNullable)
@@ -72,7 +72,7 @@ let mapValid = (func, map) =>
 let forEachValid = (func, map) =>
   map
   |> ArrayService.forEach((. value) =>
-       if (value === Js.Nullable.undefined) {
+       if (NullService.isNotInMap(value)) {
          ();
        } else {
          func(. value |> SparseMapType.nullableToNotNullable);
@@ -82,7 +82,7 @@ let forEachValid = (func, map) =>
 let forEachiValid = (func, map) =>
   map
   |> ArrayService.forEachi((. value, index) =>
-       if (value === Js.Nullable.undefined) {
+       if (NullService.isNotInMap(value)) {
          ();
        } else {
          func(. value |> SparseMapType.nullableToNotNullable, index);
@@ -95,7 +95,7 @@ let reduceValid = (func, initValue, map) =>
   map
   |> ArrayService.reduceOneParam(
        (. previousValue, value) =>
-         if (value === Js.Nullable.undefined) {
+         if (NullService.isNotInMap(value)) {
            previousValue;
          } else {
            func(.
@@ -112,7 +112,7 @@ let reduceiValid = (func, initValue, map) =>
   map
   |> ArrayService.reduceOneParami(
        (. previousValue, value, index) =>
-         if (value === Js.Nullable.undefined) {
+         if (NullService.isNotInMap(value)) {
            previousValue;
          } else {
            func(.
