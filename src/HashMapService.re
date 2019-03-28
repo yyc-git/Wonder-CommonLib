@@ -54,16 +54,39 @@ let copy =
        _createEmpty(),
      )
   |> HashMapType.dictNotNullableToDictNullable;
+/*
+ let map =
+     (
+       func: (. Js.Nullable.t('a)) => Js.Nullable.t('b),
+       map: Js.Dict.t(Js.Nullable.t('a)),
+     )
+     : Js.Dict.t(Js.Nullable.t('b)) =>
+   Js.Dict.map(func, map);
+
+ let mapValid = (func, map) =>
+   map
+   |> Js.Dict.map((. value) =>
+        if (NullService.isNotInMap(value)) {
+          Js.Nullable.undefined;
+        } else {
+          func(. value |> SparseMapType.nullableToNotNullable)
+          |> SparseMapType.notNullableToNullable;
+        }
+      ); */
 
 let map =
-    (
-      func: (. Js.Nullable.t('a)) => Js.Nullable.t('b),
-      map: Js.Dict.t(Js.Nullable.t('a)),
-    )
+    (func: (. 'a) => 'b, map: Js.Dict.t(Js.Nullable.t('a)))
     : Js.Dict.t(Js.Nullable.t('b)) =>
-  Js.Dict.map(func, map);
+  Js.Dict.map(
+    (. value) =>
+      func(. value |> HashMapType.nullableToNotNullable)
+      |> HashMapType.notNullableToNullable,
+    map,
+  );
 
-let mapValid = (func, map) =>
+let mapValid =
+    (func: (. 'a) => 'b, map: Js.Dict.t(Js.Nullable.t('a)))
+    : Js.Dict.t(Js.Nullable.t('b)) =>
   map
   |> Js.Dict.map((. value) =>
        if (NullService.isNotInMap(value)) {
