@@ -25,4 +25,8 @@ let has = HashMapService.has;
 
 let entries = HashMapService.entries;
 
+let getValidEntries = HashMapService.getValidEntries;
+
+let getValidValues = HashMapService.getValidValues;
+
 let copy = HashMapService.copy;

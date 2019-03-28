@@ -19,6 +19,17 @@ let has = (key: string, map) => !NullService.isEmpty(unsafeGet(key, map));
 let entries = map =>
   map |> Js.Dict.entries |> HashMapType.entriesNullableToEntriesNotNullable;
 
+let getValidEntries = map =>
+  map
+  |> entries
+  |> Js.Array.filter(((key, value)) => value |> NullService.isInMap);
+
+let getValidValues = map =>
+  map
+  |> Js.Dict.values
+  |> Js.Array.filter(value => value |> NullService.isInMap)
+  |> SparseMapType.arrayNullableToArrayNotNullable;
+
 let _mutableSet = (key: string, value, map) => {
   Js.Dict.set(map, key, value);
   map;
