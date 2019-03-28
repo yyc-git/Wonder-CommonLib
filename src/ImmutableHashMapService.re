@@ -19,7 +19,7 @@ let length = HashMapService.length;
 let fromList = HashMapService.fromList;
 
 let deleteVal = (key: string, map: t('a)): t('a) =>
-  set(key, Js.Nullable.undefined, map |> HashMapService.copy);
+  set(key, Js.Nullable.undefined, map);
 
 let has = HashMapService.has;
 
