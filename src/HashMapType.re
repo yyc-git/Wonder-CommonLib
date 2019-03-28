@@ -6,6 +6,10 @@ external entriesNullableToEntriesNotNullable:
   array((Js.Dict.key, Js.Nullable.t('a))) => array((Js.Dict.key, 'a)) =
   "%identity";
 
+external entriesNotNullableToEntriesNullable:
+  array((Js.Dict.key, 'a)) => array((Js.Dict.key, Js.Nullable.t('a))) =
+  "%identity";
+
 external dictNotNullableToDictNullable:
   Js.Dict.t('a) => Js.Dict.t(Js.Nullable.t('a)) =
   "%identity";

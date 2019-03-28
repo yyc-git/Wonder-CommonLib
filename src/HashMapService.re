@@ -16,13 +16,21 @@ let fromList = list =>
 
 let has = (key: string, map) => !NullService.isEmpty(unsafeGet(key, map));
 
-let entries = map =>
+let entries =
+    (map: Js.Dict.t(Js.Nullable.t('a)))
+    /* : array((Js.Dict.key, Js.Nullable.t('a))) => */
+    : array((Js.Dict.key, 'a)) =>
   map |> Js.Dict.entries |> HashMapType.entriesNullableToEntriesNotNullable;
 
-let getValidEntries = map =>
+let getValidEntries =
+    (map: Js.Dict.t(Js.Nullable.t('a)))
+    /* : array((Js.Dict.key, Js.Nullable.t('a))) => */
+    : array((Js.Dict.key, 'a)) =>
   map
   |> entries
-  |> Js.Array.filter(((key, value)) => value |> NullService.isInMap);
+  |> HashMapType.entriesNotNullableToEntriesNullable
+  |> Js.Array.filter(((key, value)) => value |> NullService.isInMap)
+  |> HashMapType.entriesNullableToEntriesNotNullable;
 
 let getValidValues = map =>
   map
