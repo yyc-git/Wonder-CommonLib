@@ -1,26 +1,37 @@
-let createEmpty = () => Js.Dict.empty();
+let createEmpty = (): Js.Dict.t(Js.Nullable.t('a)) => Js.Dict.empty();
 
-let get = (key: string, map) => Js.Dict.get(map, key);
+let unsafeGet = (key: string, map) =>
+  Js.Dict.unsafeGet(map, key) |> HashMapType.nullableToNotNullable;
 
-let unsafeGet = (key: string, map) => Js.Dict.unsafeGet(map, key);
+let get = (key: string, map) => {
+  let value = unsafeGet(key, map);
+  NullService.isEmpty(value) ? None : Some(value);
+};
 
-let length = map => Js.Array.length(Js.Dict.entries(map));
+let length = (map: Js.Dict.t(Js.Nullable.t('a))) =>
+  Js.Array.length(Js.Dict.entries(map));
 
-let fromList = Js.Dict.fromList;
+let fromList = list =>
+  list |> Js.Dict.fromList |> HashMapType.dictNotNullableToDictNullable;
 
-let has = (key: string, map) => map |> get(key) |> Js.Option.isSome;
+let has = (key: string, map) => !NullService.isEmpty(unsafeGet(key, map));
 
-let entries = Js.Dict.entries;
+let entries = map =>
+  map |> Js.Dict.entries |> HashMapType.entriesNullableToEntriesNotNullable;
 
 let _mutableSet = (key: string, value, map) => {
   Js.Dict.set(map, key, value);
   map;
 };
 
-let copy = map =>
+let _createEmpty = (): Js.Dict.t('a) => Js.Dict.empty();
+
+let copy =
+    (map: Js.Dict.t(Js.Nullable.t('a))): Js.Dict.t(Js.Nullable.t('a)) =>
   map
   |> entries
   |> ArrayUtils.reduceOneParam(
        (. newMap, (key, value)) => newMap |> _mutableSet(key, value),
-       createEmpty(),
-     );
+       _createEmpty(),
+     )
+  |> HashMapType.dictNotNullableToDictNullable;
