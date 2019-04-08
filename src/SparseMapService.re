@@ -27,10 +27,12 @@ let length = Js.Array.length;
 
 let filter = Js.Array.filter;
 
-let filterValid = map =>
+let filterValid = (func, map) =>
   map
-  |> Js.Array.filter(value => NullService.isInMap(value))
-  |> SparseMapType.arrayNullableToArrayNotNullable;
+  |> Js.Array.filter(value =>
+       NullService.isInMap(value)
+       && func(. value |> SparseMapType.nullableToNotNullable)
+     );
 
 let getValidValues = map =>
   map
@@ -143,6 +145,18 @@ let mergeSparseMaps = (setFunc, mapArr) =>
               (. resultMap, value, key) => resultMap |> setFunc(key, value),
               resultMap,
             ),
-       /* |> SparseMapType.nullableToNotNullable, */
        createEmpty(),
+     );
+
+let find = (func, map) =>
+  Js.Array.find(func, map |> SparseMapType.arrayNullableToArrayNotNullable);
+
+let getValidDataArr = map =>
+  map
+  |> reduceiValid(
+       (. arr, value, key) => {
+         arr |> Js.Array.push((key, value)) |> ignore;
+         arr;
+       },
+       [||],
      );

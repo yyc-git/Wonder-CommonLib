@@ -10,7 +10,7 @@ let get = SparseMapService.get;
 
 let has = SparseMapService.has;
 
-let set = (key: int, value: 'a, map: t('a)) : t('a) => {
+let set = (key: int, value: 'a, map: t('a)): t('a) => {
   Array.unsafe_set(map, key, value |> SparseMapType.notNullableToNullable);
 
   map;
@@ -34,6 +34,8 @@ let getValidValues = SparseMapService.getValidValues;
 
 let getValidKeys = SparseMapService.getValidKeys;
 
+let getValidDataArr = SparseMapService.getValidDataArr;
+
 let map = SparseMapService.map;
 
 let mapValid = SparseMapService.mapValid;
@@ -52,5 +54,7 @@ let indexOf = SparseMapService.indexOf;
 
 let includes = SparseMapService.includes;
 
-let mergeSparseMaps = (mapArr: array(t('a))) : t('a) =>
+let mergeSparseMaps = (mapArr: array(t('a))): t('a) =>
   SparseMapService.mergeSparseMaps(set, mapArr);
+
+let find = SparseMapService.find;
