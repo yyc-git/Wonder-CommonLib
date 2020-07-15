@@ -1,4 +1,5 @@
 type t('a) = Js.Dict.t(Js.Nullable.t('a));
+type t2('key, 'a) = t('a);
 
 let createEmpty = HashMapService.createEmpty;
 

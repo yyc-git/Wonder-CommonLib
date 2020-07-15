@@ -1,4 +1,5 @@
 type t('a) = array(Js.Nullable.t('a));
+type t2('index, 'a) = t('a);
 
 let createEmpty = SparseMapService.createEmpty;
 
