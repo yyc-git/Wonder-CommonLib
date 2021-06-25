@@ -9,8 +9,8 @@
   "main": "",
   "scripts": {
     "start": "node ./server/app.js",
-    "watch": "bsb -clean-world -make-world -w",
-    "build": "bsb -clean-world -make-world",
+    "watch": "rescript build -w",
+    "build": "rescript",
     "test": "npm run build && jest --config jest.json",
     "test:watch": "npm run build && jest --watch --config jest.json"
   },
@@ -18,7 +18,7 @@
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
     "babel-jest": "^24.1.0",
-    "bs-platform": "4.0.18",
+    "rescript": "^9.1.4",
     "wonder-bs-jest": "latest",
     "wonder-bs-sinon": "latest"
   },

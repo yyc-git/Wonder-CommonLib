@@ -1,19 +1,22 @@
 ####{BSB GENERATED: NO EDIT
 B lib/bs
 FLG -open WonderCommonlib
-FLG -ppx /Users/y/Github/Wonder-CommonLib/node_modules/bs-platform/lib/bsppx.exe
-S /Users/y/Github/Wonder-CommonLib/node_modules/bs-platform/lib/ocaml
-B /Users/y/Github/Wonder-CommonLib/node_modules/bs-platform/lib/ocaml
-FLG -nostdlib -color always
-FLG -w -30-40+6+7+27+32..39+44+45+101
-S /Users/y/Github/Wonder-CommonLib/node_modules/wonder-bs-jest/lib/ocaml
-B /Users/y/Github/Wonder-CommonLib/node_modules/wonder-bs-jest/lib/ocaml
-S /Users/y/Github/Wonder-CommonLib/node_modules/wonder-bs-sinon/lib/ocaml
-B /Users/y/Github/Wonder-CommonLib/node_modules/wonder-bs-sinon/lib/ocaml
-S src
-B lib/bs/src
-S src/utils
-B lib/bs/src/utils
-S src/external
-B lib/bs/src/external
+FLG -ppx '/Users/yang/Github/Wonder-CommonLib/node_modules/rescript/darwin/bsc.exe -as-ppx '
+S /Users/yang/Github/Wonder-CommonLib/node_modules/rescript/lib/ocaml
+B /Users/yang/Github/Wonder-CommonLib/node_modules/rescript/lib/ocaml
+FLG -w +a-4-9-20-40-41-42-50-61-102
+S /Users/yang/Github/Wonder-CommonLib/node_modules/wonder-bs-jest/lib/ocaml
+B /Users/yang/Github/Wonder-CommonLib/node_modules/wonder-bs-jest/lib/ocaml
+S /Users/yang/Github/Wonder-CommonLib/node_modules/wonder-bs-sinon/lib/ocaml
+B /Users/yang/Github/Wonder-CommonLib/node_modules/wonder-bs-sinon/lib/ocaml
+S src/structure
+B lib/bs/src/structure
+S src/structure/utils
+B lib/bs/src/structure/utils
+S src/structure/sparse_map
+B lib/bs/src/structure/sparse_map
+S src/structure/tuple
+B lib/bs/src/structure/tuple
+S src/structure/hash_map
+B lib/bs/src/structure/hash_map
 ####BSB GENERATED: NO EDIT}
